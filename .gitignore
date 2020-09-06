@@ -1,0 +1,7 @@
+a.out
+*.gch
+ft_ssl
+.DS_Store
+.vscode
+*.o
+*.a
