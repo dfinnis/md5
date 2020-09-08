@@ -14,4 +14,17 @@ typedef struct			s_args
 	int					flag_s;
 }						t_args;
 
+/*
+**		ft_ssl.c
+*/
+// static void	init_ssl(t_args *args);
+int			read_flag(char **argv, t_args *args, int i);
+void		read_args(int argc, char **argv, t_args *args);
+void		print_usage();
+
+/*
+**		md5.c
+*/
+void	md5(t_args *args);
+
 #endif

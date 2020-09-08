@@ -57,7 +57,11 @@ int		main(int argc, char **argv)
 	ft_printf("args.flag_q: %d\n", args.flag_q);//rm!!!
 	ft_printf("args.flag_r: %d\n", args.flag_r);//rm!!!
 	ft_printf("args.flag_s: %d\n", args.flag_s);//rm!!!
-
+	if (args.md5)//
+		// ft_printf("OH HI\n");//
+		md5(&args);
+	else if (args.sha256)//
+		ft_printf("sha256\n");//
 
 	return (0);
 }
