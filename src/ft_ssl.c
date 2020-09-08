@@ -1,6 +1,6 @@
 #include "../inc/ft_ssl.h"
 
-void	print_usage()
+void	print_usage(void)
 {
 	ft_putstr("\nusage:\t./ft_ssl []");
 	// free(eveything);
@@ -30,6 +30,7 @@ void	read_args(int argc, char **argv, t_args *args)
 	if (argc == 1)
 		print_usage();
 	else
+	{
 		if (ft_strcmp((argv[1]), "md5") == 0)
 			args->md5 = 1;
 		else if (ft_strcmp((argv[1]), "sha256") == 0)
@@ -39,6 +40,7 @@ void	read_args(int argc, char **argv, t_args *args)
 		if (argc > 2)
 			while (i < argc)
 				i = read_flag(argv, args, i);
+	}
 }
 
 static void	init_ssl(t_args *args)
@@ -49,6 +51,7 @@ static void	init_ssl(t_args *args)
 int		main(int argc, char **argv)
 {
 	t_args	args;
+
 	init_ssl(&args);
 	read_args(argc, argv, &args);
 	ft_printf("args.md5: %d\n", args.md5);//rm!!!
@@ -58,8 +61,8 @@ int		main(int argc, char **argv)
 	ft_printf("args.flag_r: %d\n", args.flag_r);//rm!!!
 	ft_printf("args.flag_s: %d\n", args.flag_s);//rm!!!
 	if (args.md5)//
-		// ft_printf("OH HI\n");//
 		md5(&args);
+		// ft_printf("OH HI\n");//
 	else if (args.sha256)//
 		ft_printf("sha256\n");//
 
