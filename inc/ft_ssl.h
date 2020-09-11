@@ -3,6 +3,9 @@
 # define FT_SSL_H
 
 # include "../libft/ft_printf/ft_printf.h"
+# include <fcntl.h>
+# include <errno.h>
+
 
 typedef struct			s_args
 {
@@ -18,7 +21,7 @@ typedef struct			s_args
 **		ft_ssl.c
 */
 // static void	init_ssl(t_args *args);
-int			read_flag(char **argv, t_args *args, int i);
+int			read_arg(char **argv, t_args *args, int i);
 void		read_args(int argc, char **argv, t_args *args);
 void		print_usage();
 

@@ -7,7 +7,7 @@ void	print_usage(void)
 	exit(1);
 }
 
-int		read_flag(char **argv, t_args *args, int i)
+int		read_arg(char **argv, t_args *args, int i)
 {
 	if (ft_strcmp((argv[i]), "-p") == 0)
 		args->flag_p = 1;
@@ -17,8 +17,24 @@ int		read_flag(char **argv, t_args *args, int i)
 		args->flag_r = 1;
 	else if (ft_strcmp((argv[i]), "-s") == 0)
 		args->flag_s = 1;
+		// parse string argv[i+1] !!!!!!!
 	else
+	{
+		ft_printf("arg: %s\n", argv[i]);//
+		char *line;
+		int	fd;
+
+		line = NULL;
+		if ((fd = open(argv[i], O_RDONLY)) == -1)
+		{
+			ft_printf("ft_ssl: md5/sha: %s: %s\n", argv[i], strerror(errno));/// command md5/sha etc!!!
+			//error exit
+		}
+		ft_printf("fd: %d\n", fd);//
+		ft_printf("line: %s\n", line);//
+		// parse file
 		print_usage();
+	}
 	return (++i);
 }
 
@@ -39,7 +55,7 @@ void	read_args(int argc, char **argv, t_args *args)
 			print_usage();
 		if (argc > 2)
 			while (i < argc)
-				i = read_flag(argv, args, i);
+				i = read_arg(argv, args, i);
 	}
 }
 
@@ -68,3 +84,7 @@ int		main(int argc, char **argv)
 
 	return (0);
 }
+
+// flag: -s "string1" -s "string2"
+// file as direct argument: ./ft_ssl md5 file
+// standard in: echo "string" | ./ft_ssl md5
