@@ -7,8 +7,32 @@ void	print_usage(void)
 	exit(1);
 }
 
-int		read_arg(char **argv, t_args *args, int i)
+char	*read_input(char *filepath)
 {
+	char *input;
+	int	error;
+	int	fd;
+
+	input = NULL;
+	if ((fd = open(filepath, O_RDONLY)) == -1)
+	{
+		ft_printf("ft_ssl: md5/sha: %s: %s\n", filepath, strerror(errno));/// command md5/sha etc!!!
+		//error exit
+	}
+	// if directory?? deal with!!!
+	if ((error = read_fd(fd, &input) == 0))
+		ft_printf("error deal with empty file\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
+	// ft_printf("error: %d\n", error);//
+	// ft_printf("fd: %d\n", fd);//
+	// print_usage();??
+	return input;
+}
+
+static int	read_arg(int argc, char **argv, t_args *args, int i)
+{
+	char *input;
+
+	input = NULL;
 	if (ft_strcmp((argv[i]), "-p") == 0)
 		args->flag_p = 1;
 	else if (ft_strcmp((argv[i]), "-q") == 0)
@@ -16,28 +40,25 @@ int		read_arg(char **argv, t_args *args, int i)
 	else if (ft_strcmp((argv[i]), "-r") == 0)
 		args->flag_r = 1;
 	else if (ft_strcmp((argv[i]), "-s") == 0)
+	{
 		args->flag_s = 1;
+		{
+			// ft_printf("string!!\n");//
+			// ft_printf("i: %d\n", i);//
+			// ft_printf("argc: %d\n", argc);//
+			if (i + 2 > argc)
+				ft_printf("Error: no string here!!\n");// EXIT!!
+			input = argv[i+1];
+			ft_printf("input string: %s\n", input);//
+		}
+		i++;
 		// parse string argv[i+1] !!!!!!!
+	}
 	else
 	{
-		ft_printf("arg: %s\n", argv[i]);//
-		char *input;
-		int	error;
-		int	fd;
-
-		input = NULL;
-		if ((fd = open(argv[i], O_RDONLY)) == -1)
-		{
-			ft_printf("ft_ssl: md5/sha: %s: %s\n", argv[i], strerror(errno));/// command md5/sha etc!!!
-			//error exit
-		}
-		if ((error = read_fd(fd, &input) == 0))
-			// DEAL WITH EMPTY FILE, input = '\0'???!!!
-		ft_printf("error: %d\n", error);//
-		ft_printf("fd: %d\n", fd);//
-		ft_printf("input: %s\n", input);//
-		// parse file
-		print_usage();
+		// ft_printf("arg: %s\n", argv[i]);//
+		input = read_input(argv[i]);
+		ft_printf("input here: %s\n", input);//
 	}
 	return (++i);
 }
@@ -59,7 +80,7 @@ void	read_args(int argc, char **argv, t_args *args)
 			print_usage();
 		if (argc > 2)
 			while (i < argc)
-				i = read_arg(argv, args, i);
+				i = read_arg(argc, argv, args, i);
 	}
 }
 
