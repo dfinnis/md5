@@ -6,7 +6,6 @@
 # include <fcntl.h>
 # include <errno.h>
 
-
 typedef struct			s_args
 {
 	int					md5;
@@ -21,14 +20,14 @@ typedef struct			s_args
 **		ft_ssl.c
 */
 // static void	init_ssl(t_args *args);
-int			read_arg(char **argv, t_args *args, int i);
-void		read_args(int argc, char **argv, t_args *args);
-void		print_usage();
+int		read_arg(char **argv, t_args *args, int i);
+void	read_args(int argc, char **argv, t_args *args);
+void	print_usage();
 
 /*
 **		read.c
 */
-int			read_fd(const int fd, char **line);
+int		read_fd(const int fd, char **line);
 
 /*
 **		md5.c

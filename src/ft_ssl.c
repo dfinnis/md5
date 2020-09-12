@@ -21,20 +21,21 @@ int		read_arg(char **argv, t_args *args, int i)
 	else
 	{
 		ft_printf("arg: %s\n", argv[i]);//
-		char *line;
+		char *input;
 		int	error;
 		int	fd;
 
-		line = NULL;
+		input = NULL;
 		if ((fd = open(argv[i], O_RDONLY)) == -1)
 		{
 			ft_printf("ft_ssl: md5/sha: %s: %s\n", argv[i], strerror(errno));/// command md5/sha etc!!!
 			//error exit
 		}
-		error = read_fd(fd, &line);
+		if ((error = read_fd(fd, &input) == 0))
+			// DEAL WITH EMPTY FILE, input = '\0'???!!!
 		ft_printf("error: %d\n", error);//
 		ft_printf("fd: %d\n", fd);//
-		ft_printf("line: %s\n", line);//
+		ft_printf("input: %s\n", input);//
 		// parse file
 		print_usage();
 	}
