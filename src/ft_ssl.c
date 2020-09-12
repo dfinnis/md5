@@ -48,10 +48,10 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 			// ft_printf("argc: %d\n", argc);//
 			if (i + 2 > argc)
 				ft_printf("Error: no string here!!\n");// EXIT!!
-			input = argv[i+1];
+			input = argv[++i];
 			ft_printf("input string: %s\n", input);//
 		}
-		i++;
+		// i++;
 		// parse string argv[i+1] !!!!!!!
 	}
 	else
