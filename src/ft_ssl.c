@@ -7,7 +7,7 @@ void	print_usage(void)
 	exit(1);
 }
 
-char	*read_input(char *filepath)
+char	*read_file(char *filepath)
 {
 	char *input;
 	int	error;
@@ -37,7 +37,7 @@ void	read_stdin(void)
 	if ((error = read_fd(0, &input) == 0))
 		ft_printf("error deal with empty input stdin\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
 	ft_printf("input stdin: %s\n", input);//
-	// hash!!!!
+	// hash(input)!!!!
 }
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)
@@ -64,7 +64,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	else
 	{
 		// ft_printf("arg: %s\n", argv[i]);//
-		input = read_input(argv[i]);
+		input = read_file(argv[i]);
 		ft_printf("input here: %s\n", input);//
 	}
 	return (++i);
