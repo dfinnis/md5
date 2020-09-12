@@ -14,6 +14,7 @@ LIBFT = libft/ft_printf
 LIBFT_A = $(LIBFT)/libftprintf.a
 
 SRCS_FILES = ft_ssl.c \
+	read.c \
 	md5.c
 
 SRCS_PATH = $(SRCS_FILES:%=$(SRCS_DIR)%)
