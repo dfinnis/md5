@@ -28,6 +28,18 @@ char	*read_input(char *filepath)
 	return input;
 }
 
+void	read_stdin(void)
+{
+	char *input;
+	int	error;
+
+	input = NULL;
+	if ((error = read_fd(0, &input) == 0))
+		ft_printf("error deal with empty input stdin\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
+	ft_printf("input stdin: %s\n", input);//
+	// hash!!!!
+}
+
 static int	read_arg(int argc, char **argv, t_args *args, int i)
 {
 	char *input;
@@ -41,18 +53,13 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 		args->flag_r = 1;
 	else if (ft_strcmp((argv[i]), "-s") == 0)
 	{
-		args->flag_s = 1;
+		args->flag_s = 1;// rm??!!
 		{
-			// ft_printf("string!!\n");//
-			// ft_printf("i: %d\n", i);//
-			// ft_printf("argc: %d\n", argc);//
 			if (i + 2 > argc)
-				ft_printf("Error: no string here!!\n");// EXIT!!
+				ft_printf("Error: no string here!!\n");// EXIT!!!
 			input = argv[++i];
 			ft_printf("input string: %s\n", input);//
 		}
-		// i++;
-		// parse string argv[i+1] !!!!!!!
 	}
 	else
 	{
@@ -78,9 +85,13 @@ void	read_args(int argc, char **argv, t_args *args)
 			args->sha256 = 1;
 		else
 			print_usage();
-		if (argc > 2)
+		if (argc == 2)
+			read_stdin();
+		else
+		{
 			while (i < argc)
 				i = read_arg(argc, argv, args, i);
+		}
 	}
 }
 
