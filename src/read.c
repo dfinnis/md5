@@ -1,6 +1,6 @@
 #include "../inc/ft_ssl.h"
 
-static int	ft_get_line(char **line, char *str)
+static int	cp_char(char **line, char *str)
 {
 	char	*tmp;
 
@@ -13,14 +13,11 @@ static int	ft_get_line(char **line, char *str)
 	return (0);
 }
 
-static int	ft_gnl_error(char **line, char *str)
+static int	read_fd_error(char **line, char *str)
 {
 	int	g;
 
-	g = 0;
-	if ((g = ft_get_line(line, str)) == 1)
-		return (1);
-	else if (g == -1)
+	if ((g = cp_char(line, str)) == -1)
 	{
 		ft_freestr(str);
 		return (-1);
@@ -28,7 +25,7 @@ static int	ft_gnl_error(char **line, char *str)
 	return (0);
 }
 
-int			get_next_line2(const int fd, char **line)
+int			read_fd(const int fd, char **line)
 {
 	char	*str;
 	int		k;
@@ -43,9 +40,7 @@ int			get_next_line2(const int fd, char **line)
 			return (-1);
 		if ((k = read(fd, str, 1)) == -1)
 			exit(1);
-		if ((g = ft_gnl_error(line, str)) == 1)
-			return (1);
-		else if (g == -1)
+		if ((g = read_fd_error(line, str)) == -1)
 			return (-1);
 		if (k == 0 && !*line[0])
 			return (0);

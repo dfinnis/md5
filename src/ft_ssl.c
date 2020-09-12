@@ -31,7 +31,7 @@ int		read_arg(char **argv, t_args *args, int i)
 			ft_printf("ft_ssl: md5/sha: %s: %s\n", argv[i], strerror(errno));/// command md5/sha etc!!!
 			//error exit
 		}
-		error = get_next_line2(fd, &line);
+		error = read_fd(fd, &line);
 		ft_printf("error: %d\n", error);//
 		ft_printf("fd: %d\n", fd);//
 		ft_printf("line: %s\n", line);//

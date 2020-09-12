@@ -28,7 +28,7 @@ void		print_usage();
 /*
 **		read.c
 */
-int			get_next_line2(const int fd, char **line);
+int			read_fd(const int fd, char **line);
 
 /*
 **		md5.c
