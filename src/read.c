@@ -49,3 +49,37 @@ int			read_fd(const int fd, char **line)
 	}
 	return (-1);
 }
+
+void	read_file(char *filepath)
+{
+	char *input;
+	int	error;
+	int	fd;
+
+	input = NULL;
+	if ((fd = open(filepath, O_RDONLY)) == -1)
+	{
+		ft_printf("ft_ssl: md5/sha: %s: %s\n", filepath, strerror(errno));/// command md5/sha etc!!!
+		//error exit
+	}
+	// if directory?? deal with!!!
+	if ((error = read_fd(fd, &input) == 0))
+		ft_printf("error deal with empty file\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
+	// ft_printf("error: %d\n", error);//
+	// ft_printf("fd: %d\n", fd);//
+	// print_usage();??
+	// return input;
+	hash(input);
+}
+
+void	read_stdin(void)
+{
+	char *input;
+	int	error;
+
+	input = NULL;
+	if ((error = read_fd(0, &input) == 0))
+		ft_printf("error deal with empty input stdin\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
+	ft_printf("input stdin: %s\n", input);//
+	hash(input);
+}

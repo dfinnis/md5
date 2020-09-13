@@ -6,10 +6,12 @@
 # include <fcntl.h>
 # include <errno.h>
 
+char	*g_cmd;
+
 typedef struct			s_args
 {
-	int					md5;
-	int					sha256;
+	// int					md5;
+	// int					sha256;
 	int					flag_p;
 	int					flag_q;
 	int					flag_r;
@@ -28,10 +30,13 @@ void	print_usage();
 **		read.c
 */
 int		read_fd(const int fd, char **line);
+void	read_file(char *filepath);
+void	read_stdin(void);
 
 /*
 **		md5.c
 */
-void	md5(t_args *args);
+void	md5(/*t_args *args*/);
+void	hash(char *input);
 
 #endif
