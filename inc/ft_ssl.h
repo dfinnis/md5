@@ -31,7 +31,7 @@ void	print_usage();
 */
 int		read_fd(const int fd, char **line);
 void	read_file(char *filepath);
-void	read_stdin(void);
+char	*read_stdin(void);
 
 /*
 **		md5.c

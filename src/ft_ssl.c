@@ -9,11 +9,16 @@ void	print_usage(void)
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)
 {
-	// char *input;
+	char *input;
 
-	// input = NULL;
+	input = NULL;
 	if (ft_strcmp((argv[i]), "-p") == 0)
-		args->flag_p = 1;
+	{
+		args->flag_p = 1;//
+		input = read_stdin();
+		ft_printf(input);
+		hash(input);
+	}
 	else if (ft_strcmp((argv[i]), "-q") == 0)
 		args->flag_q = 1;
 	else if (ft_strcmp((argv[i]), "-r") == 0)
@@ -40,8 +45,10 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 void	read_args(int argc, char **argv, t_args *args)
 {
 	int i;
+	char *input;
 
 	i = 2;
+	input = NULL;
 	if (argc == 1)
 		print_usage();
 	else
@@ -56,7 +63,7 @@ void	read_args(int argc, char **argv, t_args *args)
 		if (!((ft_strcmp((argv[1]), "md5") == 0) || (ft_strcmp((argv[1]), "sha256") == 0)))
 			print_usage();
 		if (argc == 2)
-			read_stdin();
+			hash(read_stdin());
 		else
 		{
 			while (i < argc)
