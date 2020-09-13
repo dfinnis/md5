@@ -39,4 +39,9 @@ void	read_stdin(void);
 void	md5(/*t_args *args*/);
 void	hash(char *input);
 
+/*
+**		sha.c
+*/
+void	sha(char *input);
+
 #endif

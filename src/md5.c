@@ -12,6 +12,6 @@ void	hash(char *input)
 	ft_printf("hash input: %s\n", input);//rm!!!
 	if (ft_strcmp(g_cmd, "md5") == 0)
 		md5(input);
-	// else if (ft_strcmp(g_cmd, "sha256") == 0)
-	// 	sha256(input)
+	else if (ft_strcmp(g_cmd, "sha256") == 0)
+		sha(input);
 }
