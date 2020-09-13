@@ -7,6 +7,32 @@ void	print_usage(void)
 	exit(1);
 }
 
+void	print_prefix(char *input, int flag_s)
+{
+	unsigned long i;
+	unsigned long len;
+
+	i = 0;
+	len = ft_strlen(g_cmd);
+	while (i < len)
+		ft_printf("%c", ft_toupper(g_cmd[i++]));
+	if (flag_s)
+		ft_printf(" (\"%s\") = ", input);
+	else
+		ft_printf(" (%s) = ", input);
+}
+
+int		flag_s(int argc, char **argv, int i)
+{
+	if (i + 2 > argc)
+		ft_printf("Error: no string here!!\n");// EXIT!!!
+	// input = argv[++i];
+	print_prefix(argv[++i], 1);
+	hash(argv[i]);
+	// ft_printf("input string: %s\n", input);//
+	return i;
+}
+
 static int	read_arg(int argc, char **argv, t_args *args, int i)
 {
 	char *input;
@@ -26,13 +52,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	else if (ft_strcmp((argv[i]), "-s") == 0)
 	{
 		args->flag_s = 1;// rm??!!
-		{
-			if (i + 2 > argc)
-				ft_printf("Error: no string here!!\n");// EXIT!!!
-			// input = argv[++i];
-			hash(argv[++i]);
-			// ft_printf("input string: %s\n", input);//
-		}
+		i = flag_s(argc, argv, i);
 	}
 	else
 	{

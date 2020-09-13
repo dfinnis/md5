@@ -4,7 +4,7 @@ void	md5(char *input/*t_args *args*/)
 {
 	// ft_printf("MD5!!!!!!\n");//
 	// ft_printf("args.md5: %d\n", args->md5);//rm!!!
-	ft_printf("md5 input: %s\n", input);//rm!!!
+	ft_printf("HASH md5 input: %s\n", input);//rm!!!
 }
 
 void	hash(char *input)
