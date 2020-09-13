@@ -79,9 +79,9 @@ void	read_args(int argc, char **argv, t_args *args)
 		// 	args->sha256 = 1;
 		// else
 		// 	print_usage();
-		g_cmd = argv[1];
 		if (!((ft_strcmp((argv[1]), "md5") == 0) || (ft_strcmp((argv[1]), "sha256") == 0)))
 			print_usage();
+		g_cmd = argv[1];
 		if (argc == 2)
 			hash(read_stdin());
 		else

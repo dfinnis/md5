@@ -23,6 +23,7 @@ typedef struct			s_args
 */
 // static void	init_ssl(t_args *args);
 // int		read_arg(char **argv, t_args *args, int i);
+void	print_prefix(char *input, int flag_s);
 void	read_args(int argc, char **argv, t_args *args);
 void	print_usage();
 

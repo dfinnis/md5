@@ -62,6 +62,7 @@ void	read_file(char *filepath)
 		ft_printf("ft_ssl: md5/sha: %s: %s\n", filepath, strerror(errno));/// command md5/sha etc!!!
 		//error exit
 	}
+	print_prefix(filepath, 0);
 	// if directory?? deal with!!!
 	if ((error = read_fd(fd, &input) == 0))
 		ft_printf("error deal with empty file\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
