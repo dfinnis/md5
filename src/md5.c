@@ -1,47 +1,37 @@
 #include "../inc/ft_ssl.h"
 
-void 	padding(char *input)
+uint8_t	*padding(char *input)
 {
-	unsigned long	len;
-	unsigned long	strlen;
-	unsigned long	strlen8;
-	unsigned long	i;
-	// unsigned long	eight;//
+	long	strlen;
+	long	strlen8;
+	long	bitlen;
+	long	i;
 	uint8_t			*padded;
 
-	i = 0;
-	// eight = 8;//
+	i = -1;
 	padded = NULL;
-	ft_printf("padding input: %s\n", input);//
+	// ft_printf("padding input: %s\n", input);//
 	strlen = ft_strlen(input);
 	strlen8 = strlen * 8;
-	len = strlen * 8 + 1;
-	// ft_printf("len: %d\n", len);//
-	while (len % 512 != 448)
-		len++;
-	len += 64;
-	// ft_printf("len mod: %d\n", len);//
-	// ft_printf("len mod - 64: %d\n", len - 64);//
-	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * len / 8)))///free me!!!
+	bitlen = strlen8 + 1;
+	while (bitlen % 512 != 448)
+		bitlen++;
+	bitlen = (bitlen + 64) / 8;
+	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * bitlen)))///free me!!!
 		ft_printf("Error: memory allocation failed\n");//EXIT!!!!
-	while (i < strlen)
-	{
+	while (++i < strlen)
 		padded[i] = input[i];
-		i++;
-	}
 	padded[i++] = 128;
-	while (i < len/8)////necessary??
+	while (i < bitlen)////necessary??
 		padded[i++] = 0;////necessary??
-	// ft_printf("i: %d\n", i);//
-	while (i-- > len/8-8)
+	while (i-- > bitlen-8)
 	{
 		// ft_printf("i: %d, strlen8: %d\n", i, strlen8);//
 		// ft_printf("strlen8 %% 256: %d\n", strlen8 % 256);//
 		padded[i] = strlen8 % 256;
 		strlen8 /= 256;
 	}
-
-	ft_printf("padded: %s\n", padded);//
+	// ft_printf("padded: %s\n", padded);//
 	// ft_printf("padded[0]: %c\n", padded[0]);//
 	// ft_printf("padded[1]: %c\n", padded[1]);//
 	// ft_printf("padded[2]: %c\n", padded[2]);//
@@ -57,6 +47,7 @@ void 	padding(char *input)
 	// // ft_printf("len: %d\n", len);//
 	// ft_printf("len/8: %d\n", len/8);//
 	// // ft_printf("len/8-2: %d\n", len/8 - 2);//
+
 	// ft_printf("padded[len]: %d\n", padded[len]);//
 	// ft_printf("padded[len/8-1-8]: %d\n", padded[len/8 - 1 - 8]);//
 	// ft_printf("padded[len/8-1-7]: %d\n", padded[len/8 - 1 - 7]);//
@@ -65,20 +56,21 @@ void 	padding(char *input)
 	// ft_printf("padded[len/8-5]: %d\n", padded[len/8 - 5]);//
 	// ft_printf("padded[len/8-4]: %d\n", padded[len/8 - 4]);//
 	// ft_printf("padded[len/8-3]: %d\n", padded[len/8 - 3]);//
-	// ft_printf("padded[len/8-2]: %d\n", padded[len/8 - 2]);//
-	// ft_printf("padded[len/8-1]: %d\n", padded[len/8 - 1]);//
-
+	// ft_printf("padded[bitlen-2]: %d\n", padded[bitlen - 2]);//
+	// ft_printf("padded[bitlen-1]: %d\n", padded[bitlen - 1]);//
 	// ft_printf("padded[len/8]: %d\n", padded[len/8]);//
-	// ft_printf("padded[62]: %d\n", padded[62]);//
-	// ft_printf("padded[511]: %d\n", padded[511]);//
-	// ft_printf("padded[5122]: %c\n", padded[5122]);//
+	return padded;
 }
 
 void	md5(char *input/*t_args *args*/)
 {
+	uint8_t			*padded;
+
+	padded = NULL;
 	// ft_printf("args.md5: %d\n", args->md5);//
 	// ft_printf("HASH md5 input: %s\n", input);//
-	padding(input);
+	padded = padding(input);
+	ft_printf("padded: %s\n", padded);//
 }
 
 void	hash(char *input)
