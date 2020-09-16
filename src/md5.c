@@ -7,7 +7,7 @@ const uint32_t	g_init_buffer[4] = {
 	0x10325476
 };
 
-const uint32_t	g_shifts[64] = {
+const uint32_t	g_shift[64] = {
 	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
 	4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
@@ -17,7 +17,7 @@ const uint32_t	g_shifts[64] = {
 
 // for i from 0 to 63 do
 //		g_sines[i] := floor(232 × abs (sin(i + 1)))
-const uint32_t	g_sines[64] = {
+const uint32_t	g_sine[64] = {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 	0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -65,25 +65,78 @@ static uint8_t	*padding(char *input)
 	return (padded);
 }
 
-// uint32_t		init_buffers();
+
+static void		rounds(uint32_t *buffer, size_t round)
+{
+	if (round < 16)
+	{
+		buffer[WORD] = round;
+		buffer[F] = (buffer[B] & buffer[C]) | ((~buffer[B]) & buffer[D]);
+	}
+	else if (round < 32)
+	{
+		buffer[WORD] = (5 * round + 1) % 16;
+		buffer[F] = (buffer[D] & buffer[B]) | ((~buffer[D]) & buffer[C]);
+	}
+	else if (round < 48)
+	{
+		buffer[WORD] = (3 * round + 5) % 16;
+		buffer[F] = buffer[B] ^ buffer[C] ^ buffer[D];
+	}
+	else
+	{
+		buffer[WORD] = (7 * round) % 16;
+		buffer[F] = buffer[C] ^ (buffer[B] | (~buffer[D]));
+	}
+}
+
+uint32_t	leftrotate(uint32_t x, uint32_t n)
+{
+	return ((x << n) | (x >> (32 - n)));
+}
 
 void			md5(char *input)
 {
 	uint8_t			*padded;
-	uint32_t		buffer[4];
+	uint32_t		hash[4];
+	uint32_t		buffer[7];
+	uint32_t		*words;
+	size_t			round;
 
-	padded = NULL;
+	round = 0;
 	padded = padding(input);
 	ft_printf("padded: %s\n", padded);//
-	// buffers = init_buffers();
+	hash[A] = g_init_buffer[A];
+	hash[B] = g_init_buffer[B];
+	hash[C] = g_init_buffer[C];
+	hash[D] = g_init_buffer[D];
+	// init_buffers()///!!!!!!
 	buffer[A] = g_init_buffer[A];
 	buffer[B] = g_init_buffer[B];
 	buffer[C] = g_init_buffer[C];
 	buffer[D] = g_init_buffer[D];
-	ft_printf("buffer A: %x\n", buffer[A]);//
-	ft_printf("buffer B: %x\n", buffer[B]);//
-	ft_printf("buffer C: %x\n", buffer[C]);//
-	ft_printf("buffer D: %x\n", buffer[D]);//
+	words = (uint32_t*)(padded/* + i*/);
+	while (round < 64)
+	{
+		rounds(buffer, round);
+		buffer[TMP] = buffer[D];
+		buffer[D] = buffer[C];
+		buffer[C] = buffer[B];
+		buffer[B] += leftrotate((buffer[F] + buffer[A] + g_sine[round] + words[buffer[WORD]]), g_shift[round]);
+		buffer[A] = buffer[TMP];
+		round++;
+	}
+
+	hash[A] += buffer[A];
+	hash[B] += buffer[B];
+	hash[C] += buffer[C];
+	hash[D] += buffer[D];
+	// ft_printf("hash A: %x\n", hash[A]);//
+	// ft_printf("hash B: %x\n", hash[B]);//
+	// ft_printf("hash C: %x\n", hash[C]);//
+	// ft_printf("hash D: %x\n", hash[D]);//
+	ft_printf("%02x%02x%02x%02x", hash[A], hash[B], hash[C], hash[D]);///
+	ft_printf("\n");//
 }
 
 void			hash(char *input)

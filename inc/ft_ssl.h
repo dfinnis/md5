@@ -10,7 +10,7 @@ char	*g_cmd;
 
 enum		e_bufs
 {
-	A, B, C, D
+	A, B, C, D, TMP, F, WORD
 };
 
 typedef struct			s_args
