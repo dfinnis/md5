@@ -8,6 +8,11 @@
 
 char	*g_cmd;
 
+enum		e_bufs
+{
+	A, B, C, D
+};
+
 typedef struct			s_args
 {
 	// int					md5;
