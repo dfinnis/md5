@@ -95,6 +95,26 @@ uint32_t	leftrotate(uint32_t x, uint32_t n)
 	return ((x << n) | (x >> (32 - n)));
 }
 
+void			print_digest(uint32_t hash[4])
+{
+	// ft_printf("hash A: %x\n", hash[A]);//
+	// ft_printf("hash B: %x\n", hash[B]);//
+	// ft_printf("hash C: %x\n", hash[C]);//
+	// ft_printf("hash D: %x\n", hash[D]);//
+	ft_printf("\n\nhash ABCD: %x%x%x%x\n\n", hash[A], hash[B], hash[C], hash[D]);/////////////
+
+	int		i;
+	uint8_t	*hashed;
+
+	i = 0;
+	while (i < 4)
+	{
+		hashed = (uint8_t*)&hash[i];
+		ft_printf("%02x%02x%02x%02x", hashed[0], hashed[1], hashed[2], hashed[3]);
+		i++;
+	}
+}
+
 void			md5(char *input)
 {
 	uint8_t			*padded;
@@ -105,7 +125,7 @@ void			md5(char *input)
 
 	round = 0;
 	padded = padding(input);
-	ft_printf("padded: %s\n", padded);//
+	// ft_printf("padded: %s\n", padded);//
 	hash[A] = g_init_buffer[A];
 	hash[B] = g_init_buffer[B];
 	hash[C] = g_init_buffer[C];
@@ -131,12 +151,7 @@ void			md5(char *input)
 	hash[B] += buffer[B];
 	hash[C] += buffer[C];
 	hash[D] += buffer[D];
-	// ft_printf("hash A: %x\n", hash[A]);//
-	// ft_printf("hash B: %x\n", hash[B]);//
-	// ft_printf("hash C: %x\n", hash[C]);//
-	// ft_printf("hash D: %x\n", hash[D]);//
-	ft_printf("%02x%02x%02x%02x", hash[A], hash[B], hash[C], hash[D]);///
-	ft_printf("\n");//
+	print_digest(hash);
 }
 
 void			hash(char *input)
