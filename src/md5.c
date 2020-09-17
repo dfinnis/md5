@@ -104,16 +104,13 @@ uint32_t	leftrotate(uint32_t x, uint32_t n)
 
 void			print_digest(uint32_t hash[4])
 {
-	int		buffer;
-	uint8_t	*byte;
+	uint8_t	*bytes;
+	int		i;
 
-	buffer = 0;
-	while (buffer < 4)
-	{
-		byte = (uint8_t*)&hash[buffer];
-		ft_printf("%02x%02x%02x%02x", byte[0], byte[1], byte[2], byte[3]);
-		buffer++;
-	}
+	bytes = (uint8_t*)&hash[0];
+	i = 0;
+	while (i < 16)
+		ft_printf("%02x", bytes[i++]);
 }
 
 void			md5(char *input)
@@ -142,7 +139,7 @@ void			md5(char *input)
 		buffer[B] = hash[B];
 		buffer[C] = hash[C];
 		buffer[D] = hash[D];
-		ft_printf("chunk: %d\n", chunk);//
+		// ft_printf("chunk: %d\n", chunk);//
 		words = (uint32_t*)(padded + chunk);
 		round = 0;
 		while (round < 64)
