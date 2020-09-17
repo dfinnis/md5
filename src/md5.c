@@ -36,11 +36,11 @@ const uint32_t	g_sine[64] = {
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-static uint8_t	*padding(char *input)
+static uint8_t	*padding(char *input, uint32_t *msg_len)
 {
-	long	strlen8;
-	long	bitlen;
-	long	i;
+	unsigned long	strlen8;
+	unsigned int	bitlen;
+	unsigned long	i;
 	uint8_t	*padded;
 
 	i = -1;
@@ -50,6 +50,7 @@ static uint8_t	*padding(char *input)
 	while (bitlen % 512 != 448)
 		bitlen++;
 	bitlen = (bitlen + 64) / 8;
+	(*msg_len) = bitlen;
 	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * bitlen)))///free me!!!
 		ft_printf("Error: memory allocation failed\n");//EXIT!!!!
 	while (++i < strlen8 / 8)
@@ -104,13 +105,13 @@ uint32_t	leftrotate(uint32_t x, uint32_t n)
 void			print_digest(uint32_t hash[4])
 {
 	int		buffer;
-	uint8_t	*hashed;
+	uint8_t	*byte;
 
 	buffer = 0;
 	while (buffer < 4)
 	{
-		hashed = (uint8_t*)&hash[buffer];
-		ft_printf("%02x%02x%02x%02x", hashed[0], hashed[1], hashed[2], hashed[3]);
+		byte = (uint8_t*)&hash[buffer];
+		ft_printf("%02x%02x%02x%02x", byte[0], byte[1], byte[2], byte[3]);
 		buffer++;
 	}
 }
@@ -122,41 +123,50 @@ void			md5(char *input)
 	uint32_t		buffer[7];
 	uint32_t		*words;
 	size_t			round;
+	size_t			chunk;
+	unsigned int	msg_len;// count
 
-	round = 0;
-	padded = padding(input);
-	// ft_printf("padded: %s\n", padded);//
+	chunk = 0;
+	padded = padding(input, &msg_len);
+	// ft_printf("msg_len: %d\n", msg_len);//
+	// ft_printf("ft_strlen(padded): %d\n", ft_strlen(padded));//
 	hash[A] = g_init_buffer[A];
 	hash[B] = g_init_buffer[B];
 	hash[C] = g_init_buffer[C];
 	hash[D] = g_init_buffer[D];
 	// ft_printf("\n\nBefore: %x%x%x%x\n\n", hash[A], hash[B], hash[C], hash[D]);/////////////
-	// init_buffers()///!!!!!!
-	buffer[A] = g_init_buffer[A];
-	buffer[B] = g_init_buffer[B];
-	buffer[C] = g_init_buffer[C];
-	buffer[D] = g_init_buffer[D];
-	words = (uint32_t*)(padded/* + i*/);
-	while (round < 64)
+	// init_buffers()///!!!!!
+	while (chunk < msg_len)
 	{
-		rounds(buffer, round);
-		// ft_printf("round: %d\n", round);//
-		// ft_printf("buffer[F]: %x\n", buffer[F]);//
-		// ft_printf("buffer[WORD]: %x\n", buffer[WORD]);//
-		buffer[TMP] = buffer[D];
-		buffer[D] = buffer[C];
-		buffer[C] = buffer[B];
-		// ft_printf("buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]: %x %x %x %d %x\n", buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]);
-		buffer[B] += leftrotate((buffer[F] + buffer[A] + g_sine[round] + words[buffer[WORD]]), g_shift[round]);
-		buffer[A] = buffer[TMP];
-		// ft_printf("buf ABCD: %x %x %x %x\n\n", buffer[A], buffer[B], buffer[C], buffer[D]);/////////////
-		round++;
-	}
+		buffer[A] = hash[A];
+		buffer[B] = hash[B];
+		buffer[C] = hash[C];
+		buffer[D] = hash[D];
+		ft_printf("chunk: %d\n", chunk);//
+		words = (uint32_t*)(padded + chunk);
+		round = 0;
+		while (round < 64)
+		{
+			rounds(buffer, round);
+			// ft_printf("round: %d\n", round);//
+			// ft_printf("buffer[F]: %x\n", buffer[F]);//
+			// ft_printf("buffer[WORD]: %x\n", buffer[WORD]);//
+			buffer[TMP] = buffer[D];
+			buffer[D] = buffer[C];
+			buffer[C] = buffer[B];
+			// ft_printf("buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]: %x %x %x %d %x\n", buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]);
+			buffer[B] += leftrotate((buffer[F] + buffer[A] + g_sine[round] + words[buffer[WORD]]), g_shift[round]);
+			buffer[A] = buffer[TMP];
+			// ft_printf("buf ABCD: %x %x %x %x\n\n", buffer[A], buffer[B], buffer[C], buffer[D]);/////////////
+			round++;
+		}
 
-	hash[A] += buffer[A];
-	hash[B] += buffer[B];
-	hash[C] += buffer[C];
-	hash[D] += buffer[D];
+		hash[A] += buffer[A];
+		hash[B] += buffer[B];
+		hash[C] += buffer[C];
+		hash[D] += buffer[D];
+		chunk += 64;
+	}
 	print_digest(hash);
 }
 
