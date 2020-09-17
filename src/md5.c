@@ -54,14 +54,20 @@ static uint8_t	*padding(char *input)
 		ft_printf("Error: memory allocation failed\n");//EXIT!!!!
 	while (++i < strlen8 / 8)
 		padded[i] = input[i];
-	padded[i++] = 128;
-	while (i < bitlen)
-		padded[i++] = 0;
-	while (i-- > bitlen - 8)
+	padded[i] = 128;
+	while (++i < bitlen - 9)
+		padded[i] = 0;
+	while (++i < bitlen)
 	{
 		padded[i] = strlen8 % 256;
 		strlen8 /= 256;
 	}
+	// int j = 0;//
+	// while (j < 64)//
+	// {
+	// 	ft_printf("padded[%d]: %x\n", j, padded[j]);//
+	// 	j++;
+	// }
 	return (padded);
 }
 
@@ -97,21 +103,15 @@ uint32_t	leftrotate(uint32_t x, uint32_t n)
 
 void			print_digest(uint32_t hash[4])
 {
-	// ft_printf("hash A: %x\n", hash[A]);//
-	// ft_printf("hash B: %x\n", hash[B]);//
-	// ft_printf("hash C: %x\n", hash[C]);//
-	// ft_printf("hash D: %x\n", hash[D]);//
-	ft_printf("\n\nhash ABCD: %x%x%x%x\n\n", hash[A], hash[B], hash[C], hash[D]);/////////////
-
-	int		i;
+	int		buffer;
 	uint8_t	*hashed;
 
-	i = 0;
-	while (i < 4)
+	buffer = 0;
+	while (buffer < 4)
 	{
-		hashed = (uint8_t*)&hash[i];
+		hashed = (uint8_t*)&hash[buffer];
 		ft_printf("%02x%02x%02x%02x", hashed[0], hashed[1], hashed[2], hashed[3]);
-		i++;
+		buffer++;
 	}
 }
 
@@ -130,6 +130,7 @@ void			md5(char *input)
 	hash[B] = g_init_buffer[B];
 	hash[C] = g_init_buffer[C];
 	hash[D] = g_init_buffer[D];
+	// ft_printf("\n\nBefore: %x%x%x%x\n\n", hash[A], hash[B], hash[C], hash[D]);/////////////
 	// init_buffers()///!!!!!!
 	buffer[A] = g_init_buffer[A];
 	buffer[B] = g_init_buffer[B];
@@ -139,11 +140,16 @@ void			md5(char *input)
 	while (round < 64)
 	{
 		rounds(buffer, round);
+		// ft_printf("round: %d\n", round);//
+		// ft_printf("buffer[F]: %x\n", buffer[F]);//
+		// ft_printf("buffer[WORD]: %x\n", buffer[WORD]);//
 		buffer[TMP] = buffer[D];
 		buffer[D] = buffer[C];
 		buffer[C] = buffer[B];
+		// ft_printf("buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]: %x %x %x %d %x\n", buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]);
 		buffer[B] += leftrotate((buffer[F] + buffer[A] + g_sine[round] + words[buffer[WORD]]), g_shift[round]);
 		buffer[A] = buffer[TMP];
+		// ft_printf("buf ABCD: %x %x %x %x\n\n", buffer[A], buffer[B], buffer[C], buffer[D]);/////////////
 		round++;
 	}
 
