@@ -64,12 +64,9 @@ void	read_file(char *filepath)
 	}
 	print_prefix(filepath, 0);
 	// if directory?? deal with!!!
-	if ((error = read_fd(fd, &input) == 0))
-		ft_printf("error deal with empty file\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
-	// ft_printf("error: %d\n", error);//
-	// ft_printf("fd: %d\n", fd);//
+	if ((error = read_fd(fd, &input) == -1))
+		ft_printf("error reading file\n", error);// EXIT!!!!!!!!!
 	// print_usage();??
-	// return input;
 	hash(input);
 }
 
@@ -79,8 +76,8 @@ char	*read_stdin(void)
 	int	error;
 
 	input = NULL;
-	if ((error = read_fd(0, &input) == 0))
-		ft_printf("error deal with empty input stdin\n", error);// DEAL WITH EMPTY FILE, input = '\0'???!!!
+	if ((error = read_fd(0, &input) == -1))
+		ft_printf("error reading stdin\n", error);// EXIT!!!!!!!!!
 	// ft_printf("input stdin: %s\n", input);//
 	// hash(input);
 	return input;
