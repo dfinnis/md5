@@ -1,4 +1,9 @@
+function dispatcher (function pointer array)
+read commands from STDIN not just args
+
 sort headers (inc libft)
+norm
+
 
 #### BONUS ####
 1. other sha#?
