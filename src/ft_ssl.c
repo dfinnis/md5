@@ -105,10 +105,10 @@ int		main(int argc, char **argv)
 	read_args(argc, argv, &args);
 	// ft_printf("args.md5: %d\n", args.md5);//rm!!!
 	// ft_printf("args.sha256: %d\n", args.sha256);//rm!!!
-	ft_printf("\n\nargs.flag_p: %d\n", args.flag_p);//rm!!!
-	ft_printf("args.flag_q: %d\n", args.flag_q);//rm!!!
-	ft_printf("args.flag_r: %d\n", args.flag_r);//rm!!!
-	ft_printf("args.flag_s: %d\n", args.flag_s);//rm!!!
+	// ft_printf("\n\nargs.flag_p: %d\n", args.flag_p);//rm!!!
+	// ft_printf("args.flag_q: %d\n", args.flag_q);//rm!!!
+	// ft_printf("args.flag_r: %d\n", args.flag_r);//rm!!!
+	// ft_printf("args.flag_s: %d\n", args.flag_s);//rm!!!
 	// if (args.md5)//
 	// 	md5(&args);
 	// 	// ft_printf("OH HI\n");//

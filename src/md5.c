@@ -56,7 +56,7 @@ static uint8_t	*padding(char *input, uint32_t *msg_len)
 	while (++i < strlen8 / 8)
 		padded[i] = input[i];
 	padded[i] = 128;
-	while (++i < bitlen - 9)
+	while (++i < bitlen - 9)////////////////:thongking face!!!!!!!!!!!!!!!!!
 		padded[i] = 0;
 	while (++i < bitlen)
 	{
@@ -66,7 +66,7 @@ static uint8_t	*padding(char *input, uint32_t *msg_len)
 	// int j = 0;//
 	// while (j < 64)//
 	// {
-	// 	ft_printf("padded[%d]: %x\n", j, padded[j]);//
+	// 	ft_printf("padded[%d]: %d , %c\n", j, padded[j], padded[j]);//
 	// 	j++;
 	// }
 	return (padded);
