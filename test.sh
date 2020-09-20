@@ -16,50 +16,28 @@ count=0
 correct=0
 
 #### -- UNIT TESTS -- ####
-cmd="./ft_ssl md5 tests/empty.txt"
-control="md5 tests/empty.txt"
-output=$(eval "$cmd")
-output2=$(eval "$control")
-if [ "$output" = "$output2" ]
-then
-	# echo "$GREEN empty:\t\t\tOK $RESET"
-	((correct+=1))
-else
-	echo "$RED empty:\t\t\tERROR $RESET"
-	echo $output2
-	echo $output
-fi
-((count+=1))
+unit_test()
+{
+	FILEPATH=$1
+	cmd="./ft_ssl md5 $FILEPATH"
+	control="md5 $FILEPATH"
+	output=$(eval "$cmd")
+	output2=$(eval "$control")
+	if [ "$output" = "$output2" ]
+	then
+		((correct+=1))
+	else
+		echo "$RED ERROR: $FILEPATH $RESET"
+		echo $output2
+		echo $output
+	fi
+	((count+=1))
+}
 
-cmd="./ft_ssl md5 tests/gnl_test.txt"
-control="md5 tests/gnl_test.txt"
-output=$(eval "$cmd")
-output2=$(eval "$control")
-if [ "$output" = "$output2" ]
-then
-	# echo "$GREEN gnl_test:\t\tOK $RESET"
-	((correct+=1))
-else
-	echo "$RED gnl_test:\t\tERROR $RESET"
-	echo $output2
-	echo $output
-fi
-((count+=1))
+unit_test tests/empty.txt
+unit_test tests/gnl_test.txt
+unit_test tests/correction.txt
 
-cmd="./ft_ssl md5 tests/correction.txt"
-control="md5 tests/correction.txt"
-output=$(eval "$cmd")
-output2=$(eval "$control")
-if [ "$output" = "$output2" ]
-then
-	# echo "$GREEN correction:\t\tOK $RESET"
-	((correct+=1))
-else
-	echo "$RED correction:\t\tERROR $RESET"
-	echo $output2
-	echo $output
-fi
-((count+=1))
 
 #### -- UNIT STATS -- ####
 if [ "$correct" == "$count" ]
