@@ -7,7 +7,6 @@ YELLOW="\x1b[33m"
 CLEAR_SCREEN="\E[H\E[2J"
 CLEAR_LINE="\r\c"
 
-
 # make fclean
 make
 printf $CLEAR_SCREEN
@@ -91,7 +90,6 @@ do
 	fi
 	((count+=1))
 	((random_count+=1))
-
 	if [ "$random_correct" == "$random_count" ]
 	then
 		echo "$GREEN Random string > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
@@ -112,13 +110,10 @@ while [ $random_count -lt 100 ]
 do
 	random_len=$(( ( RANDOM % 1000 )  + 1 ))
 	random_str=$(eval "openssl rand -base64 $random_len")
-	# echo $random_str #######
 	cmd="./ft_ssl md5 -s \"$random_str\""
 	control="md5 -s \"$random_str\""
 	output=$(eval "$cmd")
 	output2=$(eval "$control")
-	# echo $output2 ###############
-	# echo $output #########
 	if [ "$output" = "$output2" ]
 	then
 		((correct+=1))
@@ -126,7 +121,6 @@ do
 	fi
 	((count+=1))
 	((random_count+=1))
-
 	if [ "$random_correct" == "$random_count" ]
 	then
 		echo "$GREEN Random -s \"string\": \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
