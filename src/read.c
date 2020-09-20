@@ -50,7 +50,7 @@ int			read_fd(const int fd, char **line)
 	return (-1);
 }
 
-void	read_file(char *filepath)
+void	read_file(char *filepath, t_args *args)
 {
 	char *input;
 	int	error;
@@ -59,15 +59,17 @@ void	read_file(char *filepath)
 	input = NULL;
 	if ((fd = open(filepath, O_RDONLY)) == -1)
 	{
-		ft_printf("ft_ssl: md5/sha: %s: %s\n", filepath, strerror(errno));/// command md5/sha etc!!!
-		//error exit
+		ft_printf("%s: %s: %s\n", g_cmd, filepath, strerror(errno));
+		return;
 	}
-	print_prefix(filepath, 0);
 	// if directory?? deal with!!!
 	if ((error = read_fd(fd, &input) == -1))
 		ft_printf("error reading file\n", error);// EXIT!!!!!!!!!
 	// print_usage();??
+	print_prefix(filepath, args);
 	hash(input);
+	print_suffix(filepath, args);
+	// ft_printf("\n");
 }
 
 char	*read_stdin(void)

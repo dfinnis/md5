@@ -7,29 +7,45 @@ void	print_usage(void)
 	exit(1);
 }
 
-void	print_prefix(char *input, int flag_s)
+void	print_prefix(char *input, t_args *args)
 {
 	unsigned long i;
 	unsigned long len;
 
-	i = 0;
-	len = ft_strlen(g_cmd);
-	while (i < len)
-		ft_printf("%c", ft_toupper(g_cmd[i++]));
-	if (flag_s)
-		ft_printf(" (\"%s\") = ", input);
-	else
-		ft_printf(" (%s) = ", input);
+	if (!args->flag_q && !args->flag_r)
+	{
+		i = 0;
+		len = ft_strlen(g_cmd);
+		while (i < len)
+			ft_printf("%c", ft_toupper(g_cmd[i++]));
+		if (args->flag_s)
+			ft_printf(" (\"%s\") = ", input);
+		else
+			ft_printf(" (%s) = ", input);
+	}
 }
 
-int		flag_s(int argc, char **argv, int i)
+void	print_suffix(char *input, t_args *args)
+{
+	if (args->flag_r)
+	{
+		if (args->flag_s)
+			ft_printf(" \"%s\"", input);
+		else
+			ft_printf(" %s", input);
+	}
+	ft_printf("\n");
+}
+
+
+int		flag_s(int argc, char **argv, int i, t_args *args)
 {
 	if (i + 2 > argc)
 		ft_printf("Error: no string here!!\n");// EXIT!!!
-	// input = argv[++i];
-	print_prefix(argv[++i], 1);
+	i++;
+	print_prefix(argv[i], args);
 	hash(argv[i]);
-	// ft_printf("input string: %s\n", input);//
+	print_suffix(argv[i], args);
 	return i;
 }
 
@@ -52,12 +68,12 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	else if (ft_strcmp((argv[i]), "-s") == 0)
 	{
 		args->flag_s = 1;// rm??!!
-		i = flag_s(argc, argv, i);
+		i = flag_s(argc, argv, i, args);
 	}
 	else
 	{
 		// ft_printf("arg: %s\n", argv[i]);//
-		read_file(argv[i]);
+		read_file(argv[i], args);
 	}
 	return (++i);
 }

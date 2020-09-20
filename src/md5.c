@@ -111,6 +111,7 @@ void			print_digest(uint32_t hash[4])
 	i = 0;
 	while (i < 16)
 		ft_printf("%02x", bytes[i++]);
+	// ft_printf("\n");////// if ! -p, -q, -r
 }
 
 void			md5(char *input)
