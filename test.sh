@@ -25,6 +25,7 @@ unit_test()
 	output2=$(eval "$control")
 	if [ "$output" = "$output2" ]
 	then
+		echo "$GREEN OK: $FILEPATH $RESET" ##
 		((correct+=1))
 	else
 		echo "$RED ERROR: $FILEPATH $RESET"
@@ -37,7 +38,14 @@ unit_test()
 unit_test tests/empty.txt
 unit_test tests/gnl_test.txt
 unit_test tests/correction.txt
-
+unit_test tests/does_not_exist.txt
+unit_test tests/
+unit_test "-q tests/empty.txt"
+unit_test "-q tests/gnl_test.txt"
+unit_test "-r tests/empty.txt"
+unit_test "-r tests/gnl_test.txt"
+unit_test "-s tests/empty.txt"
+unit_test "-s tests/gnl_test.txt"
 
 #### -- UNIT STATS -- ####
 if [ "$correct" == "$count" ]
