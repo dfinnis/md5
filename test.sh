@@ -23,7 +23,7 @@ output=$(eval "$cmd")
 output2=$(eval "$control")
 if [ "$output" = "$output2" ]
 then
-	echo "$GREEN empty:\t\t\tOK $RESET"
+	# echo "$GREEN empty:\t\t\tOK $RESET"
 	((correct+=1))
 else
 	echo "$RED empty:\t\t\tERROR $RESET"
@@ -38,7 +38,7 @@ output=$(eval "$cmd")
 output2=$(eval "$control")
 if [ "$output" = "$output2" ]
 then
-	echo "$GREEN gnl_test:\t\tOK $RESET"
+	# echo "$GREEN gnl_test:\t\tOK $RESET"
 	((correct+=1))
 else
 	echo "$RED gnl_test:\t\tERROR $RESET"
@@ -53,7 +53,7 @@ output=$(eval "$cmd")
 output2=$(eval "$control")
 if [ "$output" = "$output2" ]
 then
-	echo "$GREEN correction:\t\tOK $RESET"
+	# echo "$GREEN correction:\t\tOK $RESET"
 	((correct+=1))
 else
 	echo "$RED correction:\t\tERROR $RESET"
@@ -63,19 +63,17 @@ fi
 ((count+=1))
 
 #### -- UNIT STATS -- ####
-echo
 if [ "$correct" == "$count" ]
 then
-	echo "\n$GREEN Unit tests: $correct / $count OK $RESET\n"
+	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET"
 elif [ "$correct" == "0" ]
 then
-	echo "\n$RED Unit tests: $correct / $count ERROR $RESET\n"
+	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET"
 else
-	echo "\n$YELLOW Unit tests: $correct / $count OK $RESET\n"
+	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET"
 fi
 
 #### -- RANDOM STRINGS -- ####
-echo
 random_correct=0
 random_count=0
 while [ $random_count -lt 100 ]
@@ -96,14 +94,48 @@ do
 
 	if [ "$random_correct" == "$random_count" ]
 	then
-		echo "$GREEN Random string tests: $random_correct / $random_count OK $RESET $CLEAR_LINE"
+		echo "$GREEN Random string > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
 	elif [ "$random_correct" == "0" ]
 	then
-		echo "$RED Random string tests: $random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+		echo "$RED Random string > file: \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
 	else
-		echo "$YELLOW Random string tests: $random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+		echo "$YELLOW Random string > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
 	fi
 	rm testrandom.txt
+done
+
+#### -- RANDOM -S STRINGS -- ####
+echo
+random_correct=0
+random_count=0
+while [ $random_count -lt 100 ]
+do
+	random_len=$(( ( RANDOM % 1000 )  + 1 ))
+	random_str=$(eval "openssl rand -base64 $random_len")
+	# echo $random_str #######
+	cmd="./ft_ssl md5 -s \"$random_str\""
+	control="md5 -s \"$random_str\""
+	output=$(eval "$cmd")
+	output2=$(eval "$control")
+	# echo $output2 ###############
+	# echo $output #########
+	if [ "$output" = "$output2" ]
+	then
+		((correct+=1))
+		((random_correct+=1))
+	fi
+	((count+=1))
+	((random_count+=1))
+
+	if [ "$random_correct" == "$random_count" ]
+	then
+		echo "$GREEN Random -s \"string\": \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
+	elif [ "$random_correct" == "0" ]
+	then
+		echo "$RED Random -s \"string\": \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+	else
+		echo "$YELLOW Random -s \"string\": \t$random_correct / $random_count      $RESET $CLEAR_LINE"
+	fi
 done
 
 #### -- FINAL STATS -- ####
