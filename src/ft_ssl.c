@@ -42,9 +42,11 @@ int		flag_s(int argc, char **argv, int i, t_args *args)
 	if (i + 2 > argc)
 		ft_printf("Error: no string here!!\n");// EXIT!!!
 	i++;
+	args->flag_s = 1;
 	print_prefix(argv[i], args);
 	hash(argv[i]);
 	print_suffix(argv[i], args);
+	args->flag_s = 0;
 	return i;
 }
 
@@ -65,10 +67,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	else if (ft_strcmp((argv[i]), "-r") == 0)
 		args->flag_r = 1;
 	else if (ft_strcmp((argv[i]), "-s") == 0)
-	{
-		args->flag_s = 1;// rm??!!
 		i = flag_s(argc, argv, i, args);
-	}
 	else
 	{
 		// ft_printf("arg: %s\n", argv[i]);//
