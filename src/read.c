@@ -50,6 +50,13 @@ int			read_fd(const int fd, char **line)
 	return (-1);
 }
 
+int is_regular_file(const char *path)
+{
+    struct stat path_stat;
+    stat(path, &path_stat);
+    return S_ISREG(path_stat.st_mode);
+}
+
 void	read_file(char *filepath, t_args *args)
 {
 	char *input;
@@ -62,9 +69,16 @@ void	read_file(char *filepath, t_args *args)
 		ft_printf("%s: %s: %s\n", g_cmd, filepath, strerror(errno));
 		return;
 	}
-	// if directory?? deal with!!!
+	if (!is_regular_file(filepath))
+	{
+		ft_printf("%s: %s: Is a directory\n", g_cmd, filepath);
+		return;
+	}
 	if ((error = read_fd(fd, &input) == -1))
-		ft_printf("error reading file\n", error);// EXIT!!!!!!!!!
+	{
+		ft_printf("%s: %s: Error reading file\n", g_cmd, filepath);
+		return;
+	}
 	// print_usage();??
 	print_prefix(filepath, args);
 	hash(input);

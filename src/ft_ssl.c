@@ -37,7 +37,6 @@ void	print_suffix(char *input, t_args *args)
 	ft_printf("\n");
 }
 
-
 int		flag_s(int argc, char **argv, int i, t_args *args)
 {
 	if (i + 2 > argc)
