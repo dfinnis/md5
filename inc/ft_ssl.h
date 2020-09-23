@@ -11,13 +11,11 @@ char	*g_cmd;
 
 enum		e_bufs
 {
-	A, B, C, D, TMP, F, WORD
+	A, B, C, D, WORD, F, TMP
 };
 
 typedef struct			s_args
 {
-	// int					md5;
-	// int					sha256;
 	int					flag_p;
 	int					flag_q;
 	int					flag_r;
