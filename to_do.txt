@@ -3,6 +3,11 @@ if directory eg. tests/
 function dispatcher (function pointer array)
 read commands from STDIN not just args
 
+test devices, pipes, symbolic links, sockets, etc.
+test long file, dev/random
+
+print errors on STDERR (ft_dprintf)
+
 sort headers (inc libft)
 norm
 
