@@ -7,8 +7,6 @@ const uint32_t	g_shift[64] = {
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 };
 
-// for i from 0 to 63 do
-//		g_sines[i] := floor(232 × abs (sin(i + 1)))
 const uint32_t	g_sine[64] = {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -31,27 +29,24 @@ const uint32_t	g_sine[64] = {
 static uint8_t	*padding(char *input, uint32_t *msg_len)
 {
 	unsigned long	strlen8;
-	unsigned int	bitlen;
 	unsigned long	i;
 	uint8_t			*padded;
 
 	i = -1;
-	padded = NULL;
 	strlen8 = ft_strlen(input) * 8;
-	bitlen = strlen8 + 1;
-	while (bitlen % 512 != 448)
-		bitlen++;
-	bitlen = (bitlen + 64) / 8;
-	(*msg_len) = bitlen;
-	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * bitlen)))///free me!!!
+	(*msg_len) = strlen8 + 1;
+	while ((*msg_len) % 512 != 448)
+		(*msg_len)++;
+	(*msg_len) = ((*msg_len) + 64) / 8;
+	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * (*msg_len))))//free!!!
 		ft_printf("Error: memory allocation failed\n");//EXIT!!!!
 	while (++i < strlen8 / 8)
 		padded[i] = input[i];
 	padded[i] = 128;
-	while (++i < bitlen)////////////////:thongking face!!!!!!!!!!!!!!!!!
+	while (++i < (*msg_len))
 		padded[i] = 0;
-	i = bitlen - 9;
-	while (++i < bitlen)
+	i = (*msg_len) - 9;
+	while (++i < (*msg_len))
 	{
 		padded[i] = strlen8 % 256;
 		strlen8 /= 256;
@@ -105,11 +100,11 @@ void			process_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk)
 	uint32_t		*words;
 	size_t			round;
 
+	words = (uint32_t*)(padded + chunk);
 	buf[A] = hash[A];
 	buf[B] = hash[B];
 	buf[C] = hash[C];
 	buf[D] = hash[D];
-	words = (uint32_t*)(padded + chunk);
 	round = 0;
 	while (round < 64)
 		rounds(buf, words, round++);
