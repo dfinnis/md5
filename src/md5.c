@@ -1,12 +1,5 @@
 #include "../inc/ft_ssl.h"
 
-const uint32_t	g_init_buffer[4] = {
-	0x67452301,
-	0xEFCDAB89,
-	0x98BADCFE,
-	0x10325476
-};
-
 const uint32_t	g_shift[64] = {
 	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
@@ -73,8 +66,17 @@ static uint8_t	*padding(char *input, uint32_t *msg_len)
 	return (padded);
 }
 
+uint32_t	leftrotate(uint32_t x, uint32_t n)
+{
+	return ((x << n) | (x >> (32 - n)));
+}
 
-static void		rounds(uint32_t *buffer, size_t round)
+static void		left_rotate_b(uint32_t *buffer, size_t round, uint32_t* words)
+{
+	buffer[B] += leftrotate((buffer[F] + buffer[A] + g_sine[round] + words[buffer[WORD]]), g_shift[round]);
+}
+
+static void		rounds(uint32_t *buffer, uint32_t* words, size_t round)
 {
 	if (round < 16)
 	{
@@ -96,12 +98,13 @@ static void		rounds(uint32_t *buffer, size_t round)
 		buffer[WORD] = (7 * round) % 16;
 		buffer[F] = buffer[C] ^ (buffer[B] | (~buffer[D]));
 	}
+	buffer[TMP] = buffer[D];
+	buffer[D] = buffer[C];
+	buffer[C] = buffer[B];
+	left_rotate_b(buffer, round, words);
+	buffer[A] = buffer[TMP];
 }
 
-uint32_t	leftrotate(uint32_t x, uint32_t n)
-{
-	return ((x << n) | (x >> (32 - n)));
-}
 
 void			print_digest(uint32_t hash[4])
 {
@@ -112,54 +115,34 @@ void			print_digest(uint32_t hash[4])
 	i = 0;
 	while (i < 16)
 		ft_printf("%02x", bytes[i++]);
-	// ft_printf("\n");////// if ! -p, -q, -r
 }
 
 void			md5(char *input)
 {
 	uint8_t			*padded;
 	uint32_t		hash[4];
-	uint32_t		buffer[7];
-	uint32_t		*words;
 	size_t			round;
 	size_t			chunk;
 	unsigned int	msg_len;// count
+	uint32_t		buffer[7];
+	uint32_t		*words;
 
 	chunk = 0;
 	padded = padding(input, &msg_len);
-	// ft_printf("msg_len: %d\n", msg_len);//
-	// ft_printf("ft_strlen(padded): %d\n", ft_strlen(padded));//
-	hash[A] = g_init_buffer[A];
-	hash[B] = g_init_buffer[B];
-	hash[C] = g_init_buffer[C];
-	hash[D] = g_init_buffer[D];
-	// ft_printf("\n\nBefore: %x%x%x%x\n\n", hash[A], hash[B], hash[C], hash[D]);/////////////
-	// init_buffers()///!!!!!
+	hash[A] = 0x67452301;
+	hash[B] = 0xEFCDAB89;
+	hash[C] = 0x98BADCFE;
+	hash[D] = 0x10325476;
 	while (chunk < msg_len)
 	{
 		buffer[A] = hash[A];
 		buffer[B] = hash[B];
 		buffer[C] = hash[C];
 		buffer[D] = hash[D];
-		// ft_printf("chunk: %d\n", chunk);//
 		words = (uint32_t*)(padded + chunk);
 		round = 0;
 		while (round < 64)
-		{
-			rounds(buffer, round);
-			// ft_printf("round: %d\n", round);//
-			// ft_printf("buffer[F]: %x\n", buffer[F]);//
-			// ft_printf("buffer[WORD]: %x\n", buffer[WORD]);//
-			buffer[TMP] = buffer[D];
-			buffer[D] = buffer[C];
-			buffer[C] = buffer[B];
-			// ft_printf("buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]: %x %x %x %d %x\n", buffer[F], buffer[A], g_sine[round], words[buffer[WORD]], g_shift[round]);
-			buffer[B] += leftrotate((buffer[F] + buffer[A] + g_sine[round] + words[buffer[WORD]]), g_shift[round]);
-			buffer[A] = buffer[TMP];
-			// ft_printf("buf ABCD: %x %x %x %x\n\n", buffer[A], buffer[B], buffer[C], buffer[D]);/////////////
-			round++;
-		}
-
+			rounds(buffer, words, round++);
 		hash[A] += buffer[A];
 		hash[B] += buffer[B];
 		hash[C] += buffer[C];
