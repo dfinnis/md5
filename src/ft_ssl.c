@@ -50,7 +50,7 @@ int		flag_s(int argc, char **argv, int i, t_args *args)
 	return i;
 }
 
-static int	read_arg(int argc, char **argv, t_args *args, int i)
+static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *first)
 {
 	char *input;
 
@@ -62,16 +62,23 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 		ft_printf(input);
 		hash(input);
 	}
-	else if (ft_strcmp((argv[i]), "-q") == 0)
+	else if (ft_strcmp((argv[i]), "-q") == 0 && (*first) == 0)
+	{
 		args->flag_q = 1;
-	else if (ft_strcmp((argv[i]), "-r") == 0)
+		(*first)++;
+	}
+	else if (ft_strcmp((argv[i]), "-r") == 0 && (*first) == 0)
+	{
 		args->flag_r = 1;
-	else if (ft_strcmp((argv[i]), "-s") == 0)
+		(*first)++;
+	}
+	else if (ft_strcmp((argv[i]), "-s") == 0 && (*first) == 0)
 		i = flag_s(argc, argv, i, args);
 	else
 	{
 		// ft_printf("arg: %s\n", argv[i]);//
 		read_file(argv[i], args);
+		(*first)++;
 	}
 	return (++i);
 }
@@ -80,8 +87,11 @@ void	read_args(int argc, char **argv, t_args *args)
 {
 	int i;
 	char *input;
+	unsigned int	first;
+
 
 	i = 2;
+	first = 0;
 	input = NULL;
 	if (argc == 1)
 		print_usage();
@@ -101,7 +111,7 @@ void	read_args(int argc, char **argv, t_args *args)
 		else
 		{
 			while (i < argc)
-				i = read_arg(argc, argv, args, i);
+				i = read_arg(argc, argv, args, i, &first);
 		}
 	}
 }
