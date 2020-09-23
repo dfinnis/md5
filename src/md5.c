@@ -56,8 +56,9 @@ static uint8_t	*padding(char *input, uint32_t *msg_len)
 	while (++i < strlen8 / 8)
 		padded[i] = input[i];
 	padded[i] = 128;
-	while (++i < bitlen - 9)////////////////:thongking face!!!!!!!!!!!!!!!!!
+	while (++i < bitlen)////////////////:thongking face!!!!!!!!!!!!!!!!!
 		padded[i] = 0;
+	i = bitlen - 9;
 	while (++i < bitlen)
 	{
 		padded[i] = strlen8 % 256;
