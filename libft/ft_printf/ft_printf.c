@@ -100,7 +100,7 @@ int		ft_printf(char const *format, ...)
 	t_print			all;
 
 	va_start(ap, format);
-	ft_initialize_print(&all);
+	ft_initialize_print(&all, 1);
 	if (!(all.form = ft_strdup(format)))
 		ft_error(NULL, all.form);
 	while (all.form[all.len] != '\0')
@@ -129,8 +129,7 @@ int		ft_dprintf(int fd, char const *format, ...)
 	t_print			all;
 
 	va_start(ap, format);
-	ft_initialize_print(&all);
-	all.fd = fd;
+	ft_initialize_print(&all, fd);
 	if (!(all.form = ft_strdup(format)))
 		ft_error(NULL, all.form);
 	while (all.form[all.len] != '\0')

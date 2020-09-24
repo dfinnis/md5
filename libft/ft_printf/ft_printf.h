@@ -59,12 +59,11 @@ void				ft_justify(char *num_str, t_print *all);
 void				ft_print(char *num_str, t_print *all);
 int					ft_printf(char const *format, ...);
 int					ft_dprintf(int fd, char const *format, ...);
-// int					ft_printf_stderr(char const *format, ...);
 
 /*
 **		initialize.c
 */
-void				ft_initialize_print(t_print *all);
+void				ft_initialize_print(t_print *all, int fd);
 void				ft_reinitialize(t_print *all);
 
 /*

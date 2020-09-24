@@ -12,12 +12,12 @@
 
 #include "ft_printf.h"
 
-void	ft_initialize_print(t_print *all)
+void	ft_initialize_print(t_print *all, int fd)
 {
 	all->printed = 0;
 	all->len = 0;
 	all->form = NULL;
-	all->fd = 1;
+	all->fd = fd;
 	ft_reinitialize(all);
 }
 
