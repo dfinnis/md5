@@ -52,32 +52,33 @@ static int	read_fd(const int fd, char **line)
 
 static int	is_regular_file(const char *path)
 {
-    struct stat path_stat;
-    stat(path, &path_stat);
-    return S_ISREG(path_stat.st_mode);
+	struct stat path_stat;
+
+	stat(path, &path_stat);
+	return (S_ISREG(path_stat.st_mode));
 }
 
 void		read_file(char *filepath, t_args *args)
 {
-	char *input;
-	int	error;
-	int	fd;
+	char	*input;
+	int		error;
+	int		fd;
 
 	input = NULL;
 	if ((fd = open(filepath, O_RDONLY)) == -1)
 	{
 		ft_dprintf(2, "%s: %s: %s\n", g_cmd, filepath, strerror(errno));
-		return;
+		return ;
 	}
 	if (!is_regular_file(filepath))
 	{
 		ft_dprintf(2, "%s: %s: Is a directory\n", g_cmd, filepath);
-		return;
+		return ;
 	}
 	if ((error = read_fd(fd, &input) == -1))
 	{
 		ft_dprintf(2, "%s: %s: Error reading file\n", g_cmd, filepath);
-		return;
+		return ;
 	}
 	// print_usage();??
 	print_prefix(filepath, args);
@@ -87,11 +88,11 @@ void		read_file(char *filepath, t_args *args)
 
 char		*read_stdin(void)
 {
-	char *input;
-	int	error;
+	char	*input;
+	int		error;
 
 	input = NULL;
 	if ((error = read_fd(0, &input) == -1))
 		ft_dprintf(2, "error reading stdin\n", error);// EXIT!!!!!!!!!
-	return input;
+	return (input);
 }
