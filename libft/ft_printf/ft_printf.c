@@ -79,18 +79,18 @@ void	ft_print(char *num_str, t_print *all)
 	{
 		if (all->minus)
 		{
-			ft_putchar('\0');
-			ft_putstr(num_str);
+			ft_putchar_fd('\0', all->fd);
+			ft_putstr_fd(num_str, all->fd);
 		}
 		else
 		{
-			ft_putstr(num_str);
-			ft_putchar('\0');
+			ft_putstr_fd(num_str, all->fd);
+			ft_putchar_fd('\0', all->fd);
 		}
 		all->printed++;
 	}
 	else
-		ft_putstr(num_str);
+		ft_putstr_fd(num_str, all->fd);
 	all->printed = all->printed + ft_strlen(num_str);
 }
 
@@ -114,7 +114,37 @@ int		ft_printf(char const *format, ...)
 		}
 		else
 		{
-			ft_putchar(all.form[all.len++]);
+			ft_putchar_fd(all.form[all.len++], all.fd);
+			all.printed++;
+		}
+	}
+	free(all.form);
+	va_end(ap);
+	return (all.printed);
+}
+
+int		ft_dprintf(int fd, char const *format, ...)
+{
+	va_list			ap;
+	t_print			all;
+
+	va_start(ap, format);
+	ft_initialize_print(&all);
+	all.fd = fd;
+	if (!(all.form = ft_strdup(format)))
+		ft_error(NULL, all.form);
+	while (all.form[all.len] != '\0')
+	{
+		if (all.form[all.len] == '%')
+		{
+			all.len++;
+			ft_parse(&all, ap);
+			ft_read(&all, ap);
+			ft_reinitialize(&all);
+		}
+		else
+		{
+			ft_putchar_fd(all.form[all.len++], all.fd);
 			all.printed++;
 		}
 	}

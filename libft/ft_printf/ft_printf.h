@@ -47,6 +47,7 @@ typedef struct		s_print
 	int				print_plus;
 	int				wild_width;
 	int				wild_prec;
+	int				fd;
 }					t_print;
 
 /*
@@ -57,6 +58,8 @@ void				ft_read(t_print *all, va_list ap);
 void				ft_justify(char *num_str, t_print *all);
 void				ft_print(char *num_str, t_print *all);
 int					ft_printf(char const *format, ...);
+int					ft_dprintf(int fd, char const *format, ...);
+// int					ft_printf_stderr(char const *format, ...);
 
 /*
 **		initialize.c

@@ -17,6 +17,7 @@ void	ft_initialize_print(t_print *all)
 	all->printed = 0;
 	all->len = 0;
 	all->form = NULL;
+	all->fd = 1;
 	ft_reinitialize(all);
 }
 
