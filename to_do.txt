@@ -1,5 +1,3 @@
-if directory eg. tests/
-
 function dispatcher (function pointer array)
 read commands from STDIN not just args
 
@@ -13,4 +11,5 @@ norm
 
 
 #### BONUS ####
-1. other sha#?
+1. test.sh
+2. other sha#?
