@@ -58,6 +58,10 @@ void				ft_read(t_print *all, va_list ap);
 void				ft_justify(char *num_str, t_print *all);
 void				ft_print(char *num_str, t_print *all);
 int					ft_printf(char const *format, ...);
+
+/*
+**		ft_dprintf.c
+*/
 int					ft_dprintf(int fd, char const *format, ...);
 
 /*
