@@ -54,7 +54,7 @@ static void		rounds(uint32_t *buf, uint32_t *words, size_t round)
 	buf[TMP] = buf[D];
 	buf[D] = buf[C];
 	buf[C] = buf[B];
-	left_rotate_b(buf, round, words);
+	rotate_left_b(buf, round, words);
 	buf[A] = buf[TMP];
 }
 
@@ -105,12 +105,4 @@ void			md5(char *input)
 	while (chunk < msg_len)
 		process_chunk(hash, padded, chunk++);
 	print_digest(hash);
-}
-
-void			hash(char *input)
-{
-	if (ft_strcmp(g_cmd, "md5") == 0)
-		md5(input);
-	else if (ft_strcmp(g_cmd, "sha256") == 0)
-		sha(input);
 }

@@ -25,7 +25,7 @@ static int	read_fd_error(char **line, char *str)
 	return (0);
 }
 
-int			read_fd(const int fd, char **line)
+static int	read_fd(const int fd, char **line)
 {
 	char	*str;
 	int		k;
@@ -50,14 +50,14 @@ int			read_fd(const int fd, char **line)
 	return (-1);
 }
 
-int is_regular_file(const char *path)
+static int	is_regular_file(const char *path)
 {
     struct stat path_stat;
     stat(path, &path_stat);
     return S_ISREG(path_stat.st_mode);
 }
 
-void	read_file(char *filepath, t_args *args)
+void		read_file(char *filepath, t_args *args)
 {
 	char *input;
 	int	error;
@@ -85,7 +85,7 @@ void	read_file(char *filepath, t_args *args)
 	print_suffix(filepath, args);
 }
 
-char	*read_stdin(void)
+char		*read_stdin(void)
 {
 	char *input;
 	int	error;
@@ -93,7 +93,5 @@ char	*read_stdin(void)
 	input = NULL;
 	if ((error = read_fd(0, &input) == -1))
 		ft_dprintf(2, "error reading stdin\n", error);// EXIT!!!!!!!!!
-	// ft_printf("input stdin: %s\n", input);//
-	// hash(input);
 	return input;
 }

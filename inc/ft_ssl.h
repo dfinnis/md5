@@ -25,8 +25,6 @@ typedef struct			s_args
 /*
 **		ft_ssl.c
 */
-// static void	init_ssl(t_args *args);
-// int		read_arg(char **argv, t_args *args, int i);
 void		print_prefix(char *input, t_args *args);
 void		print_suffix(char *input, t_args *args);
 void		read_args(int argc, char **argv, t_args *args);
@@ -35,20 +33,23 @@ void		print_usage();
 /*
 **		read.c
 */
-int			read_fd(const int fd, char **line);
 void		read_file(char *filepath, t_args *args);
 char		*read_stdin(void);
 
 /*
 **		md5.c
 */
-void		md5(/*t_args *args*/);
-void		hash(char *input);
+void		md5(char *input);
 
 /*
 **		md5_rotate.c
 */
-void		left_rotate_b(uint32_t *buf, size_t round, uint32_t *words);
+void		rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
+
+/*
+**		dispatcher.c
+*/
+void		hash(char *input);
 
 /*
 **		sha.c

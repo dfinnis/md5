@@ -26,13 +26,13 @@ const uint32_t	g_sine[64] = {
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-static uint32_t	left_rotate(uint32_t x, uint32_t n)
+static uint32_t	rotate_left(uint32_t x, uint32_t n)
 {
 	return ((x << n) | (x >> (32 - n)));
 }
 
-void			left_rotate_b(uint32_t *buf, size_t round, uint32_t *words)
+void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words)
 {
-	buf[B] += left_rotate((buf[F] + buf[A] + g_sine[round] + words[buf[WORD]]),
+	buf[B] += rotate_left((buf[F] + buf[A] + g_sine[round] + words[buf[WORD]]),
 							g_shift[round]);
 }
