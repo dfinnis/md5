@@ -66,24 +66,23 @@ void	read_file(char *filepath, t_args *args)
 	input = NULL;
 	if ((fd = open(filepath, O_RDONLY)) == -1)
 	{
-		ft_printf("%s: %s: %s\n", g_cmd, filepath, strerror(errno));
+		ft_dprintf(2, "%s: %s: %s\n", g_cmd, filepath, strerror(errno));
 		return;
 	}
 	if (!is_regular_file(filepath))
 	{
-		ft_printf("%s: %s: Is a directory\n", g_cmd, filepath);
+		ft_dprintf(2, "%s: %s: Is a directory\n", g_cmd, filepath);
 		return;
 	}
 	if ((error = read_fd(fd, &input) == -1))
 	{
-		ft_printf("%s: %s: Error reading file\n", g_cmd, filepath);
+		ft_dprintf(2, "%s: %s: Error reading file\n", g_cmd, filepath);
 		return;
 	}
 	// print_usage();??
 	print_prefix(filepath, args);
 	hash(input);
 	print_suffix(filepath, args);
-	// ft_printf("\n");
 }
 
 char	*read_stdin(void)
@@ -93,7 +92,7 @@ char	*read_stdin(void)
 
 	input = NULL;
 	if ((error = read_fd(0, &input) == -1))
-		ft_printf("error reading stdin\n", error);// EXIT!!!!!!!!!
+		ft_dprintf(2, "error reading stdin\n", error);// EXIT!!!!!!!!!
 	// ft_printf("input stdin: %s\n", input);//
 	// hash(input);
 	return input;
