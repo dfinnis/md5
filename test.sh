@@ -15,42 +15,43 @@ echo "$BRIGHT Launching MD5 Performance Test... $RESET\n"
 count=0
 correct=0
 
-# unit_test()
-# {
-# 	FILEPATH=$1
-# 	./ft_ssl md5 $FILEPATH > test/test_unit.txt 2>&1
-# 	md5 $FILEPATH > test/test_unit2.txt 2>&1
-# 	dif=$(eval "diff test/test_unit.txt test/test_unit2.txt")
-# 	if [ "$dif" = "" ]
-# 	then
-# 		echo "$GREEN OK: $FILEPATH $RESET" ##
-# 		((correct+=1))
-# 	else
-# 		echo "$RED ERROR: $FILEPATH $RESET \n $dif"
-# 	fi
-# 	((count+=1))
-# 	rm test/test_unit.txt test/test_unit2.txt
-# }
-
 #### -- UNIT test -- ####
 unit_test()
 {
 	FILEPATH=$1
-	cmd="./ft_ssl md5 $FILEPATH"
-	control="md5 $FILEPATH"
-	output=$(eval "$cmd")
-	output2=$(eval "$control")
-	if [ "$output" = "$output2" ]
+	./ft_ssl md5 $FILEPATH > test/test_unit.txt 2> test/test_unit_err.txt
+	md5 $FILEPATH > test/test_unit2.txt 2> test/test_unit2_err.txt
+	dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+				diff test/test_unit_err.txt test/test_unit2_err.txt")
+	if [ "$dif" = "" ]
 	then
-		echo "$GREEN OK: $FILEPATH $RESET" ##
+		# echo "$GREEN OK: $FILEPATH $RESET" ## Flag??!!!
 		((correct+=1))
 	else
-		echo "$RED ERROR: $FILEPATH $RESET"
-		echo $output2
-		echo $output
+		echo "$RED ERROR: $FILEPATH $RESET \n $dif"
 	fi
 	((count+=1))
+	rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 }
+
+# unit_test()
+# {
+# 	FILEPATH=$1
+# 	cmd="./ft_ssl md5 $FILEPATH"
+# 	control="md5 $FILEPATH"
+# 	output=$(eval "$cmd")
+# 	output2=$(eval "$control")
+# 	if [ "$output" = "$output2" ]
+# 	then
+# 		echo "$GREEN OK: $FILEPATH $RESET" ##
+# 		((correct+=1))
+# 	else
+# 		echo "$RED ERROR: $FILEPATH $RESET"
+# 		echo $output2
+# 		echo $output
+# 	fi
+# 	((count+=1))
+# }
 
 unit_test test/empty.txt
 unit_test test/gnl_test.txt
@@ -234,12 +235,12 @@ done
 echo
 if [ "$correct" == "$count" ]
 then
-	echo "\nPassed $GREEN $correct / $count $RESET total test\n"
+	echo "\nPassed $GREEN $correct / $count $RESET total tests\n"
 elif [ "$correct" == "0" ]
 then
-	echo "\nPassed $RED $correct / $count $RESET total test\n"	
+	echo "\nPassed $RED $correct / $count $RESET total tests\n"	
 else
-	echo "\nPassed $YELLOW $correct / $count $RESET total test\n"
+	echo "\nPassed $YELLOW $correct / $count $RESET total tests\n"
 fi
 
 #### -- END -- ####
