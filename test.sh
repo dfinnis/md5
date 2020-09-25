@@ -25,33 +25,24 @@ unit_test()
 				diff test/test_unit_err.txt test/test_unit2_err.txt")
 	if [ "$dif" = "" ]
 	then
-		# echo "$GREEN OK: $FILEPATH $RESET" ## Flag??!!!
 		((correct+=1))
+		# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
 	else
-		echo "$RED ERROR: $FILEPATH $RESET \n $dif"
+		echo "$RED ERROR:$FILEPATH $RESET                                $dif"
 	fi
 	((count+=1))
+
+	if [ "$correct" == "$count" ]
+	then
+		echo "$GREEN Unit test: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+	elif [ "$correct" == "0" ]
+	then
+		echo "$RED Unit test: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+	else
+		echo "$YELLOW Unit test: \t\t$correct / $count      $RESET $CLEAR_LINE"
+	fi
 	rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 }
-
-# unit_test()
-# {
-# 	FILEPATH=$1
-# 	cmd="./ft_ssl md5 $FILEPATH"
-# 	control="md5 $FILEPATH"
-# 	output=$(eval "$cmd")
-# 	output2=$(eval "$control")
-# 	if [ "$output" = "$output2" ]
-# 	then
-# 		echo "$GREEN OK: $FILEPATH $RESET" ##
-# 		((correct+=1))
-# 	else
-# 		echo "$RED ERROR: $FILEPATH $RESET"
-# 		echo $output2
-# 		echo $output
-# 	fi
-# 	((count+=1))
-# }
 
 unit_test test/empty.txt
 unit_test test/gnl_test.txt
@@ -124,22 +115,27 @@ unit_test "-s test/empty.txt -s test/gnl_test.txt -q test/gnl_test.txt test/gnl_
 unit_test "-s test/empty.txt -s test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
 unit_test "-s test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
 
+# unit_test test/max_line.txt
+# unit_test test/max_line_2.txt
+# unit_test test/max_line_3.txt
+
 unit_test test/random_binary1.txt
 unit_test test/random_binary2.txt
 unit_test test/random_binary3.txt
 
 
 #### -- UNIT STATS -- ####
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit test: \t\t$correct / $count OK   $RESET"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit test: \t\t$correct / $count ERROR $RESET"
-else
-	echo "$YELLOW Unit test: \t\t$correct / $count      $RESET"
-fi
+# if [ "$correct" == "$count" ]
+# then
+# 	echo "$GREEN Unit test: \t\t$correct / $count OK   $RESET"
+# elif [ "$correct" == "0" ]
+# then
+# 	echo "$RED Unit test: \t\t$correct / $count ERROR $RESET"
+# else
+# 	echo "$YELLOW Unit test: \t\t$correct / $count      $RESET"
+# fi
 
+echo
 #### -- RANDOM STRINGS -- ####
 random_correct=0
 random_count=0
