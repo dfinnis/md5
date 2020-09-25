@@ -123,6 +123,11 @@ unit_test "-s test/empty.txt -s test/gnl_test.txt -q test/gnl_test.txt test/gnl_
 unit_test "-s test/empty.txt -s test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
 unit_test "-s test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
 
+unit_test test/random_binary1.txt
+unit_test test/random_binary2.txt
+unit_test test/random_binary3.txt
+
+
 #### -- UNIT STATS -- ####
 if [ "$correct" == "$count" ]
 then
