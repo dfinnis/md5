@@ -15,7 +15,24 @@ echo "$BRIGHT Launching MD5 Performance Test... $RESET\n"
 count=0
 correct=0
 
-#### -- UNIT TESTS -- ####
+# unit_test()
+# {
+# 	FILEPATH=$1
+# 	./ft_ssl md5 $FILEPATH > test/test_unit.txt 2>&1
+# 	md5 $FILEPATH > test/test_unit2.txt 2>&1
+# 	dif=$(eval "diff test/test_unit.txt test/test_unit2.txt")
+# 	if [ "$dif" = "" ]
+# 	then
+# 		echo "$GREEN OK: $FILEPATH $RESET" ##
+# 		((correct+=1))
+# 	else
+# 		echo "$RED ERROR: $FILEPATH $RESET \n $dif"
+# 	fi
+# 	((count+=1))
+# 	rm test/test_unit.txt test/test_unit2.txt
+# }
+
+#### -- UNIT test -- ####
 unit_test()
 {
 	FILEPATH=$1
@@ -35,86 +52,86 @@ unit_test()
 	((count+=1))
 }
 
-unit_test tests/empty.txt
-unit_test tests/gnl_test.txt
-unit_test tests/correction.txt
-unit_test tests/does_not_exist.txt
-unit_test tests/
-unit_test "tests/does_not_exist.txt tests/gnl_test.txt"
+unit_test test/empty.txt
+unit_test test/gnl_test.txt
+unit_test test/correction.txt
+unit_test test/does_not_exist.txt
+unit_test test/
+unit_test "test/does_not_exist.txt test/gnl_test.txt"
 
-unit_test "-q tests/empty.txt"
-unit_test "-q tests/gnl_test.txt"
-unit_test "-r tests/empty.txt"
-unit_test "-r tests/gnl_test.txt"
-unit_test "-s tests/empty.txt"
-unit_test "-s tests/gnl_test.txt"
+unit_test "-q test/empty.txt"
+unit_test "-q test/gnl_test.txt"
+unit_test "-r test/empty.txt"
+unit_test "-r test/gnl_test.txt"
+unit_test "-s test/empty.txt"
+unit_test "-s test/gnl_test.txt"
 
-unit_test "-q tests/empty.txt tests/gnl_test.txt"
-unit_test "-q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt tests/gnl_test.txt"
-unit_test "-r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt tests/gnl_test.txt"
-unit_test "-s tests/gnl_test.txt tests/gnl_test.txt"
+unit_test "-q test/empty.txt test/gnl_test.txt"
+unit_test "-q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt test/gnl_test.txt"
+unit_test "-r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt test/gnl_test.txt"
+unit_test "-s test/gnl_test.txt test/gnl_test.txt"
 
-unit_test "tests/empty.txt tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
+unit_test "test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
 
-unit_test "-q tests/empty.txt tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "tests/empty.txt -q tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "tests/empty.txt tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -q tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -q tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -q tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -q tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -r tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -r tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -r tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -r tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -s tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -s tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -s tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-q tests/empty.txt -s tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
+unit_test "-q test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "test/empty.txt -q test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "test/empty.txt test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -q test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -q test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -q test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -q test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -r test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -r test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -r test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -r test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -s test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -s test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -s test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
 
-unit_test "-r tests/empty.txt tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "tests/empty.txt -r tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "tests/empty.txt tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -q tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -q tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -q tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -q tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -r tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -r tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -r tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -r tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -s tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -s tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -s tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-r tests/empty.txt -s tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
+unit_test "-r test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "test/empty.txt -r test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "test/empty.txt test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -q test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -q test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -q test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -q test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -r test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -r test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -r test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -r test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -s test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -s test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -s test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
 
-unit_test "-s tests/empty.txt tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "tests/empty.txt -s tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "tests/empty.txt tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -q tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -q tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -q tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -q tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -r tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -r tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -r tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -r tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -s tests/gnl_test.txt tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -s tests/gnl_test.txt -q tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -s tests/gnl_test.txt -r tests/gnl_test.txt tests/gnl_test.txt"
-unit_test "-s tests/empty.txt -s tests/gnl_test.txt -s tests/gnl_test.txt tests/gnl_test.txt"
+unit_test "-s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "test/empty.txt -s test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "test/empty.txt test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -q test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -q test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -q test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -q test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -r test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -r test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -r test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -r test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -s test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -s test/gnl_test.txt -q test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -s test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
+unit_test "-s test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
 
 #### -- UNIT STATS -- ####
 if [ "$correct" == "$count" ]
 then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET"
+	echo "$GREEN Unit test: \t\t$correct / $count OK   $RESET"
 elif [ "$correct" == "0" ]
 then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET"
+	echo "$RED Unit test: \t\t$correct / $count ERROR $RESET"
 else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET"
+	echo "$YELLOW Unit test: \t\t$correct / $count      $RESET"
 fi
 
 #### -- RANDOM STRINGS -- ####
@@ -123,9 +140,9 @@ random_count=0
 while [ $random_count -lt 100 ]
 do
 	random_len=$(( ( RANDOM % 1000 )  + 1 ))
-	openssl rand -base64 $random_len > tests/test_random.txt
-	cmd="./ft_ssl md5 tests/test_random.txt"
-	control="md5 tests/test_random.txt"
+	openssl rand -base64 $random_len > test/test_random.txt
+	cmd="./ft_ssl md5 test/test_random.txt"
+	control="md5 test/test_random.txt"
 	output=$(eval "$cmd")
 	output2=$(eval "$control")
 	if [ "$output" = "$output2" ]
@@ -144,7 +161,7 @@ do
 	else
 		echo "$YELLOW Random string > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
 	fi
-	rm tests/test_random.txt
+	rm test/test_random.txt
 done
 echo
 
@@ -184,9 +201,9 @@ random_count=0
 while [ $random_count -lt 100 ]
 do
 	random_len=$(( ( RANDOM % 1000 )  + 1 ))
-	cat /dev/urandom | head -c $random_len > tests/test_random.txt
-	cmd="./ft_ssl md5 tests/test_random.txt"
-	control="md5 tests/test_random.txt"
+	cat /dev/urandom | head -c $random_len > test/test_random.txt
+	cmd="./ft_ssl md5 test/test_random.txt"
+	control="md5 test/test_random.txt"
 	output=$(eval "$cmd")
 	output2=$(eval "$control")
 	if [ "$output" = "$output2" ]
@@ -205,19 +222,19 @@ do
 	else
 		echo "$YELLOW Random binary > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
 	fi
-	rm tests/test_random.txt
+	rm test/test_random.txt
 done
 
 #### -- FINAL STATS -- ####
 echo
 if [ "$correct" == "$count" ]
 then
-	echo "\nPassed $GREEN $correct / $count $RESET total tests\n"
+	echo "\nPassed $GREEN $correct / $count $RESET total test\n"
 elif [ "$correct" == "0" ]
 then
-	echo "\nPassed $RED $correct / $count $RESET total tests\n"	
+	echo "\nPassed $RED $correct / $count $RESET total test\n"	
 else
-	echo "\nPassed $YELLOW $correct / $count $RESET total tests\n"
+	echo "\nPassed $YELLOW $correct / $count $RESET total test\n"
 fi
 
 #### -- END -- ####
