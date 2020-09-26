@@ -29,7 +29,7 @@ static uint8_t	*padding(char *input, uint32_t *msg_len)
 	return (padded);
 }
 
-static void		rounds(uint32_t *buf, uint32_t *words, size_t round)
+static void		digest_round(uint32_t *buf, uint32_t *words, size_t round)
 {
 	if (round < 16)
 	{
@@ -58,7 +58,7 @@ static void		rounds(uint32_t *buf, uint32_t *words, size_t round)
 	buf[A] = buf[TMP];
 }
 
-static void		process_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk)
+static void		digest_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk)
 {
 	uint32_t		buf[7];
 	uint32_t		*words;
@@ -71,7 +71,7 @@ static void		process_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk)
 	buf[D] = hash[D];
 	round = 0;
 	while (round < 64)
-		rounds(buf, words, round++);
+		digest_round(buf, words, round++);
 	hash[A] += buf[A];
 	hash[B] += buf[B];
 	hash[C] += buf[C];
@@ -103,6 +103,6 @@ void			md5(char *input)
 	hash[C] = 0x98BADCFE;
 	hash[D] = 0x10325476;
 	while (chunk < msg_len)
-		process_chunk(hash, padded, chunk++);
+		digest_chunk(hash, padded, chunk++);
 	print_digest(hash);
 }
