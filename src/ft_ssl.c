@@ -83,31 +83,26 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 	return (++i);
 }
 
+void	read_command(char *command)
+{
+	if (!((ft_strcmp(command, "md5") == 0) || (ft_strcmp(command, "sha256") == 0)))//rm!!!
+		print_usage();
+	g_cmd = command;
+	g_command = &md5;
+}
+
 void	read_args(int argc, char **argv, t_args *args)
 {
 	int i;
-	// char *input; //////////////////
 	unsigned int	first;
-
 
 	i = 2;
 	first = 0;
-	// input = NULL; /////////////
 	if (argc == 1)
 		print_usage();
 	else
 	{
-		// if (ft_strcmp((argv[1]), "md5") == 0)
-		// 	args->md5 = 1;
-		// else if (ft_strcmp((argv[1]), "sha256") == 0)
-		// 	args->sha256 = 1;
-		// else
-		// 	print_usage();
-		if (!((ft_strcmp((argv[1]), "md5") == 0) || (ft_strcmp((argv[1]), "sha256") == 0))) //(function dispatcher)rm!!!!!!
-			print_usage();
-		g_cmd = argv[1];
-		g_command = &md5;
-		// read_command(argv[1]);
+		read_command(argv[1]);
 		if (argc == 2)
 			hash(read_stdin());
 		else
@@ -129,21 +124,13 @@ int		main(int argc, char **argv)
 
 	init_ssl(&args);
 	read_args(argc, argv, &args);
-	// ft_printf("args.md5: %d\n", args.md5);//rm!!!
-	// ft_printf("args.sha256: %d\n", args.sha256);//rm!!!
 	// ft_printf("\n\nargs.flag_p: %d\n", args.flag_p);//rm!!!
 	// ft_printf("args.flag_q: %d\n", args.flag_q);//rm!!!
 	// ft_printf("args.flag_r: %d\n", args.flag_r);//rm!!!
 	// ft_printf("args.flag_s: %d\n", args.flag_s);//rm!!!
-	// if (args.md5)//
-	// 	md5(&args);
-	// 	// ft_printf("OH HI\n");//
-	// else if (args.sha256)//
-	// 	ft_printf("sha256\n");//
-
 	return (0);
 }
 
 // flag: -s "string1" -s "string2"
 // file as direct argument: ./ft_ssl md5 file
-// standard in: echo "string" | ./ft_ssl md5
+// standard in: -p OR echo "string" | ./ft_ssl md5
