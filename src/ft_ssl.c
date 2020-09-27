@@ -1,5 +1,30 @@
 #include "../inc/ft_ssl.h"
 
+static void	init_ssl(t_args *args)
+{
+	ft_bzero(args, sizeof(*args));
+	args->first = 1;
+}
+
+static void	read_command(char *command, t_args *args)
+{
+	args->command = command;
+	(ft_strcmp(command, "md5") == 0) ? g_cmd_func = &md5 : 0;
+	(ft_strcmp(command, "sha256") == 0) ? g_cmd_func = &sha256 : 0;
+	if (g_cmd_func == NULL)
+		print_usage();// correct action here?
+}
+
+void		flag_p(void)
+{
+	char *input;
+
+	input = read_stdin();
+	ft_printf(input);
+	g_cmd_func(input);
+	ft_printf("\n");
+}
+
 int			flag_s(int argc, char **argv, int i, t_args *args)
 {
 	if (i + 2 > argc)
@@ -11,16 +36,6 @@ int			flag_s(int argc, char **argv, int i, t_args *args)
 	print_suffix(argv[i], args);
 	args->flag_s = 0;
 	return (i);
-}
-
-void		flag_p(void)
-{
-	char *input;
-
-	input = read_stdin();
-	ft_printf(input);
-	g_cmd_func(input);
-	ft_printf("\n");
 }
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)
@@ -45,21 +60,6 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 		args->first = 0;
 	}
 	return (++i);
-}
-
-static void	read_command(char *command, t_args *args)
-{
-	args->command = command;
-	(ft_strcmp(command, "md5") == 0) ? g_cmd_func = &md5 : 0;
-	(ft_strcmp(command, "sha256") == 0) ? g_cmd_func = &sha256 : 0;
-	if (g_cmd_func == NULL)
-		print_usage();// correct action here?
-}
-
-static void	init_ssl(t_args *args)
-{
-	ft_bzero(args, sizeof(*args));
-	args->first = 1;
 }
 
 int			main(int argc, char **argv)
