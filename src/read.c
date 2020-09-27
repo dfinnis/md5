@@ -80,7 +80,6 @@ void		read_file(char *filepath, t_args *args)
 		ft_dprintf(2, "%s: %s: Error reading file\n", g_cmd_str, filepath);
 		return ;
 	}
-	// print_usage();??
 	print_prefix(filepath, args);
 	g_cmd_func(input);
 	print_suffix(filepath, args);

@@ -23,6 +23,7 @@ typedef struct			s_args
 	int					flag_q;
 	int					flag_r;
 	int					flag_s;
+	int					first;
 }						t_args;
 
 /*
