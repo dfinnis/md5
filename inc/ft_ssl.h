@@ -7,11 +7,11 @@
 # include <errno.h>
 # include <sys/stat.h>
 
-char	*g_cmd_str;
 /*
-**		function_dispatcher
+**		global command function dispatcher
 */
 void 	(*g_cmd_func)(char *);
+char	*g_cmd_str;
 
 enum		e_bufs
 {

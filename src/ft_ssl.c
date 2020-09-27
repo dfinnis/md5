@@ -62,22 +62,22 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 		ft_printf(input);
 		g_cmd_func(input);
 	}
-	else if (ft_strcmp((argv[i]), "-q") == 0 && (*first) == 0)
+	else if (ft_strcmp((argv[i]), "-q") == 0 && (*first) == 1)
 	{
 		args->flag_q = 1;
-		(*first)++;
+		(*first) = 0;
 	}
-	else if (ft_strcmp((argv[i]), "-r") == 0 && (*first) == 0)
+	else if (ft_strcmp((argv[i]), "-r") == 0 && (*first) == 1)
 	{
 		args->flag_r = 1;
-		(*first)++;
+		(*first) = 0;
 	}
-	else if (ft_strcmp((argv[i]), "-s") == 0 && (*first) == 0)
+	else if (ft_strcmp((argv[i]), "-s") == 0 && (*first) == 1)
 		i = flag_s(argc, argv, i, args);
 	else
 	{
 		read_file(argv[i], args);
-		(*first)++;
+		(*first) = 0;
 	}
 	return (++i);
 }
@@ -97,7 +97,7 @@ void	read_args(int argc, char **argv, t_args *args)
 	unsigned int	first;
 
 	i = 2;
-	first = 0;
+	first = 1;
 	if (argc == 1)
 		print_usage();
 	else
