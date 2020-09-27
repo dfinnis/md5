@@ -10,49 +10,49 @@
 /*
 **		global command function dispatcher
 */
-void 	(*g_cmd_func)(char *);
-char	*g_cmd_str;
+void			(*g_cmd_func)(char *);
 
-enum		e_bufs
+enum			e_bufs
 {
 	A, B, C, D, WORD, F, TMP
 };
 
-typedef struct			s_args
+typedef struct	s_args
 {
-	int					flag_q;
-	int					flag_r;
-	int					flag_s;
-	int					first;
-}						t_args;
+	char		*command;
+	int			flag_q;
+	int			flag_r;
+	int			flag_s;
+	int			first;
+}				t_args;
 
 /*
 **		ft_ssl.c
 */
-void		print_prefix(char *input, t_args *args);
-void		print_suffix(char *input, t_args *args);
-void		read_args(int argc, char **argv, t_args *args);
-void		print_usage();
+void			print_prefix(char *input, t_args *args);
+void			print_suffix(char *input, t_args *args);
+void			read_args(int argc, char **argv, t_args *args);
+void			print_usage();
 
 /*
 **		read.c
 */
-void		read_file(char *filepath, t_args *args);
-char		*read_stdin(void);
+void			read_file(char *filepath, t_args *args);
+char			*read_stdin(void);
 
 /*
 **		md5.c
 */
-void		md5(char *input);
+void			md5(char *input);
 
 /*
 **		md5_rotate.c
 */
-void		rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
+void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
 
 /*
 **		sha.c
 */
-void		sha256(char *input);
+void			sha256(char *input);
 
 #endif

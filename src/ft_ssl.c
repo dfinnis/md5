@@ -15,9 +15,9 @@ void		print_prefix(char *input, t_args *args)
 	if (!args->flag_q && !args->flag_r)
 	{
 		i = 0;
-		len = ft_strlen(g_cmd_str);
+		len = ft_strlen(args->command);
 		while (i < len)
-			ft_printf("%c", ft_toupper(g_cmd_str[i++]));
+			ft_printf("%c", ft_toupper(args->command[i++]));
 		if (args->flag_s)
 			ft_printf(" (\"%s\") = ", input);
 		else
@@ -83,9 +83,9 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	return (++i);
 }
 
-void		read_command(char *command)
+void		read_command(char *command, t_args *args)
 {
-	g_cmd_str = command;
+	args->command = command;
 	(ft_strcmp(command, "md5") == 0) ? g_cmd_func = &md5 : 0;
 	(ft_strcmp(command, "sha256") == 0) ? g_cmd_func = &sha256 : 0;
 	if (g_cmd_func == NULL)
@@ -101,7 +101,7 @@ void		read_args(int argc, char **argv, t_args *args)
 		print_usage();
 	else
 	{
-		read_command(argv[1]);
+		read_command(argv[1], args);
 		if (argc == 2)
 			g_cmd_func(read_stdin());
 		else
