@@ -9,6 +9,16 @@
 
 char	*g_cmd;
 
+/*
+**		function_dispatcher
+*/
+void 	(*function_dispatcher)(char *);
+// void 		md5(char *input);
+// void		sha256(char *input);
+
+// typedef void hash_function(char *input);
+
+
 enum		e_bufs
 {
 	A, B, C, D, WORD, F, TMP
@@ -50,10 +60,12 @@ void		rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
 **		dispatcher.c
 */
 void		hash(char *input);
+void		read_command(char *command);
+
 
 /*
 **		sha.c
 */
-void		sha(char *input);
+void		sha256(char *input);
 
 #endif

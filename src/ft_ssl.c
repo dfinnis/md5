@@ -86,13 +86,13 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 void	read_args(int argc, char **argv, t_args *args)
 {
 	int i;
-	char *input;
+	// char *input; //////////////////
 	unsigned int	first;
 
 
 	i = 2;
 	first = 0;
-	input = NULL;
+	// input = NULL; /////////////
 	if (argc == 1)
 		print_usage();
 	else
@@ -103,9 +103,11 @@ void	read_args(int argc, char **argv, t_args *args)
 		// 	args->sha256 = 1;
 		// else
 		// 	print_usage();
-		if (!((ft_strcmp((argv[1]), "md5") == 0) || (ft_strcmp((argv[1]), "sha256") == 0)))
+		if (!((ft_strcmp((argv[1]), "md5") == 0) || (ft_strcmp((argv[1]), "sha256") == 0))) //(function dispatcher)rm!!!!!!
 			print_usage();
 		g_cmd = argv[1];
+		function_dispatcher = &md5;
+		// read_command(argv[1]);
 		if (argc == 2)
 			hash(read_stdin());
 		else

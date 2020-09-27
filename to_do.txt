@@ -1,14 +1,12 @@
 function dispatcher (function pointer array)
 read commands from STDIN not just args
 
+echo “Speed up now, Gas Pedal??” | ./ft_ssl md5 -p
 test devices, pipes, symbolic links, sockets, etc.
 test long file, dev/random
 
-print errors on STDERR (ft_dprintf)
-
 sort headers (inc libft)
 norm
-
 
 #### BONUS ####
 1. test.sh
