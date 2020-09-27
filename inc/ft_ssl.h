@@ -20,7 +20,6 @@ enum		e_bufs
 
 typedef struct			s_args
 {
-	int					flag_p;
 	int					flag_q;
 	int					flag_r;
 	int					flag_s;

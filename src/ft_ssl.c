@@ -57,7 +57,6 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 	input = NULL;
 	if (ft_strcmp((argv[i]), "-p") == 0)
 	{
-		args->flag_p = 1;//
 		input = read_stdin();
 		ft_printf(input);
 		g_cmd_func(input);
@@ -124,7 +123,6 @@ int		main(int argc, char **argv)
 
 	init_ssl(&args);
 	read_args(argc, argv, &args);
-	// ft_printf("\n\nargs.flag_p: %d\n", args.flag_p);//rm!!!
 	// ft_printf("args.flag_q: %d\n", args.flag_q);//rm!!!
 	// ft_printf("args.flag_r: %d\n", args.flag_r);//rm!!!
 	// ft_printf("args.flag_s: %d\n", args.flag_s);//rm!!!
