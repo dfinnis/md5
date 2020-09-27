@@ -11,7 +11,7 @@ char	*g_cmd_str;
 /*
 **		function_dispatcher
 */
-void 	(*g_command)(char *);
+void 	(*g_cmd_func)(char *);
 
 enum		e_bufs
 {

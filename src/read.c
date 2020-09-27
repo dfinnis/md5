@@ -82,7 +82,7 @@ void		read_file(char *filepath, t_args *args)
 	}
 	// print_usage();??
 	print_prefix(filepath, args);
-	g_command(input);
+	g_cmd_func(input);
 	print_suffix(filepath, args);
 }
 

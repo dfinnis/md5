@@ -44,7 +44,7 @@ int		flag_s(int argc, char **argv, int i, t_args *args)
 	i++;
 	args->flag_s = 1;
 	print_prefix(argv[i], args);
-	g_command(argv[i]);
+	g_cmd_func(argv[i]);
 	print_suffix(argv[i], args);
 	args->flag_s = 0;
 	return i;
@@ -60,7 +60,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 		args->flag_p = 1;//
 		input = read_stdin();
 		ft_printf(input);
-		g_command(input);
+		g_cmd_func(input);
 	}
 	else if (ft_strcmp((argv[i]), "-q") == 0 && (*first) == 0)
 	{
@@ -76,7 +76,6 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 		i = flag_s(argc, argv, i, args);
 	else
 	{
-		// ft_printf("arg: %s\n", argv[i]);//
 		read_file(argv[i], args);
 		(*first)++;
 	}
@@ -86,9 +85,9 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 void	read_command(char *command)
 {
 	g_cmd_str = command;
-	(ft_strcmp(command, "md5") == 0) ? g_command = &md5 : 0 ;
-	(ft_strcmp(command, "sha256") == 0) ? g_command = &sha256 : 0 ;
-	if (g_command == NULL)
+	(ft_strcmp(command, "md5") == 0) ? g_cmd_func = &md5 : 0 ;
+	(ft_strcmp(command, "sha256") == 0) ? g_cmd_func = &sha256 : 0 ;
+	if (g_cmd_func == NULL)
 		print_usage();// correct action here?
 }
 
@@ -105,7 +104,7 @@ void	read_args(int argc, char **argv, t_args *args)
 	{
 		read_command(argv[1]);
 		if (argc == 2)
-			g_command(read_stdin());
+			g_cmd_func(read_stdin());
 		else
 		{
 			while (i < argc)
