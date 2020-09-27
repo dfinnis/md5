@@ -15,9 +15,9 @@ void	print_prefix(char *input, t_args *args)
 	if (!args->flag_q && !args->flag_r)
 	{
 		i = 0;
-		len = ft_strlen(g_cmd);
+		len = ft_strlen(g_cmd_str);
 		while (i < len)
-			ft_printf("%c", ft_toupper(g_cmd[i++]));
+			ft_printf("%c", ft_toupper(g_cmd_str[i++]));
 		if (args->flag_s)
 			ft_printf(" (\"%s\") = ", input);
 		else
@@ -44,7 +44,7 @@ int		flag_s(int argc, char **argv, int i, t_args *args)
 	i++;
 	args->flag_s = 1;
 	print_prefix(argv[i], args);
-	hash(argv[i]);
+	g_command(argv[i]);
 	print_suffix(argv[i], args);
 	args->flag_s = 0;
 	return i;
@@ -60,7 +60,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 		args->flag_p = 1;//
 		input = read_stdin();
 		ft_printf(input);
-		hash(input);
+		g_command(input);
 	}
 	else if (ft_strcmp((argv[i]), "-q") == 0 && (*first) == 0)
 	{
@@ -85,10 +85,11 @@ static int	read_arg(int argc, char **argv, t_args *args, int i, unsigned int *fi
 
 void	read_command(char *command)
 {
-	if (!((ft_strcmp(command, "md5") == 0) || (ft_strcmp(command, "sha256") == 0)))//rm!!!
-		print_usage();
-	g_cmd = command;
-	g_command = &md5;
+	g_cmd_str = command;
+	(ft_strcmp(command, "md5") == 0) ? g_command = &md5 : 0 ;
+	(ft_strcmp(command, "sha256") == 0) ? g_command = &sha256 : 0 ;
+	if (g_command == NULL)
+		print_usage();// correct action here?
 }
 
 void	read_args(int argc, char **argv, t_args *args)
@@ -104,7 +105,7 @@ void	read_args(int argc, char **argv, t_args *args)
 	{
 		read_command(argv[1]);
 		if (argc == 2)
-			hash(read_stdin());
+			g_command(read_stdin());
 		else
 		{
 			while (i < argc)

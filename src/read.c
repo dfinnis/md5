@@ -67,22 +67,22 @@ void		read_file(char *filepath, t_args *args)
 	input = NULL;
 	if ((fd = open(filepath, O_RDONLY)) == -1)
 	{
-		ft_dprintf(2, "%s: %s: %s\n", g_cmd, filepath, strerror(errno));
+		ft_dprintf(2, "%s: %s: %s\n", g_cmd_str, filepath, strerror(errno));
 		return ;
 	}
 	if (!is_regular_file(filepath))
 	{
-		ft_dprintf(2, "%s: %s: Is a directory\n", g_cmd, filepath);
+		ft_dprintf(2, "%s: %s: Is a directory\n", g_cmd_str, filepath);
 		return ;
 	}
 	if ((error = read_fd(fd, &input) == -1))
 	{
-		ft_dprintf(2, "%s: %s: Error reading file\n", g_cmd, filepath);
+		ft_dprintf(2, "%s: %s: Error reading file\n", g_cmd_str, filepath);
 		return ;
 	}
 	// print_usage();??
 	print_prefix(filepath, args);
-	hash(input);
+	g_command(input);
 	print_suffix(filepath, args);
 }
 

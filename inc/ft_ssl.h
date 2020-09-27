@@ -7,17 +7,11 @@
 # include <errno.h>
 # include <sys/stat.h>
 
-char	*g_cmd;
-
+char	*g_cmd_str;
 /*
 **		function_dispatcher
 */
 void 	(*g_command)(char *);
-// void 		md5(char *input);
-// void		sha256(char *input);
-
-// typedef void hash_function(char *input);
-
 
 enum		e_bufs
 {
@@ -55,13 +49,6 @@ void		md5(char *input);
 **		md5_rotate.c
 */
 void		rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
-
-/*
-**		dispatcher.c
-*/
-void		hash(char *input);
-void		read_command(char *command);
-
 
 /*
 **		sha.c
