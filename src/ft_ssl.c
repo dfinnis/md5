@@ -57,6 +57,7 @@ void		flag_p(void)
 	input = read_stdin();
 	ft_printf(input);
 	g_cmd_func(input);
+	ft_printf("\n");
 }
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)
@@ -92,26 +93,6 @@ void		read_command(char *command, t_args *args)
 		print_usage();// correct action here?
 }
 
-void		read_args(int argc, char **argv, t_args *args)
-{
-	int i;
-
-	i = 2;
-	if (argc == 1)
-		print_usage();
-	else
-	{
-		read_command(argv[1], args);
-		if (argc == 2)
-			g_cmd_func(read_stdin());
-		else
-		{
-			while (i < argc)
-				i = read_arg(argc, argv, args, i);
-		}
-	}
-}
-
 static void	init_ssl(t_args *args)
 {
 	ft_bzero(args, sizeof(*args));
@@ -120,13 +101,22 @@ static void	init_ssl(t_args *args)
 
 int			main(int argc, char **argv)
 {
+	int 	i;
 	t_args	args;
 
+	i = 2;
 	init_ssl(&args);
-	read_args(argc, argv, &args);
-	// ft_printf("args.flag_q: %d\n", args.flag_q);//rm!!!
-	// ft_printf("args.flag_r: %d\n", args.flag_r);//rm!!!
-	// ft_printf("args.flag_s: %d\n", args.flag_s);//rm!!!
+	if (argc == 1)
+		print_usage();
+	else
+	{
+		read_command(argv[1], &args);
+		if (argc == 2)
+			g_cmd_func(read_stdin());
+		else
+			while (i < argc)
+				i = read_arg(argc, argv, &args, i);
+	}
 	return (0);
 }
 
