@@ -106,7 +106,7 @@ void	read_args(int argc, char **argv, t_args *args)
 		if (!((ft_strcmp((argv[1]), "md5") == 0) || (ft_strcmp((argv[1]), "sha256") == 0))) //(function dispatcher)rm!!!!!!
 			print_usage();
 		g_cmd = argv[1];
-		function_dispatcher = &md5;
+		g_command = &md5;
 		// read_command(argv[1]);
 		if (argc == 2)
 			hash(read_stdin());

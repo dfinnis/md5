@@ -12,7 +12,7 @@ char	*g_cmd;
 /*
 **		function_dispatcher
 */
-void 	(*function_dispatcher)(char *);
+void 	(*g_command)(char *);
 // void 		md5(char *input);
 // void		sha256(char *input);
 
