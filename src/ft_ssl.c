@@ -64,7 +64,7 @@ static void	init_ssl(t_args *args)
 
 int			main(int argc, char **argv)
 {
-	int 	i;
+	int		i;
 	t_args	args;
 
 	i = 2;
