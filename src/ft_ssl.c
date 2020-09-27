@@ -1,42 +1,5 @@
 #include "../inc/ft_ssl.h"
 
-void		print_usage(void)
-{
-	ft_putstr("\nusage:\t./ft_ssl []");
-	// free(eveything);
-	exit(1);
-}
-
-void		print_prefix(char *input, t_args *args)
-{
-	unsigned long i;
-	unsigned long len;
-
-	if (!args->flag_q && !args->flag_r)
-	{
-		i = 0;
-		len = ft_strlen(args->command);
-		while (i < len)
-			ft_printf("%c", ft_toupper(args->command[i++]));
-		if (args->flag_s)
-			ft_printf(" (\"%s\") = ", input);
-		else
-			ft_printf(" (%s) = ", input);
-	}
-}
-
-void		print_suffix(char *input, t_args *args)
-{
-	if (args->flag_r)
-	{
-		if (args->flag_s)
-			ft_printf(" \"%s\"", input);
-		else
-			ft_printf(" %s", input);
-	}
-	ft_printf("\n");
-}
-
 int			flag_s(int argc, char **argv, int i, t_args *args)
 {
 	if (i + 2 > argc)
@@ -84,7 +47,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	return (++i);
 }
 
-void		read_command(char *command, t_args *args)
+static void	read_command(char *command, t_args *args)
 {
 	args->command = command;
 	(ft_strcmp(command, "md5") == 0) ? g_cmd_func = &md5 : 0;

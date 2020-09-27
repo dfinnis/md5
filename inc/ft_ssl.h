@@ -29,10 +29,13 @@ typedef struct	s_args
 /*
 **		ft_ssl.c
 */
+
+/*
+**		ft_ssl.c
+*/
+void			print_usage();
 void			print_prefix(char *input, t_args *args);
 void			print_suffix(char *input, t_args *args);
-void			read_args(int argc, char **argv, t_args *args);
-void			print_usage();
 
 /*
 **		read.c
