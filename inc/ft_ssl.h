@@ -30,18 +30,19 @@ typedef struct	s_args
 **		ft_ssl.c
 */
 
-/*
-**		ft_ssl.c
-*/
-void			print_usage();
-void			print_prefix(char *input, t_args *args);
-void			print_suffix(char *input, t_args *args);
 
 /*
 **		read.c
 */
 void			read_file(char *filepath, t_args *args);
 char			*read_stdin(void);
+
+/*
+**		print.c
+*/
+void			print_usage();
+void			print_prefix(char *input, t_args *args);
+void			print_suffix(char *input, t_args *args);
 
 /*
 **		md5.c
