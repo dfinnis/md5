@@ -6,24 +6,28 @@ static void	init_ssl(t_args *args)
 	args->first = 1;
 }
 
+const static struct {
+	const char *cmd;
+	void (*func)(char *);
+} cmd_func_map[] = {
+	{ "md5", md5 },
+	{ "sha256", sha256 },
+};
+
 static void	read_command(char *cmd, t_args *args)
 {
 	unsigned long i;
-	static struct {
-		const char *cmd;
-		void (*func)(char *);
-	} cmd_func_map [] = {
-		{ "md5", md5 },
-		{ "sha256", sha256 },
-	};
 
 	args->command = cmd;
-	for (i = 0; i < (sizeof(cmd_func_map) / sizeof(cmd_func_map[0])); i++) {
+	i = 0;
+	while (i < (sizeof(cmd_func_map) / sizeof(cmd_func_map[0])))
+	{
 		if (!strcmp(cmd_func_map[i].cmd, cmd) && cmd_func_map[i].func)
 		{
 			g_cmd_func = cmd_func_map[i].func;
-			break;
+			break ;
 		}
+		i++;
 	}
 	if (g_cmd_func == NULL)
 		print_usage();// correct action here?
