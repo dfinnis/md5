@@ -27,21 +27,12 @@ static int	cp_char(char **line, char *str)
 	tmp = NULL;
 	tmp = *line;
 	if (!(*line = ft_strjoin_bin(*line, str)))
-		return (-1);
-	ft_freestr(tmp);
-	ft_freestr(str);
-	return (0);
-}
-
-static int	read_fd_error(char **line, char *str)
-{
-	int	g;
-
-	if ((g = cp_char(line, str)) == -1)
 	{
 		ft_freestr(str);
 		return (-1);
 	}
+	ft_freestr(tmp);
+	ft_freestr(str);
 	return (0);
 }
 
@@ -59,7 +50,7 @@ static int	read_fd(const int fd, char **line)
 			return (-1);
 		if ((k = read(fd, str, 1)) == -1)
 			exit(1);
-		if ((read_fd_error(line, str)) == -1)
+		if ((cp_char(line, str)) == -1)
 			return (-1);
 		if (k == 0 && !*line[0])
 			return (0);
