@@ -34,12 +34,12 @@ unit_test()
 
 	if [ "$correct" == "$count" ]
 	then
-		echo "$GREEN Unit test: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+		echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
 	elif [ "$correct" == "0" ]
 	then
-		echo "$RED Unit test: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+		echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
 	else
-		echo "$YELLOW Unit test: \t\t$correct / $count      $RESET $CLEAR_LINE"
+		echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
 	fi
 	rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 }
