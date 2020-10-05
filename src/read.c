@@ -14,17 +14,8 @@ char	*ft_strcpy2(char *dst, const char *src)
 	return (dst);
 }
 
-
 char	*ft_strcat2(char *s1, const char *s2)
 {
-	// int	i;
-	// // int	j;
-
-	// i = 0;
-	// // j = 0;
-	// while (s1[i])
-	// 	i++;
-	// while (s2[j])
 	s1[g_len] = s2[0];
 	s1[g_len + 1] = '\0';
 	return (s1);
@@ -36,9 +27,6 @@ char	*ft_strjoin2(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	// ft_printf("s2: %x\n", s2[0]);//
-	// ft_printf("ft_strlen(s1): %d\n", ft_strlen(s1));//
-	// ft_printf("ft_strlen(s2): %d\n", ft_strlen(s2));//
 	if (!(fresh = ft_strnew(g_len + 1)))
 		return (NULL);
 	ft_strcpy2(fresh, s1);
@@ -54,10 +42,6 @@ static int	cp_char(char **line, char *str)
 	tmp = *line;
 	if (!(*line = ft_strjoin2(*line, str)))
 		return (-1);
-	// ft_printf("g_len: %x\n", g_len);//
-	// ft_printf("str: %x\n\n", str[0]);//
-
-	// ft_printf("line: %x\n", *line[0]);//
 	ft_freestr(tmp);
 	ft_freestr(str);
 	return (0);
@@ -67,13 +51,11 @@ static int	read_fd_error(char **line, char *str)
 {
 	int	g;
 
-	// ft_printf("str: %x\n", str[0]);//
 	if ((g = cp_char(line, str)) == -1)
 	{
 		ft_freestr(str);
 		return (-1);
 	}
-	// ft_printf("g: %x\n", g);//
 	return (0);
 }
 
@@ -133,19 +115,9 @@ void		read_file(char *filepath, t_args *args)
 		return ;
 	}
 	g_len *= 8;
-
-	// ft_printf("g_len: %d\n", g_len);/////
-	// ft_printf("g_len / 8: %d\n", g_len/8);/////
-	// ft_printf("input: %s\n", input);/////
-
 	print_prefix(filepath, args);
 	g_cmd_func(input);
 	print_suffix(filepath, args);
-
-	// print_prefix(filepath, args);
-	// input = read_input(filepath);
-	// g_cmd_func(input);
-	// print_suffix(filepath, args);
 }
 
 char		*read_stdin(void)
