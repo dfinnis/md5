@@ -120,6 +120,7 @@ unit_test test/random_binary0.txt
 unit_test test/random_binary1.txt
 unit_test test/random_binary2.txt
 unit_test test/random_binary3.txt
+unit_test "test/random_binary1.txt test/random_binary2.txt unit_test test/random_binary3.txt"
 unit_test test/random_binary2_err.txt
 unit_test test/random_binary3_err.txt
 unit_test test/contradiction_long.txt
