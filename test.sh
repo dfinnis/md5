@@ -119,9 +119,12 @@ unit_test "-s test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_
 # unit_test test/max_line_2.txt
 # unit_test test/max_line_3.txt
 
+unit_test test/random_binary0.txt
 unit_test test/random_binary1.txt
 unit_test test/random_binary2.txt
 unit_test test/random_binary3.txt
+unit_test test/random_binary2_err.txt
+unit_test test/random_binary3_err.txt
 
 
 #### -- UNIT STATS -- ####
