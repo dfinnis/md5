@@ -23,7 +23,7 @@ static uint8_t	*padding(char *input, uint32_t *msg_len)
 		padded[i] = g_len % 256;
 		g_len /= 256;
 	}
-	(*msg_len) /= 64;	
+	(*msg_len) /= 64;
 	return (padded);
 }
 

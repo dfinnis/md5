@@ -115,28 +115,16 @@ unit_test "-s test/empty.txt -s test/gnl_test.txt -q test/gnl_test.txt test/gnl_
 unit_test "-s test/empty.txt -s test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
 unit_test "-s test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
 
-# unit_test test/max_line.txt
-# unit_test test/max_line_2.txt
-# unit_test test/max_line_3.txt
-
+unit_test test/max_line.txt
 unit_test test/random_binary0.txt
 unit_test test/random_binary1.txt
 unit_test test/random_binary2.txt
 unit_test test/random_binary3.txt
 unit_test test/random_binary2_err.txt
 unit_test test/random_binary3_err.txt
-
-
-#### -- UNIT STATS -- ####
-# if [ "$correct" == "$count" ]
-# then
-# 	echo "$GREEN Unit test: \t\t$correct / $count OK   $RESET"
-# elif [ "$correct" == "0" ]
-# then
-# 	echo "$RED Unit test: \t\t$correct / $count ERROR $RESET"
-# else
-# 	echo "$YELLOW Unit test: \t\t$correct / $count      $RESET"
-# fi
+unit_test test/contradiction_long.txt
+unit_test test/the_best_player_around_the_whole_universe.cor
+unit_test test/the_best_player_around_the_whole_universe.s
 
 echo
 #### -- RANDOM STRINGS -- ####
