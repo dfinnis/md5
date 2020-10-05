@@ -1,36 +1,22 @@
 #include "../inc/ft_ssl.h"
 
-char	*ft_strcpy2(char *dst, const char *src)
+static char	*ft_strjoin_bin(char const *s1, char const *s2)
 {
+	char			*fresh;
 	unsigned long	i;
-
-	i = 0;
-	while (i < g_len)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
-char	*ft_strcat2(char *s1, const char *s2)
-{
-	s1[g_len] = s2[0];
-	s1[g_len + 1] = '\0';
-	return (s1);
-}
-
-char	*ft_strjoin2(char const *s1, char const *s2)
-{
-	char	*fresh;
 
 	if (!s1 || !s2)
 		return (0);
 	if (!(fresh = ft_strnew(g_len + 1)))
 		return (NULL);
-	ft_strcpy2(fresh, s1);
-	ft_strcat2(fresh, s2);
+	i = 0;
+	while (i < g_len)
+	{
+		fresh[i] = s1[i];
+		i++;
+	}
+	fresh[g_len] = s2[0];
+	fresh[g_len + 1] = '\0';
 	return (fresh);
 }
 
@@ -40,7 +26,7 @@ static int	cp_char(char **line, char *str)
 
 	tmp = NULL;
 	tmp = *line;
-	if (!(*line = ft_strjoin2(*line, str)))
+	if (!(*line = ft_strjoin_bin(*line, str)))
 		return (-1);
 	ft_freestr(tmp);
 	ft_freestr(str);
