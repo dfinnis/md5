@@ -1,55 +1,11 @@
 #include "../inc/ft_ssl.h"
 
-// static uint8_t	*padding(char *input, unsigned int *msg_len)
-// {
-// 	uint8_t		*message;
-// 	uint32_t	bits_len;
-// 	uint32_t	input_len;
-
-// 	message = NULL;
-// 	bits_len = g_len;
-// 	input_len = g_len / 8;
-// 	while ((*msg_len) % 512 != 448)
-// 		(*msg_len)++;
-// 	(*msg_len) /= 8;
-// 	if ((message = calloc((*msg_len) + 64, sizeof(uint8_t))) == NULL)
-// 	{
-// 		ft_dprintf(2, "Memory allocation failure\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	ft_memcpy(message, input, input_len);
-// 	// ft_printf("input_len: %d\n", input_len);//rm!!!
-// 	// ft_printf("(*msg_len): %d\n", (*msg_len));//rm!!!
-// 	// ft_printf("(*msg_len) / 64: %d\n", (*msg_len)/64);//rm!!!
-// 	// ft_printf("bits_len: %d\n", bits_len);//rm!!!
-// 	// ft_printf("g_input_len: %d\n", g_input_len);//rm!!!
-// 	// // ft_printf("CHAR_BIT: %d\n", CHAR_BIT);//rm!!!
-
-// 	message[input_len] = 0x80;
-// 	ft_memcpy(&message[(*msg_len)], &bits_len, sizeof(uint32_t));
-// 	return (message);
-// }
-
-
 static uint8_t	*padding(char *input, uint32_t *msg_len)
 {
-	// unsigned long	strlen8;
 	unsigned long	i;
 	uint8_t			*padded;
 
-	// unsigned long j = 0;///
-	// ft_printf("\n");///
-	// while (j < g_len / 8)///
-	// {
-	// 	ft_printf("input[%d]: %x\n", j, input[j]);///
-	// 	j++;
-	// }
-	// ft_printf("\n");///
-
-
 	i = -1;
-	// strlen8 = ft_strlen(input) * 8;
-	// (*msg_len) = strlen8 + 1;
 	(*msg_len) = g_len + 1;
 	while ((*msg_len) % 512 != 448)
 		(*msg_len)++;
@@ -62,19 +18,12 @@ static uint8_t	*padding(char *input, uint32_t *msg_len)
 	while (++i < (*msg_len))
 		padded[i] = 0;
 	i = (*msg_len) - 9;
-	// ft_printf("g_len: %d\n", g_len);//rm!!!
-	// ft_printf("strlen8: %d\n", strlen8);//rm!!!
-	// ft_printf("strlen8 / 8: %d\n", strlen8/8);//rm!!!
-	// ft_printf("(*msg_len 64): %d\n", (*msg_len));//rm!!!
-
 	while (++i < (*msg_len))
 	{
 		padded[i] = g_len % 256;
 		g_len /= 256;
 	}
-	(*msg_len) /= 64;
-	// ft_printf("(*msg_len): %d\n", (*msg_len));//rm!!!
-	
+	(*msg_len) /= 64;	
 	return (padded);
 }
 
