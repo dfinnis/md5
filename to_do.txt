@@ -5,6 +5,7 @@ echo “Speed up now, Gas Pedal??” | ./ft_ssl md5 -p
 test devices, pipes, symbolic links, sockets, etc.
 test long file, dev/random
 
+static all files as possible
 sort headers (inc libft)
 norm
 

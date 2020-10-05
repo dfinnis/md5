@@ -11,6 +11,13 @@
 **		global command function dispatcher
 */
 void			(*g_cmd_func)(char *);
+unsigned long	g_len;
+
+
+// typedef struct	s_cmd_func_map {
+// 	const char *cmd;
+// 	void (*func)(char *);
+// }				t_cmd_func_map;
 
 enum			e_bufs
 {

@@ -17,6 +17,12 @@ const static struct {
 static void	read_command(char *cmd, t_args *args)
 {
 	unsigned long i;
+	// t_cmd_func_map cmd_func_map;
+
+	// cmd_func_map[] = {
+	// 	{ "md5", md5 },
+	// 	{ "sha256", sha256 },
+	// };
 
 	args->command = cmd;
 	i = 0;
@@ -49,6 +55,7 @@ int			flag_s(int argc, char **argv, int i, t_args *args)
 		ft_printf("Error: no string here!!\n");// EXIT!!!
 	i++;
 	args->flag_s = 1;
+	g_len = ft_strlen(argv[i]) * 8;////////
 	print_prefix(argv[i], args);
 	g_cmd_func(argv[i]);
 	print_suffix(argv[i], args);

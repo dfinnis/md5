@@ -35,4 +35,6 @@ void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words)
 {
 	buf[B] += rotate_left((buf[F] + buf[A] + g_sine[round] + words[buf[WORD]]),
 							g_shift[round]);
+	// if (round < 16)
+	// 	ft_printf("round: %d, buf[WORD]: %d, words[buf[WORD]]): %x\n", round, buf[WORD], words[buf[WORD]]);///////
 }
