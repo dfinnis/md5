@@ -94,12 +94,12 @@ void			md5(char *input)
 	size_t			chunk;
 	unsigned int	msg_len;
 
-	chunk = 0;
 	padded = padding(input, &msg_len);
 	hash[A] = 0x67452301;
 	hash[B] = 0xEFCDAB89;
 	hash[C] = 0x98BADCFE;
 	hash[D] = 0x10325476;
+	chunk = 0;
 	while (chunk < msg_len)
 		digest_chunk(hash, padded, chunk++);
 	print_digest(hash);
