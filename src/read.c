@@ -105,5 +105,6 @@ char		*read_stdin(void)
 	input = NULL;
 	if ((error = read_fd(0, &input) == -1))
 		ft_dprintf(2, "error reading stdin\n", error);// EXIT!!!!!!!!!
+	g_len *= 8;
 	return (input);
 }

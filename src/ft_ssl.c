@@ -100,7 +100,10 @@ int			main(int argc, char **argv)
 	{
 		read_command(argv[1], &args);
 		if (argc == 2)
+		{
 			g_cmd_func(read_stdin());
+			ft_printf("\n");
+		}
 		else
 			while (i < argc)
 				i = read_arg(argc, argv, &args, i);
