@@ -115,6 +115,12 @@ unit_test "-s test/empty.txt -s test/gnl_test.txt -q test/gnl_test.txt test/gnl_
 unit_test "-s test/empty.txt -s test/gnl_test.txt -r test/gnl_test.txt test/gnl_test.txt"
 unit_test "-s test/empty.txt -s test/gnl_test.txt -s test/gnl_test.txt test/gnl_test.txt"
 
+unit_test "-q -r -s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q -q -s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r -r -s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-q -s -s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+unit_test "-r -s -s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
+
 unit_test test/random_binary0.txt
 unit_test test/random_binary1.txt
 unit_test test/random_binary2.txt
@@ -131,8 +137,10 @@ unit_test "-s \"pity those that aren\'t following baerista on spotify.\""
 unit_test test/big_smoke_order_remix
 unit_test "-q test/big_smoke_order_remix"
 unit_test "-s \"wubba lubba dub dub\""
+unit_test "-s \"!@#$%^&*()~{}|<>,.\""
+unit_test "-s \"I mean.....\""
+unit_test "-s \"Does Donny?\""
 unit_test test/max_line.txt
-
 
 # echo
 #### -- More UNIT tests -- ####
@@ -376,9 +384,81 @@ else
 fi
 rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 
-rm file
+#### -- 10 -- ####
+echo "I mean..." | ./ft_ssl md5 -q -r -s "...you know?" > test/test_unit.txt 2> test/test_unit_err.txt
+echo "I mean..." | md5 -q -r -s "...you know?" > test/test_unit2.txt 2> test/test_unit2_err.txt
+dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+		diff test/test_unit_err.txt test/test_unit2_err.txt")
+if [ "$dif" = "" ]
+then
+	((correct+=1))
+	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+else
+	echo "$RED ERROR: echo \"I mean...\" | md5 -q -r -s \"...you know?\" $RESET	$dif\n"
+fi
+((count+=1))
+if [ "$correct" == "$count" ]
+then
+	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+elif [ "$correct" == "0" ]
+then
+	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+else
+	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
+fi
+rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 
+#### -- 11 -- ####
+echo "Wait..." | ./ft_ssl md5 -q -r -s "...what?" file -s -p -s -q > test/test_unit.txt 2> test/test_unit_err.txt
+echo "Wait..." | md5 -q -r -s "...what?" file -s -p -s -q > test/test_unit2.txt 2> test/test_unit2_err.txt
+dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+		diff test/test_unit_err.txt test/test_unit2_err.txt")
+if [ "$dif" = "" ]
+then
+	((correct+=1))
+	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+else
+	echo "$RED ERROR: echo \"Wait...\" | md5 -q -r -s \"...what?\" file -s -p -s -q $RESET	$dif\n"
+fi
+((count+=1))
+if [ "$correct" == "$count" ]
+then
+	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+elif [ "$correct" == "0" ]
+then
+	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+else
+	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
+fi
+rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+
+#### -- 12 -- ####
+echo "Salutations!" | ./ft_ssl md5 -p -p -s -s "Donny does" file -s -p -s -r > test/test_unit.txt 2> test/test_unit_err.txt
+echo "Salutations!" | md5 -p -p -s -s "Donny does" file -s -p -s -r > test/test_unit2.txt 2> test/test_unit2_err.txt
+dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+		diff test/test_unit_err.txt test/test_unit2_err.txt")
+if [ "$dif" = "" ]
+then
+	((correct+=1))
+	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+else
+	echo "$RED ERROR: echo \"Salutations!\" | ./ft_ssl md5 -p -p -s -s \"Donny does\" file -s -p -s -r $RESET	$dif\n"
+fi
+((count+=1))
+if [ "$correct" == "$count" ]
+then
+	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+elif [ "$correct" == "0" ]
+then
+	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+else
+	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
+fi
+rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+
+rm file
 echo
+
 #### -- RANDOM STRINGS -- ####
 random_correct=0
 random_count=0
