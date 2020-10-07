@@ -68,15 +68,9 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	if (ft_strcmp((argv[i]), "-p") == 0)
 		flag_p();
 	else if (ft_strcmp((argv[i]), "-q") == 0 && args->first == 1)
-	{
 		args->flag_q = 1;
-		args->first = 0;
-	}
 	else if (ft_strcmp((argv[i]), "-r") == 0 && args->first == 1)
-	{
 		args->flag_r = 1;
-		args->first = 0;
-	}
 	else if (ft_strcmp((argv[i]), "-s") == 0 && args->first == 1)
 		i = flag_s(argc, argv, i, args);
 	else
@@ -105,8 +99,15 @@ int			main(int argc, char **argv)
 			ft_printf("\n");
 		}
 		else
+		{
 			while (i < argc)
 				i = read_arg(argc, argv, &args, i);
+			if (args.first && (args.flag_q || args.flag_r))
+			{
+				g_cmd_func(read_stdin());
+				ft_printf("\n");
+			}
+		}
 	}
 	return (0);
 }
