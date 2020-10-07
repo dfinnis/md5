@@ -97,7 +97,7 @@ void		read_file(char *filepath, t_args *args)
 	print_suffix(filepath, args);
 }
 
-char		*read_stdin(void)
+void		read_stdin(int flag_p)
 {
 	char	*input;
 	int		error;
@@ -106,5 +106,8 @@ char		*read_stdin(void)
 	if ((error = read_fd(0, &input) == -1))
 		ft_dprintf(2, "error reading stdin\n", error);// EXIT!!!!!!!!!
 	g_len *= 8;
-	return (input);
+	if (flag_p)
+		ft_printf(input);
+	g_cmd_func(input);
+	ft_printf("\n");
 }

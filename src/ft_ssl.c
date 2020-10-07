@@ -39,16 +39,6 @@ static void	read_command(char *cmd, t_args *args)
 		print_usage();// correct action here?
 }
 
-void		flag_p(void)
-{
-	char *input;
-
-	input = read_stdin();
-	ft_printf(input);
-	g_cmd_func(input);
-	ft_printf("\n");
-}
-
 int			flag_s(int argc, char **argv, int i, t_args *args)
 {
 	if (i + 2 > argc)
@@ -66,7 +56,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 {
 	args->flag_s = 0;
 	if (ft_strcmp((argv[i]), "-p") == 0 && args->first)
-		flag_p();
+		read_stdin(1);
 	else if (ft_strcmp((argv[i]), "-q") == 0 && args->first)
 		args->flag_q = 1;
 	else if (ft_strcmp((argv[i]), "-r") == 0 && args->first)
@@ -94,19 +84,13 @@ int			main(int argc, char **argv)
 	{
 		read_command(argv[1], &args);
 		if (argc == 2)
-		{
-			g_cmd_func(read_stdin());
-			ft_printf("\n");
-		}
+			read_stdin(0);
 		else
 		{
 			while (i < argc)
 				i = read_arg(argc, argv, &args, i);
 			if (args.first && (args.flag_q || args.flag_r) && !args.flag_s)
-			{
-				g_cmd_func(read_stdin());
-				ft_printf("\n");
-			}
+				read_stdin(0);
 		}
 	}
 	return (0);

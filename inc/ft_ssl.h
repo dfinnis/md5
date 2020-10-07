@@ -42,7 +42,7 @@ typedef struct	s_args
 **		read.c
 */
 void			read_file(char *filepath, t_args *args);
-char			*read_stdin(void);
+void			read_stdin(int flag_p);
 
 /*
 **		print.c
