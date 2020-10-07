@@ -55,24 +55,23 @@ int			flag_s(int argc, char **argv, int i, t_args *args)
 		ft_printf("Error: no string here!!\n");// EXIT!!!
 	i++;
 	args->flag_s = 1;
-	g_len = ft_strlen(argv[i]) * 8;////////
+	g_len = ft_strlen(argv[i]) * 8;
 	print_prefix(argv[i], args);
 	g_cmd_func(argv[i]);
 	print_suffix(argv[i], args);
-	// args->flag_s = 0;
 	return (i);
 }
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)
 {
 	args->flag_s = 0;
-	if (ft_strcmp((argv[i]), "-p") == 0)
+	if (ft_strcmp((argv[i]), "-p") == 0 && args->first)
 		flag_p();
-	else if (ft_strcmp((argv[i]), "-q") == 0 && args->first == 1)
+	else if (ft_strcmp((argv[i]), "-q") == 0 && args->first)
 		args->flag_q = 1;
-	else if (ft_strcmp((argv[i]), "-r") == 0 && args->first == 1)
+	else if (ft_strcmp((argv[i]), "-r") == 0 && args->first)
 		args->flag_r = 1;
-	else if (ft_strcmp((argv[i]), "-s") == 0 && args->first == 1)
+	else if (ft_strcmp((argv[i]), "-s") == 0 && args->first)
 		i = flag_s(argc, argv, i, args);
 	else
 	{
