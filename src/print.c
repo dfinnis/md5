@@ -27,7 +27,7 @@ void		print_prefix(char *input, t_args *args)
 
 void		print_suffix(char *input, t_args *args)
 {
-	if (args->flag_r)
+	if (args->flag_r && !args->flag_q)
 	{
 		if (args->flag_s)
 			ft_printf(" \"%s\"", input);

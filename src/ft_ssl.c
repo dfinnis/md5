@@ -59,12 +59,13 @@ int			flag_s(int argc, char **argv, int i, t_args *args)
 	print_prefix(argv[i], args);
 	g_cmd_func(argv[i]);
 	print_suffix(argv[i], args);
-	args->flag_s = 0;
+	// args->flag_s = 0;
 	return (i);
 }
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)
 {
+	args->flag_s = 0;
 	if (ft_strcmp((argv[i]), "-p") == 0)
 		flag_p();
 	else if (ft_strcmp((argv[i]), "-q") == 0 && args->first == 1)
@@ -102,7 +103,7 @@ int			main(int argc, char **argv)
 		{
 			while (i < argc)
 				i = read_arg(argc, argv, &args, i);
-			if (args.first && (args.flag_q || args.flag_r))
+			if (args.first && (args.flag_q || args.flag_r) && !args.flag_s)
 			{
 				g_cmd_func(read_stdin());
 				ft_printf("\n");
