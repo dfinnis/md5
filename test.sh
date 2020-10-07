@@ -456,6 +456,54 @@ else
 fi
 rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 
+#### -- 13 -- ####
+echo "Magic mirror on the wall, think I wanna smash them all?" | ./ft_ssl md5 -p > test/test_unit.txt 2> test/test_unit_err.txt
+echo "Magic mirror on the wall, think I wanna smash them all?" | md5 -p > test/test_unit2.txt 2> test/test_unit2_err.txt
+dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+		diff test/test_unit_err.txt test/test_unit2_err.txt")
+if [ "$dif" = "" ]
+then
+	((correct+=1))
+	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+else
+	echo "$RED ERROR: echo \"Magic mirror on the wall, think I wanna smash them all?\" | md5 -p $RESET	$dif\n"
+fi
+((count+=1))
+if [ "$correct" == "$count" ]
+then
+	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+elif [ "$correct" == "0" ]
+then
+	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+else
+	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
+fi
+rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+
+#### -- 14 -- ####
+echo "Speed up now, Gas Pedal??" | ./ft_ssl md5 -p > test/test_unit.txt 2> test/test_unit_err.txt
+echo "Speed up now, Gas Pedal??" | md5 -p > test/test_unit2.txt 2> test/test_unit2_err.txt
+dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+		diff test/test_unit_err.txt test/test_unit2_err.txt")
+if [ "$dif" = "" ]
+then
+	((correct+=1))
+	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+else
+	echo "$RED ERROR: echo \"Speed up now, Gas Pedal??\" | md5 -p $RESET	$dif\n"
+fi
+((count+=1))
+if [ "$correct" == "$count" ]
+then
+	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+elif [ "$correct" == "0" ]
+then
+	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+else
+	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
+fi
+rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+
 rm file
 echo
 
