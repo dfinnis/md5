@@ -54,6 +54,7 @@ void			print_suffix(char *input, t_args *args);
 /*
 **		md5.c
 */
+uint8_t			*pad(char *input, uint32_t *msg_len);
 void			md5(char *input);
 
 /*

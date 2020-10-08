@@ -1,6 +1,6 @@
 #include "../inc/ft_ssl.h"
 
-static uint8_t	*padding(char *input, uint32_t *msg_len)
+uint8_t			*pad(char *input, uint32_t *msg_len)
 {
 	unsigned long	i;
 	uint8_t			*padded;
@@ -94,7 +94,7 @@ void			md5(char *input)
 	size_t			chunk;
 	unsigned int	msg_len;
 
-	padded = padding(input, &msg_len);
+	padded = pad(input, &msg_len);
 	hash[A] = 0x67452301;
 	hash[B] = 0xEFCDAB89;
 	hash[C] = 0x98BADCFE;
