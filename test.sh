@@ -44,6 +44,8 @@ unit_test()
 	rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 }
 
+echo "And above all," > file
+unit_test file
 unit_test test/empty.txt
 unit_test test/gnl_test.txt
 unit_test test/correction.txt
@@ -142,367 +144,50 @@ unit_test "-s \"I mean.....\""
 unit_test "-s \"Does Donny?\""
 unit_test test/max_line.txt
 
-# echo
 #### -- More UNIT tests -- ####
-echo "pickle rick" | ./ft_ssl md5 > test/test_unit.txt 2> test/test_unit_err.txt
-echo "pickle rick" | md5 > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"pickle rick\" | md5 $RESET                    $dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+unit_test2()
+{
+	PREFIX=$1
+	SUFFIX=$2
+	echo $PREFIX | ./ft_ssl md5 $SUFFIX > test/test_unit.txt 2> test/test_unit_err.txt
+	echo $PREFIX | md5 $SUFFIX > test/test_unit2.txt 2> test/test_unit2_err.txt
+	dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+			diff test/test_unit_err.txt test/test_unit2_err.txt")
+	if [ "$dif" = "" ]
+	then
+		((correct+=1))
+		# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+	else
+		echo "$RED $PREFIX | md5 $SUFFIX $RESET                           $dif"
+	fi
+	((count+=1))
+	if [ "$correct" == "$count" ]
+	then
+		echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
+	elif [ "$correct" == "0" ]
+	then
+		echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
+	else
+		echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
+	fi
+	rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 
-#### -- 1 -- ####
-echo "Do not pity the dead, Harry." | ./ft_ssl md5 -p > test/test_unit.txt 2> test/test_unit_err.txt
-echo "Do not pity the dead, Harry." | md5 -p > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"Do not pity the dead, Harry.\" | md5 $RESET $dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+}
 
-#### -- 2 -- ####
-echo "Pity the living." | ./ft_ssl md5 -q -r > test/test_unit.txt 2> test/test_unit_err.txt
-echo "Pity the living." | md5 -q -r > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"Pity the living.\" | md5 -q -r $RESET          $dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 3 -- ####
-echo "And above all," > file
-./ft_ssl md5 file > test/test_unit.txt 2> test/test_unit_err.txt
-md5 file > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: \"And above all,\" > file $RESET                  	$dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 4 -- ####
-echo "be sure to handle edge cases carefully" | ./ft_ssl md5 -p file > test/test_unit.txt 2> test/test_unit_err.txt
-echo "be sure to handle edge cases carefully" | md5 -p file > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo "be sure to handle edge cases carefully" | md5 -p file $RESET	$dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 5 -- ####
-echo "some of this will not make sense at first" | ./ft_ssl md5 file > test/test_unit.txt 2> test/test_unit_err.txt
-echo "some of this will not make sense at first" | md5 file > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"some of this will not make sense at first\" | md5 file $RESET	$dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 6 -- ####
-echo "but eventually you will understand" | ./ft_ssl md5 -p -r file > test/test_unit.txt 2> test/test_unit_err.txt
-echo "but eventually you will understand" | md5 -p -r file > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"but eventually you will understand\" | md5 -p -r file $RESET	$dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 7 -- ####
-echo "GL HF let's go" | ./ft_ssl md5 -p -s "foo" file > test/test_unit.txt 2> test/test_unit_err.txt
-echo "GL HF let's go" | md5 -p -s "foo" file > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"GL HF let's go\" | md5 -p -s "foo" file  $RESET	$dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 8 -- ####
-echo "one more thing" | ./ft_ssl md5 -r -p -s "foo" file -s "bar" > test/test_unit.txt 2> test/test_unit_err.txt
-echo "one more thing" | md5 -r -p -s "foo" file -s "bar" > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"one more thing\" | md5 -r -p -s \"foo\" file -s \"bar\" $RESET	$dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 9 -- ####
-echo "just to be extra clear" | ./ft_ssl md5 -r -q -p -s "foo" file > test/test_unit.txt 2> test/test_unit_err.txt
-echo "just to be extra clear" | md5 -r -q -p -s "foo" file > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"just to be extra clear\" | md5 -r -q -p -s \"foo\" file $RESET	$dif"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 10 -- ####
-echo "I mean..." | ./ft_ssl md5 -q -r -s "...you know?" > test/test_unit.txt 2> test/test_unit_err.txt
-echo "I mean..." | md5 -q -r -s "...you know?" > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"I mean...\" | md5 -q -r -s \"...you know?\" $RESET	$dif\n"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 11 -- ####
-echo "Wait..." | ./ft_ssl md5 -q -r -s "...what?" file -s -p -s -q > test/test_unit.txt 2> test/test_unit_err.txt
-echo "Wait..." | md5 -q -r -s "...what?" file -s -p -s -q > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"Wait...\" | md5 -q -r -s \"...what?\" file -s -p -s -q $RESET	$dif\n"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 12 -- ####
-echo "Salutations!" | ./ft_ssl md5 -p -p -s -s "Donny does" file -s -p -s -r > test/test_unit.txt 2> test/test_unit_err.txt
-echo "Salutations!" | md5 -p -p -s -s "Donny does" file -s -p -s -r > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"Salutations!\" | ./ft_ssl md5 -p -p -s -s \"Donny does\" file -s -p -s -r $RESET	$dif\n"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 13 -- ####
-echo "Magic mirror on the wall, think I wanna smash them all?" | ./ft_ssl md5 -p > test/test_unit.txt 2> test/test_unit_err.txt
-echo "Magic mirror on the wall, think I wanna smash them all?" | md5 -p > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"Magic mirror on the wall, think I wanna smash them all?\" | md5 -p $RESET	$dif\n"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
-
-#### -- 14 -- ####
-echo "Speed up now, Gas Pedal??" | ./ft_ssl md5 -p > test/test_unit.txt 2> test/test_unit_err.txt
-echo "Speed up now, Gas Pedal??" | md5 -p > test/test_unit2.txt 2> test/test_unit2_err.txt
-dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-		diff test/test_unit_err.txt test/test_unit2_err.txt")
-if [ "$dif" = "" ]
-then
-	((correct+=1))
-	# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-else
-	echo "$RED ERROR: echo \"Speed up now, Gas Pedal??\" | md5 -p $RESET	$dif\n"
-fi
-((count+=1))
-if [ "$correct" == "$count" ]
-then
-	echo "$GREEN Unit tests: \t\t$correct / $count OK   $RESET $CLEAR_LINE"
-elif [ "$correct" == "0" ]
-then
-	echo "$RED Unit tests: \t\t$correct / $count ERROR $RESET $CLEAR_LINE"
-else
-	echo "$YELLOW Unit tests: \t\t$correct / $count      $RESET $CLEAR_LINE"
-fi
-rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+unit_test2 "\"pickle rick\""
+unit_test2 "Do not pity the dead, Harry." "-p"
+unit_test2 "Pity the living." "-q -r"
+unit_test2 "be sure to handle edge cases carefully" "-p file"
+unit_test2 "some of this will not make sense at first" "file"
+unit_test2 "but eventually you will understand" "-p -r file"
+unit_test2 "GL HF let's go" "-p -s \"foo\" file"
+unit_test2 "one more thing" "-r -p -s \"foo\" file -s \"bar\""
+unit_test2 "just to be extra clear" "-r -q -p -s \"foo\" file"
+unit_test2 "I mean..." "-q -r -s \"...you know?\""
+unit_test2 "Wait..." "-q -r -s \"...what?\" file -s -p -s -q"
+unit_test2 "Salutations!" "-p -p -s -s \"Donny does\" file -s -p -s -r"
+unit_test2 "Magic mirror on the wall, think I wanna smash them all?" "-p"
+unit_test2 "Speed up now, Gas Pedal??" "-p"
 
 rm file
 echo
