@@ -13,12 +13,6 @@
 void			(*g_cmd_func)(char *);
 unsigned long	g_len;
 
-
-// typedef struct	s_cmd_func_map {
-// 	const char *cmd;
-// 	void (*func)(char *);
-// }				t_cmd_func_map;
-
 enum			e_bufs
 {
 	A, B, C, D, WORD, F, TMP
@@ -36,7 +30,6 @@ typedef struct	s_args
 /*
 **		ft_ssl.c
 */
-
 
 /*
 **		read.c
@@ -66,5 +59,13 @@ void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
 **		sha.c
 */
 void			sha256(char *input);
+
+const static struct {
+	const char	*cmd;
+	void		(*func)(char *);
+} g_cmd_func_map[] = {
+	{ "md5", md5 },
+	{ "sha256", sha256 },
+};
 
 #endif

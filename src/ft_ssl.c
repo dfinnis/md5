@@ -6,31 +6,17 @@ static void	init_ssl(t_args *args)
 	args->first = 1;
 }
 
-const static struct {
-	const char *cmd;
-	void (*func)(char *);
-} cmd_func_map[] = {
-	{ "md5", md5 },
-	{ "sha256", sha256 },
-};
-
 static void	read_command(char *cmd, t_args *args)
 {
 	unsigned long i;
-	// t_cmd_func_map cmd_func_map;
-
-	// cmd_func_map[] = {
-	// 	{ "md5", md5 },
-	// 	{ "sha256", sha256 },
-	// };
 
 	args->command = cmd;
 	i = 0;
-	while (i < (sizeof(cmd_func_map) / sizeof(cmd_func_map[0])))
+	while (i < (sizeof(g_cmd_func_map) / sizeof(g_cmd_func_map[0])))
 	{
-		if (!strcmp(cmd_func_map[i].cmd, cmd) && cmd_func_map[i].func)
+		if (!strcmp(g_cmd_func_map[i].cmd, cmd) && g_cmd_func_map[i].func)
 		{
-			g_cmd_func = cmd_func_map[i].func;
+			g_cmd_func = g_cmd_func_map[i].func;
 			break ;
 		}
 		i++;
@@ -95,7 +81,3 @@ int			main(int argc, char **argv)
 	}
 	return (0);
 }
-
-// flag: -s "string1" -s "string2"
-// file as direct argument: ./ft_ssl md5 file
-// standard in: -p OR echo "string" | ./ft_ssl md5
