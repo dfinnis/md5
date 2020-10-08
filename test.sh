@@ -156,7 +156,7 @@ unit_test2()
 	if [ "$dif" = "" ]
 	then
 		((correct+=1))
-		# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+		# echo "$GREEN OK: $PREFIX | md5 $SUFFIX $RESET"
 	else
 		echo "$RED $PREFIX | md5 $SUFFIX $RESET                           $dif"
 	fi
@@ -174,7 +174,7 @@ unit_test2()
 
 }
 
-unit_test2 "\"pickle rick\""
+unit_test2 "pickle rick"
 unit_test2 "Do not pity the dead, Harry." "-p"
 unit_test2 "Pity the living." "-q -r"
 unit_test2 "be sure to handle edge cases carefully" "-p file"
