@@ -20,12 +20,19 @@ echo "And above all," > file
 test_hash()
 {
 	HASH=$1
+	if [ $HASH == "md5" ]
+	then
+		openssl=""
+	else
+		openssl="openssl"
+	fi
+	echo "$BRIGHT $HASH $RESET"
 	#### -- UNIT tests -- ####
 	unit_test()
 	{
 		FILEPATH=$1
 		./ft_ssl $HASH $FILEPATH > test/test_unit.txt 2> test/test_unit_err.txt
-		$HASH $FILEPATH > test/test_unit2.txt 2> test/test_unit2_err.txt
+		$openssl $HASH $FILEPATH > test/test_unit2.txt 2> test/test_unit2_err.txt
 		dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
 					diff test/test_unit_err.txt test/test_unit2_err.txt")
 		if [ "$dif" = "" ]
@@ -52,6 +59,12 @@ test_hash()
 	unit_test file
 	unit_test test/empty.txt
 	unit_test test/gnl_test.txt
+
+	# if [ $HASH == "sha256" ] ################
+	# then ############################
+	# 	exit ############################
+	# fi #############################
+
 	unit_test test/correction.txt
 	unit_test test/does_not_exist.txt
 	unit_test test/
@@ -154,7 +167,7 @@ test_hash()
 		PREFIX=$1
 		SUFFIX=$2
 		echo $PREFIX | ./ft_ssl $HASH $SUFFIX > test/test_unit.txt 2> test/test_unit_err.txt
-		echo $PREFIX | $HASH $SUFFIX > test/test_unit2.txt 2> test/test_unit2_err.txt
+		echo $PREFIX | $openssl $HASH $SUFFIX > test/test_unit2.txt 2> test/test_unit2_err.txt
 		dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
 				diff test/test_unit_err.txt test/test_unit2_err.txt")
 		if [ "$dif" = "" ]
@@ -201,7 +214,7 @@ test_hash()
 		random_len=$(( ( RANDOM % 1000 )  + 1 ))
 		openssl rand -base64 $random_len > test/test_random.txt
 		cmd="./ft_ssl $HASH test/test_random.txt"
-		control="$HASH test/test_random.txt"
+		control="$openssl $HASH test/test_random.txt"
 		output=$(eval "$cmd")
 		output2=$(eval "$control")
 		if [ "$output" = "$output2" ]
@@ -232,7 +245,7 @@ test_hash()
 		random_len=$(( ( RANDOM % 1000 )  + 1 ))
 		random_str=$(eval "openssl rand -base64 $random_len")
 		cmd="./ft_ssl $HASH -s \"$random_str\""
-		control="$HASH -s \"$random_str\""
+		control="$openssl $HASH -s \"$random_str\""
 		output=$(eval "$cmd")
 		output2=$(eval "$control")
 		if [ "$output" = "$output2" ]
@@ -262,7 +275,7 @@ test_hash()
 		random_len=$(( ( RANDOM % 1000 )  + 1 ))
 		cat /dev/urandom | head -c $random_len > test/test_random.txt
 		cmd="./ft_ssl $HASH test/test_random.txt"
-		control="$HASH test/test_random.txt"
+		control="$openssl $HASH test/test_random.txt"
 		output=$(eval "$cmd")
 		output2=$(eval "$control")
 		if [ "$output" = "$output2" ]
@@ -298,7 +311,7 @@ test_hash()
 }
 
 test_hash "md5"
-# test_hash "openssl sha256"
+# test_hash "sha256"
 
 #### -- FINAL STATS -- ####
 echo
