@@ -310,6 +310,7 @@ test_hash()
 	fi
 }
 
+#### -- EXEC TEST HASH -- ####
 test_hash "md5"
 # test_hash "sha256"
 
