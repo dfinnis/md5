@@ -1,6 +1,6 @@
 #include "../inc/ft_ssl.h"
 
-uint8_t			*pad(char *input, uint32_t *msg_len)
+static uint8_t	*pad(char *input, uint32_t *msg_len)
 {
 	unsigned long	i;
 	uint8_t			*padded;

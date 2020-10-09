@@ -19,14 +19,14 @@ void	init_hash(uint32_t hash[8])
 
 void	sha256(char *input)
 {
-	// ft_printf("sha input: %s\n", input);//rm!!!
+	ft_printf("sha input: %s\n", input);//rm!!!
 
-	uint8_t			*padded;
+	// uint8_t			*padded;
 	uint32_t		hash[8];
 	// size_t			chunk;
-	unsigned int	msg_len;
+	// unsigned int	msg_len;
 
-	padded = pad(input, &msg_len);
+	// padded = pad(input, &msg_len);
 	init_hash(hash);
 
 	ft_printf("\n");
@@ -36,9 +36,6 @@ void	sha256(char *input)
 		ft_printf("hash[%d]: 0x%x\n", j, hash[j]);//
 		j++;//
 	}//
-
-	hash[0] = 0x6a09e667;
-
 
 	// chunk = 0;
 	// while (chunk < msg_len)

@@ -3,6 +3,7 @@
 # define FT_SSL_H
 
 # include "../libft/ft_printf/ft_printf.h"
+# include "commands_map.h"
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/stat.h>
@@ -47,8 +48,6 @@ void			print_suffix(char *input, t_args *args);
 /*
 **		md5.c
 */
-uint8_t			*pad(char *input, uint32_t *msg_len);
-void			md5(char *input);
 
 /*
 **		md5_rotate.c
@@ -58,14 +57,5 @@ void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
 /*
 **		sha.c
 */
-void			sha256(char *input);
-
-const static struct {
-	const char	*cmd;
-	void		(*func)(char *);
-} g_cmd_func_map[] = {
-	{ "md5", md5 },
-	{ "sha256", sha256 },
-};
 
 #endif

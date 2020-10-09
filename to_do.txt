@@ -1,7 +1,6 @@
 function dispatcher (function pointer array)
 read commands from STDIN not just args
 
-echo “Speed up now, Gas Pedal??” | ./ft_ssl md5 -p
 test devices, pipes, symbolic links, sockets, etc.
 
 static all files as possible
@@ -9,6 +8,17 @@ sort headers (inc libft)
 norm
 author
 
+The md5 & sha utilities exit 0 on success
+1 if at least one of the input files could not be read (error)
+
+#### INPUT #### 
+// flag: -s "string1" -s "string2"
+// file as direct argument: ./ft_ssl md5 file
+// standard in: -p OR echo "string" | ./ft_ssl md5
+
 #### BONUS ####
 1. test.sh
 2. other sha#?
+parse commands from STDIN the same way that OpenSSL does ?
+-t Run a built-in time trial ?
+-x Run a built-in test script ?
