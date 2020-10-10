@@ -102,5 +102,6 @@ void			md5(char *input)
 	chunk = 0;
 	while (chunk < msg_len)
 		digest_chunk(hash, padded, chunk++);
+	free(padded);
 	print_digest(hash);
 }

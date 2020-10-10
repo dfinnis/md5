@@ -314,6 +314,37 @@ test_hash()
 test_hash "md5"
 # test_hash "sha256"
 
+echo "$BRIGHT sha256 $RESET"
+#### -- RANDOM STRINGS -- ####
+random_correct=0
+random_count=0
+while [ $random_count -lt 100 ]
+do
+	random_len=$(( ( RANDOM % 1000 )  + 1 ))
+	openssl rand -base64 $random_len > test/test_random.txt
+	cmd="./ft_ssl $HASH -q test/test_random.txt"
+	control="openssl $HASH -r test/test_random.txt | awk '{print \$1;}'"
+	output=$(eval "$cmd")
+	output2=$(eval "$control")
+	if [ "$output" = "$output2" ]
+	then
+		((correct+=1))
+		((random_correct+=1))
+	fi
+	((count+=1))
+	((random_count+=1))
+	if [ "$random_correct" == "$random_count" ]
+	then
+		echo "$GREEN Random string > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
+	elif [ "$random_correct" == "0" ]
+	then
+		echo "$RED Random string > file: \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+	else
+		echo "$YELLOW Random string > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
+	fi
+	rm test/test_random.txt
+done
+
 #### -- FINAL STATS -- ####
 echo
 if [ "$correct" == "$count" ]
