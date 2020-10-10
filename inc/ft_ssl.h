@@ -9,14 +9,14 @@
 # include <sys/stat.h>
 
 /*
-**		global command function dispatcher
+**		global command function pointer
 */
 void			(*g_cmd_func)(char *);
 unsigned long	g_len;
 
 enum			e_bufs
 {
-	A, B, C, D, WORD, F, TMP
+	A, B, C, D, E, F, G, I, WORD = 4, TMP = 6
 };
 
 typedef struct	s_args
