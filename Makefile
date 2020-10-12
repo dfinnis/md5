@@ -18,7 +18,9 @@ SRCS_FILES = ft_ssl.c \
 	print.c \
 	md5.c \
 	md5_rotate.c \
-	sha.c
+	sha.c \
+	sha_chunk.c \
+	sha_cmd.c
 
 SRCS_PATH = $(SRCS_FILES:%=$(SRCS_DIR)%)
 

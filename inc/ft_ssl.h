@@ -57,5 +57,11 @@ void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
 /*
 **		sha.c
 */
+void			sha2(char *input, int algo);
+
+/*
+**		sha_chunk.c
+*/
+void			sha_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk);
 
 #endif
