@@ -58,14 +58,35 @@ test_hash()
 
 	unit_test file
 	unit_test test/empty.txt
+	unit_test test/hello.txt
 	unit_test test/gnl_test.txt
-
-	# if [ $HASH == "sha256" ] ################
-	# then ############################
-	# 	exit ############################
-	# fi #############################
-
 	unit_test test/correction.txt
+
+	unit_test test/random_str.txt
+	unit_test test/random_str1.txt
+	unit_test test/random_str2.txt
+	unit_test test/random_str3.txt
+	unit_test test/random_str4.txt
+	unit_test test/random_str5.txt
+	unit_test test/random_str6.txt
+	unit_test test/random_str7.txt
+	unit_test test/random_str8.txt
+	unit_test test/random_str9.txt
+
+	unit_test test/random_binary0.txt
+	unit_test test/random_binary1.txt
+	unit_test test/random_binary2.txt
+	unit_test test/random_binary3.txt
+	unit_test test/random_binary2_err.txt
+	unit_test test/random_binary3_err.txt
+
+	unit_test test/contradiction_long.txt
+	unit_test test/the_best_player_around_the_whole_universe.cor
+	unit_test test/the_best_player_around_the_whole_universe.s
+	unit_test test/big_smoke_order_remix
+	unit_test test/max_line.txt
+
+	## ERROR, MULTIPLE & FLAG tests
 	unit_test test/does_not_exist.txt
 	unit_test test/
 	unit_test "test/does_not_exist.txt test/gnl_test.txt"
@@ -140,26 +161,14 @@ test_hash()
 	unit_test "-q -s -s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
 	unit_test "-r -s -s test/empty.txt test/gnl_test.txt test/gnl_test.txt test/gnl_test.txt"
 
-	unit_test test/random_binary0.txt
-	unit_test test/random_binary1.txt
-	unit_test test/random_binary2.txt
-	unit_test test/random_binary3.txt
 	unit_test "test/random_binary1.txt test/random_binary2.txt unit_test test/random_binary3.txt"
-	unit_test test/random_binary2_err.txt
-	unit_test test/random_binary3_err.txt
-
-	unit_test test/contradiction_long.txt
-	unit_test test/the_best_player_around_the_whole_universe.cor
-	unit_test test/the_best_player_around_the_whole_universe.s
 
 	unit_test "-s \"pity those that aren\'t following baerista on spotify.\""
-	unit_test test/big_smoke_order_remix
 	unit_test "-q test/big_smoke_order_remix"
 	unit_test "-s \"wubba lubba dub dub\""
 	unit_test "-s \"!@#$%^&*()~{}|<>,.\""
 	unit_test "-s \"I mean.....\""
 	unit_test "-s \"Does Donny?\""
-	unit_test test/max_line.txt
 
 	#### -- More UNIT tests -- ####
 	unit_test2()
@@ -265,8 +274,44 @@ test_hash()
 			echo "$YELLOW Random -s \"string\": \t$random_correct / $random_count      $RESET $CLEAR_LINE"
 		fi
 	done
-	echo
 
+	echo
+	#### -- RANDOM echo -- ####
+	random_correct=0
+	random_count=0
+	while [ $random_count -lt 100 ]
+	do
+		random_len=$(( ( RANDOM % 1000 )  + 1 ))
+		random_str=$(eval "openssl rand -base64 $random_len")
+		cmd="echo \"$random_str\" | ./ft_ssl md5"
+		control="echo \"$random_str\" | openssl md5"
+		output=$(eval "$cmd")
+		output2=$(eval "$control")
+		if [ "$output" = "$output2" ]
+		then
+			((correct+=1))
+			((random_correct+=1))
+		else
+			echo "$RED ERROR: echo \"random string\" | ./ft_ssl $RESET                            "
+			echo "$random_str"
+			echo "./ft_ssl: $output"
+			echo "openssl:  $output2"
+		fi
+		((count+=1))
+		((random_count+=1))
+		if [ "$random_correct" == "$random_count" ]
+		then
+			echo "$GREEN echo \"str\" | ./ft_ssl: $random_correct / $random_count OK   $RESET $CLEAR_LINE"
+		elif [ "$random_correct" == "0" ]
+		then
+			echo "$RED echo \"str\" | ./ft_ssl: $random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+		else
+			echo "$YELLOW echo \"str\" | ./ft_ssl: $random_correct / $random_count      $RESET $CLEAR_LINE"
+		fi
+		# rm test/test_random.txt
+	done
+
+	echo
 	#### -- RANDOM BINARY -- ####
 	random_correct=0
 	random_count=0
@@ -349,13 +394,35 @@ unit_test_sha()
 	rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
 }
 
+unit_test_sha file
+unit_test_sha test/empty.txt
 unit_test_sha test/hello.txt
+unit_test_sha test/gnl_test.txt
+unit_test_sha test/correction.txt
+
 unit_test_sha test/random_str.txt
 unit_test_sha test/random_str1.txt
 unit_test_sha test/random_str2.txt
 unit_test_sha test/random_str3.txt
 unit_test_sha test/random_str4.txt
 unit_test_sha test/random_str5.txt
+unit_test_sha test/random_str6.txt
+unit_test_sha test/random_str7.txt
+unit_test_sha test/random_str8.txt
+unit_test_sha test/random_str9.txt
+
+unit_test_sha test/random_binary0.txt
+unit_test_sha test/random_binary1.txt
+unit_test_sha test/random_binary2.txt
+unit_test_sha test/random_binary3.txt
+unit_test_sha test/random_binary2_err.txt
+unit_test_sha test/random_binary3_err.txt
+
+unit_test_sha test/contradiction_long.txt
+unit_test_sha test/the_best_player_around_the_whole_universe.cor
+unit_test_sha test/the_best_player_around_the_whole_universe.s
+unit_test_sha test/big_smoke_order_remix
+unit_test_sha test/max_line.txt
 
 echo
 #### -- RANDOM STRINGS -- ####
@@ -409,7 +476,7 @@ do
 		echo "$random_str"
 		echo "./ft_ssl: $output"
 		echo "openssl:  $output2"
-		echo $random_str > test/random_str9.txt
+		# echo $random_str > test/random_str9z.txt ##
 	fi
 	((count+=1))
 	((random_count+=1))
