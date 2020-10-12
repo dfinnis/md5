@@ -159,3 +159,40 @@ void	sha256(char *input)
 	free(padded);
 	print_digest(hash);
 }
+
+void	init_224(uint32_t hash[8])
+{
+	hash[0] = 0xc1059ed8;
+	hash[1] = 0x367cd507;
+	hash[2] = 0x3070dd17;
+	hash[3] = 0xf70e5939;
+	hash[4] = 0xffc00b31;
+	hash[5] = 0x68581511;
+	hash[6] = 0x64f98fa7;
+	hash[7] = 0xbefa4fa4;
+}
+
+static void		print_224(uint32_t hash[8])
+{
+	int i;
+
+	i = 0;
+	while (i < 7)
+		ft_printf("%08x", hash[i++]);
+}
+
+void	sha224(char *input)
+{
+	uint32_t	*padded;
+	uint32_t	hash[8];
+	size_t		chunk;
+	size_t		msg_len;
+
+	padded = pad(input, &msg_len);
+	init_224(hash);
+	chunk = 0;
+	while (chunk < msg_len)
+		digest_chunk(hash, padded, chunk++);
+	free(padded);
+	print_224(hash);
+}

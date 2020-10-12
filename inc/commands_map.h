@@ -9,6 +9,7 @@ const static struct {
 	void		(*func)(char *);
 } g_cmd_func_map[] = {
 	{ "md5", md5 },
+	{ "sha224", sha224 },
 	{ "sha256", sha256 },
 };
 
