@@ -31,16 +31,16 @@ void	init_hash(uint32_t hash[8])
 	hash[7] = 0x5be0cd19;
 }
 
-uint32_t	change_endianness(uint32_t value)
+uint32_t	swap_endianness(uint32_t before)
 {
-	uint32_t result;
+	uint32_t after;
 
-	result = 0;
-	result |= (value & 0x000000ff) << 24;
-	result |= (value & 0x0000ff00) << 8;
-	result |= (value & 0x00ff0000) >> 8;
-	result |= (value & 0xff000000) >> 24;
-	return (result);
+	after = 0;
+	after |= (before & 0x000000ff) << 24;
+	after |= (before & 0x0000ff00) << 8;
+	after |= (before & 0x00ff0000) >> 8;
+	after |= (before & 0xff000000) >> 24;
+	return (after);
 }
 
 static uint32_t	*pad(char *input, size_t *msg_len)
@@ -50,16 +50,16 @@ static uint32_t	*pad(char *input, size_t *msg_len)
 
 	padded = NULL;
 	(*msg_len) = ((g_len + 64) / 512) + 1;
-	if ((padded = calloc((*msg_len) * 16, 32)) == NULL)
+	if ((padded = calloc((*msg_len) * 16, 32)) == NULL)// malloc
 	{
 		ft_dprintf(2, "Memory allocation failure\n");
 		exit(EXIT_FAILURE);
 	}
-	((uint8_t*)padded)[g_len/8] = 0x80;
-	ft_memcpy(padded, input, g_len/8);
+	ft_memcpy(padded, input, g_len / 8);
+	((uint8_t*)padded)[g_len / 8] = 0x80;
 	i = -1;
-	while (++i < g_len/8 + 1)
-		padded[i] = change_endianness(padded[i]);
+	while (++i < g_len / 8 + 1)
+		padded[i] = swap_endianness(padded[i]);
 	padded[((((*msg_len) * 512) - 64) / 32) + 1] = g_len;
 	g_len = 0;
 	return (padded);
@@ -107,29 +107,12 @@ static void		operations(uint32_t *buf, uint32_t *w, size_t i)
 	buf[A] = tmp[0] + tmp[1];
 }
 
-void	init_buf(uint32_t hash[8], uint32_t *buf)
-{
-	int i;
-
-	i = -1;
-	while (++i < 8)
-		buf[i] = hash[i];
-}
-
-void	add_buf(uint32_t hash[8], uint32_t *buf)
-{
-	int i;
-
-	i = -1;
-	while (++i < 8)
-		hash[i] += buf[i];
-}
-
 static void		digest_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 {
 	uint32_t	*words;
 	size_t		round;
 	uint32_t	buf[8];
+	int			i;
 
 	if ((words = calloc(64, 32)) == NULL)// malloc
 	{
@@ -140,11 +123,15 @@ static void		digest_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 	round = 16;
 	while (round < 64)
 		extend(words, round++);
-	init_buf(hash, buf);
+	i = -1;
+	while (++i < 8)
+		buf[i] = hash[i];
 	round = 0;
 	while (round < 64)
 		operations(buf, words, round++);
-	add_buf(hash, buf);
+	i = -1;
+	while (++i < 8)
+		hash[i] += buf[i];
 	free(words);
 }
 
