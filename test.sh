@@ -342,24 +342,24 @@ test_hash()
 		rm test/test_random.txt
 	done
 
-	#### -- HASH STATS -- ####
-	echo
-	if [ "$correct" == "$count" ]
-	then
-		echo "\nPassed $GREEN $correct / $count $RESET $HASH tests\n"
-	elif [ "$correct" == "0" ]
-	then
-		echo "\nPassed $RED $correct / $count $RESET $HASH tests\n"	
-	else
-		echo "\nPassed $YELLOW $correct / $count $RESET $HASH tests\n"
-	fi
+	# #### -- MD5 STATS -- ####
+	# echo
+	# if [ "$correct" == "$count" ]
+	# then
+	# 	echo "\n\t     md5 total:$GREEN $correct / $count OK $RESET\n"
+	# elif [ "$correct" == "0" ]
+	# then
+	# 	echo "\n\t     md5 total:$RED $correct / $count $RESET\n"	
+	# else
+	# 	echo "\n\t     md5 total:$YELLOW $correct / $count $RESET\n"
+	# fi
 }
 
 #### -- EXEC TEST HASH -- ####
 test_hash "md5"
 # test_hash "sha256"
 
-echo "$BRIGHT sha256 $RESET"
+echo "\n\n$BRIGHT sha256 $RESET"
 
 #### -- SHA UNIT test -- ####
 unit_correct=0
@@ -493,17 +493,59 @@ do
 done
 
 echo
+#### -- RANDOM BINARY -- ####
+random_correct=0
+random_count=0
+while [ $random_count -lt 100 ]
+do
+	random_len=$(( ( RANDOM % 1000 )  + 1 ))
+	cat /dev/urandom | head -c $random_len > test/test_random.txt
+	cmd="./ft_ssl sha256 -q test/test_random.txt"
+	control="openssl sha256 -r test/test_random.txt | awk '{print \$1;}'"
+	output=$(eval "$cmd")
+	output2=$(eval "$control")
+	if [ "$output" = "$output2" ]
+	then
+		((correct+=1))
+		((random_correct+=1))
+	fi
+	((count+=1))
+	((random_count+=1))
+	if [ "$random_correct" == "$random_count" ]
+	then
+		echo "$GREEN Random binary > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
+	elif [ "$random_correct" == "0" ]
+	then
+		echo "$RED Random binary > file: \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+	else
+		echo "$YELLOW Random binary > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
+	fi
+	rm test/test_random.txt
+done
+
+# #### -- SHA256 STATS -- ####
+# echo
+# if [ "$correct" == "$count" ]
+# then
+# 	echo "\n\t  sha256 total:$GREEN $correct / $count OK $RESET\n"
+# elif [ "$correct" == "0" ]
+# then
+# 	echo "\n\t  sha256 total:$RED $correct / $count $RESET\n"	
+# else
+# 	echo "\n\t  sha256 total:$YELLOW $correct / $count $RESET\n"
+# fi
 
 #### -- FINAL STATS -- ####
 echo
+echo
 if [ "$correct" == "$count" ]
 then
-	echo "\nPassed $GREEN $correct / $count $RESET total tests\n"
+	echo " Passed $GREEN $correct / $count $RESET total tests\n"
 elif [ "$correct" == "0" ]
 then
-	echo "\nPassed $RED $correct / $count $RESET total tests\n"	
+	echo " Passed $RED $correct / $count $RESET total tests\n"	
 else
-	echo "\nPassed $YELLOW $correct / $count $RESET total tests\n"
+	echo " Passed $YELLOW $correct / $count $RESET total tests\n"
 fi
 
 #### -- END -- ####
