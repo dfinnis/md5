@@ -49,7 +49,7 @@ static uint32_t	*padding(char *input, size_t *msg_len)
 	size_t		i;
 
 	padded = NULL;
-	(*msg_len) = ((g_len + 16 + 64) / 512) + 1;
+	(*msg_len) = ((g_len + 64) / 512) + 1;
 	if ((padded = calloc((*msg_len) * 16, 32)) == NULL)
 	{
 		ft_dprintf(2, "Memory allocation failure\n");
@@ -166,9 +166,11 @@ void	sha256(char *input)
 	size_t		chunk;
 	size_t		msg_len;
 
+	// ft_printf("g_len %d, g_len / 8: %d\n", g_len, g_len / 8);
 	padded = padding(input, &msg_len);
 	init_hash(hash);
 	chunk = 0;
+	// ft_printf("msg_len: %d, msg_len * 64: %d\n", msg_len, msg_len * 64);//
 	while (chunk < msg_len)
 		digest_chunk(hash, padded, chunk++);
 	free(padded);

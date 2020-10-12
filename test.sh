@@ -409,6 +409,7 @@ do
 		echo "$random_str"
 		echo "./ft_ssl: $output"
 		echo "openssl:  $output2"
+		echo $random_str > test/random_str9.txt
 	fi
 	((count+=1))
 	((random_count+=1))
