@@ -131,7 +131,7 @@ static void		digest_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 	size_t		round;
 	uint32_t	buf[8];
 
-	if ((words = calloc(64, 32)) == NULL)
+	if ((words = calloc(64, 32)) == NULL)// malloc
 	{
 		ft_dprintf(2, "Memory allocation failure\n");
 		exit(1);
@@ -146,6 +146,8 @@ static void		digest_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 		operations(buf, words, round++);
 	add_buf(hash, buf);
 	free(words);
+	// print_digest(hash);//
+	// ft_printf("\n");//
 }
 
 static void		print_digest(uint32_t hash[8])
