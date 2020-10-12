@@ -359,179 +359,186 @@ test_hash()
 test_hash "md5"
 # test_hash "sha256"
 
-echo "\n\n$BRIGHT sha256 $RESET"
 
-#### -- SHA UNIT test -- ####
-unit_correct=0
-unit_count=0
-
-unit_test_sha()
+test_sha()
 {
-	FILEPATH=$1
-	./ft_ssl sha256 -q $FILEPATH > test/test_unit.txt 2> test/test_unit_err.txt
-	openssl sha256 -r $FILEPATH | awk '{print $1;}' > test/test_unit2.txt 2> test/test_unit2_err.txt
-	dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
-				diff test/test_unit_err.txt test/test_unit2_err.txt")
-	if [ "$dif" = "" ]
-	then
-		((correct+=1))
-		((unit_correct+=1))
-		# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
-	else
-		echo "$RED ERROR:$FILEPATH $RESET                                \n$dif"
-	fi
-	((count+=1))
-	((unit_count+=1))
-	if [ "$unit_correct" == "$unit_count" ]
-	then
-		echo "$GREEN Unit tests: \t\t$unit_correct / $unit_count OK   $RESET $CLEAR_LINE"
-	elif [ "$unit_correct" == "0" ]
-	then
-		echo "$RED Unit tests: \t\t$unit_correct / $unit_count ERROR $RESET $CLEAR_LINE"
-	else
-		echo "$YELLOW Unit tests: \t\t$unit_correct / $unit_count      $RESET $CLEAR_LINE"
-	fi
-	rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+	SHA=$1
+	echo "\n\n$BRIGHT $SHA $RESET"
+	#### -- SHA UNIT test -- ####
+	unit_correct=0
+	unit_count=0
+	unit_test_sha()
+	{
+		FILEPATH=$1
+		./ft_ssl $SHA -q $FILEPATH > test/test_unit.txt 2> test/test_unit_err.txt
+		openssl $SHA -r $FILEPATH | awk '{print $1;}' > test/test_unit2.txt 2> test/test_unit2_err.txt
+		dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
+					diff test/test_unit_err.txt test/test_unit2_err.txt")
+		if [ "$dif" = "" ]
+		then
+			((correct+=1))
+			((unit_correct+=1))
+			# echo "$GREEN OK: $FILEPATH $RESET" ## Flag -v --verbose??!!!
+		else
+			echo "$RED ERROR:$FILEPATH $RESET                                \n$dif"
+		fi
+		((count+=1))
+		((unit_count+=1))
+		if [ "$unit_correct" == "$unit_count" ]
+		then
+			echo "$GREEN Unit tests: \t\t$unit_correct / $unit_count OK   $RESET $CLEAR_LINE"
+		elif [ "$unit_correct" == "0" ]
+		then
+			echo "$RED Unit tests: \t\t$unit_correct / $unit_count ERROR $RESET $CLEAR_LINE"
+		else
+			echo "$YELLOW Unit tests: \t\t$unit_correct / $unit_count      $RESET $CLEAR_LINE"
+		fi
+		rm test/test_unit.txt test/test_unit2.txt test/test_unit_err.txt test/test_unit2_err.txt
+	}
+
+	unit_test_sha file
+	unit_test_sha test/empty.txt
+	unit_test_sha test/hello.txt
+	unit_test_sha test/gnl_test.txt
+	unit_test_sha test/correction.txt
+
+	unit_test_sha test/random_str.txt
+	unit_test_sha test/random_str1.txt
+	unit_test_sha test/random_str2.txt
+	unit_test_sha test/random_str3.txt
+	unit_test_sha test/random_str4.txt
+	unit_test_sha test/random_str5.txt
+	unit_test_sha test/random_str6.txt
+	unit_test_sha test/random_str7.txt
+	unit_test_sha test/random_str8.txt
+	unit_test_sha test/random_str9.txt
+
+	unit_test_sha test/random_binary0.txt
+	unit_test_sha test/random_binary1.txt
+	unit_test_sha test/random_binary2.txt
+	unit_test_sha test/random_binary3.txt
+	unit_test_sha test/random_binary2_err.txt
+	unit_test_sha test/random_binary3_err.txt
+
+	unit_test_sha test/contradiction_long.txt
+	unit_test_sha test/the_best_player_around_the_whole_universe.cor
+	unit_test_sha test/the_best_player_around_the_whole_universe.s
+	unit_test_sha test/big_smoke_order_remix
+	unit_test_sha test/max_line.txt
+
+	echo
+	#### -- RANDOM STRINGS -- ####
+	random_correct=0
+	random_count=0
+	while [ $random_count -lt 100 ]
+	do
+		random_len=$(( ( RANDOM % 1000 )  + 1 ))
+		openssl rand -base64 $random_len > test/test_random.txt
+		cmd="./ft_ssl $HASH -q test/test_random.txt"
+		control="openssl $HASH -r test/test_random.txt | awk '{print \$1;}'"
+		output=$(eval "$cmd")
+		output2=$(eval "$control")
+		if [ "$output" = "$output2" ]
+		then
+			((correct+=1))
+			((random_correct+=1))
+		fi
+		((count+=1))
+		((random_count+=1))
+		if [ "$random_correct" == "$random_count" ]
+		then
+			echo "$GREEN Random string > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
+		elif [ "$random_correct" == "0" ]
+		then
+			echo "$RED Random string > file: \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+		else
+			echo "$YELLOW Random string > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
+		fi
+		rm test/test_random.txt
+	done
+
+	echo
+	#### -- RANDOM echo -- ####
+	random_correct=0
+	random_count=0
+	while [ $random_count -lt 100 ]
+	do
+		random_len=$(( ( RANDOM % 1000 )  + 1 ))
+		random_str=$(eval "openssl rand -base64 $random_len")
+		cmd="echo \"$random_str\" | ./ft_ssl $SHA"
+		control="echo \"$random_str\" | openssl $SHA"
+		output=$(eval "$cmd")
+		output2=$(eval "$control")
+		if [ "$output" = "$output2" ]
+		then
+			((correct+=1))
+			((random_correct+=1))
+		else
+			echo "$RED ERROR: echo \"random string\" | ./ft_ssl $RESET                            "
+			echo "$random_str"
+			echo "./ft_ssl: $output"
+			echo "openssl:  $output2"
+		fi
+		((count+=1))
+		((random_count+=1))
+		if [ "$random_correct" == "$random_count" ]
+		then
+			echo "$GREEN echo \"str\" | ./ft_ssl: $random_correct / $random_count OK   $RESET $CLEAR_LINE"
+		elif [ "$random_correct" == "0" ]
+		then
+			echo "$RED echo \"str\" | ./ft_ssl: $random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+		else
+			echo "$YELLOW echo \"str\" | ./ft_ssl: $random_correct / $random_count      $RESET $CLEAR_LINE"
+		fi
+	done
+
+	echo
+	#### -- RANDOM BINARY -- ####
+	random_correct=0
+	random_count=0
+	while [ $random_count -lt 100 ]
+	do
+		random_len=$(( ( RANDOM % 1000 )  + 1 ))
+		cat /dev/urandom | head -c $random_len > test/test_random.txt
+		cmd="./ft_ssl $SHA -q test/test_random.txt"
+		control="openssl $SHA -r test/test_random.txt | awk '{print \$1;}'"
+		output=$(eval "$cmd")
+		output2=$(eval "$control")
+		if [ "$output" = "$output2" ]
+		then
+			((correct+=1))
+			((random_correct+=1))
+		fi
+		((count+=1))
+		((random_count+=1))
+		if [ "$random_correct" == "$random_count" ]
+		then
+			echo "$GREEN Random binary > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
+		elif [ "$random_correct" == "0" ]
+		then
+			echo "$RED Random binary > file: \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
+		else
+			echo "$YELLOW Random binary > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
+		fi
+		rm test/test_random.txt
+	done
+
+
+	# #### -- SHA256 STATS -- ####
+	# echo
+	# if [ "$correct" == "$count" ]
+	# then
+	# 	echo "\n\t  $SHA total:$GREEN $correct / $count OK $RESET\n"
+	# elif [ "$correct" == "0" ]
+	# then
+	# 	echo "\n\t  $SHA total:$RED $correct / $count $RESET\n"	
+	# else
+	# 	echo "\n\t  $SHA total:$YELLOW $correct / $count $RESET\n"
+	# fi
 }
 
-unit_test_sha file
-unit_test_sha test/empty.txt
-unit_test_sha test/hello.txt
-unit_test_sha test/gnl_test.txt
-unit_test_sha test/correction.txt
-
-unit_test_sha test/random_str.txt
-unit_test_sha test/random_str1.txt
-unit_test_sha test/random_str2.txt
-unit_test_sha test/random_str3.txt
-unit_test_sha test/random_str4.txt
-unit_test_sha test/random_str5.txt
-unit_test_sha test/random_str6.txt
-unit_test_sha test/random_str7.txt
-unit_test_sha test/random_str8.txt
-unit_test_sha test/random_str9.txt
-
-unit_test_sha test/random_binary0.txt
-unit_test_sha test/random_binary1.txt
-unit_test_sha test/random_binary2.txt
-unit_test_sha test/random_binary3.txt
-unit_test_sha test/random_binary2_err.txt
-unit_test_sha test/random_binary3_err.txt
-
-unit_test_sha test/contradiction_long.txt
-unit_test_sha test/the_best_player_around_the_whole_universe.cor
-unit_test_sha test/the_best_player_around_the_whole_universe.s
-unit_test_sha test/big_smoke_order_remix
-unit_test_sha test/max_line.txt
-
-echo
-#### -- RANDOM STRINGS -- ####
-random_correct=0
-random_count=0
-while [ $random_count -lt 100 ]
-do
-	random_len=$(( ( RANDOM % 1000 )  + 1 ))
-	openssl rand -base64 $random_len > test/test_random.txt
-	cmd="./ft_ssl $HASH -q test/test_random.txt"
-	control="openssl $HASH -r test/test_random.txt | awk '{print \$1;}'"
-	output=$(eval "$cmd")
-	output2=$(eval "$control")
-	if [ "$output" = "$output2" ]
-	then
-		((correct+=1))
-		((random_correct+=1))
-	fi
-	((count+=1))
-	((random_count+=1))
-	if [ "$random_correct" == "$random_count" ]
-	then
-		echo "$GREEN Random string > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
-	elif [ "$random_correct" == "0" ]
-	then
-		echo "$RED Random string > file: \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
-	else
-		echo "$YELLOW Random string > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
-	fi
-	rm test/test_random.txt
-done
-
-echo
-#### -- RANDOM echo -- ####
-random_correct=0
-random_count=0
-while [ $random_count -lt 100 ]
-do
-	random_len=$(( ( RANDOM % 1000 )  + 1 ))
-	random_str=$(eval "openssl rand -base64 $random_len")
-	cmd="echo \"$random_str\" | ./ft_ssl sha256"
-	control="echo \"$random_str\" | openssl sha256"
-	output=$(eval "$cmd")
-	output2=$(eval "$control")
-	if [ "$output" = "$output2" ]
-	then
-		((correct+=1))
-		((random_correct+=1))
-	else
-		echo "$RED ERROR: echo \"random string\" | ./ft_ssl $RESET                            "
-		echo "$random_str"
-		echo "./ft_ssl: $output"
-		echo "openssl:  $output2"
-	fi
-	((count+=1))
-	((random_count+=1))
-	if [ "$random_correct" == "$random_count" ]
-	then
-		echo "$GREEN echo \"str\" | ./ft_ssl: $random_correct / $random_count OK   $RESET $CLEAR_LINE"
-	elif [ "$random_correct" == "0" ]
-	then
-		echo "$RED echo \"str\" | ./ft_ssl: $random_correct / $random_count ERROR $RESET $CLEAR_LINE"
-	else
-		echo "$YELLOW echo \"str\" | ./ft_ssl: $random_correct / $random_count      $RESET $CLEAR_LINE"
-	fi
-done
-
-echo
-#### -- RANDOM BINARY -- ####
-random_correct=0
-random_count=0
-while [ $random_count -lt 100 ]
-do
-	random_len=$(( ( RANDOM % 1000 )  + 1 ))
-	cat /dev/urandom | head -c $random_len > test/test_random.txt
-	cmd="./ft_ssl sha256 -q test/test_random.txt"
-	control="openssl sha256 -r test/test_random.txt | awk '{print \$1;}'"
-	output=$(eval "$cmd")
-	output2=$(eval "$control")
-	if [ "$output" = "$output2" ]
-	then
-		((correct+=1))
-		((random_correct+=1))
-	fi
-	((count+=1))
-	((random_count+=1))
-	if [ "$random_correct" == "$random_count" ]
-	then
-		echo "$GREEN Random binary > file: \t$random_correct / $random_count OK   $RESET $CLEAR_LINE"
-	elif [ "$random_correct" == "0" ]
-	then
-		echo "$RED Random binary > file: \t$random_correct / $random_count ERROR $RESET $CLEAR_LINE"
-	else
-		echo "$YELLOW Random binary > file: \t$random_correct / $random_count      $RESET $CLEAR_LINE"
-	fi
-	rm test/test_random.txt
-done
-
-# #### -- SHA256 STATS -- ####
-# echo
-# if [ "$correct" == "$count" ]
-# then
-# 	echo "\n\t  sha256 total:$GREEN $correct / $count OK $RESET\n"
-# elif [ "$correct" == "0" ]
-# then
-# 	echo "\n\t  sha256 total:$RED $correct / $count $RESET\n"	
-# else
-# 	echo "\n\t  sha256 total:$YELLOW $correct / $count $RESET\n"
-# fi
+test_sha sha256
+test_sha sha224
 
 #### -- FINAL STATS -- ####
 echo
