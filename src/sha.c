@@ -43,7 +43,7 @@ uint32_t	change_endianness(uint32_t value)
 	return (result);
 }
 
-static uint32_t	*padding(char *input, size_t *msg_len)
+static uint32_t	*pad(char *input, size_t *msg_len)
 {
 	uint32_t	*padded;
 	size_t		i;
@@ -146,8 +146,6 @@ static void		digest_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 		operations(buf, words, round++);
 	add_buf(hash, buf);
 	free(words);
-	// print_digest(hash);//
-	// ft_printf("\n");//
 }
 
 static void		print_digest(uint32_t hash[8])
@@ -166,11 +164,9 @@ void	sha256(char *input)
 	size_t		chunk;
 	size_t		msg_len;
 
-	// ft_printf("g_len %d, g_len / 8: %d\n", g_len, g_len / 8);
-	padded = padding(input, &msg_len);
+	padded = pad(input, &msg_len);
 	init_hash(hash);
 	chunk = 0;
-	// ft_printf("msg_len: %d, msg_len * 64: %d\n", msg_len, msg_len * 64);//
 	while (chunk < msg_len)
 		digest_chunk(hash, padded, chunk++);
 	free(padded);
