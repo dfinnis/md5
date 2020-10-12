@@ -19,16 +19,30 @@ static uint32_t g_roots[] = {
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
-void	init_hash(uint32_t hash[8])
+void	init_hash(uint32_t hash[8], int algo)
 {
-	hash[0] = 0x6a09e667;
-	hash[1] = 0xbb67ae85;
-	hash[2] = 0x3c6ef372;
-	hash[3] = 0xa54ff53a;
-	hash[4] = 0x510e527f;
-	hash[5] = 0x9b05688c;
-	hash[6] = 0x1f83d9ab;
-	hash[7] = 0x5be0cd19;
+	if (algo == 256)
+	{
+		hash[0] = 0x6a09e667;
+		hash[1] = 0xbb67ae85;
+		hash[2] = 0x3c6ef372;
+		hash[3] = 0xa54ff53a;
+		hash[4] = 0x510e527f;
+		hash[5] = 0x9b05688c;
+		hash[6] = 0x1f83d9ab;
+		hash[7] = 0x5be0cd19;
+	}
+	else
+	{
+		hash[0] = 0xc1059ed8;
+		hash[1] = 0x367cd507;
+		hash[2] = 0x3070dd17;
+		hash[3] = 0xf70e5939;
+		hash[4] = 0xffc00b31;
+		hash[5] = 0x68581511;
+		hash[6] = 0x64f98fa7;
+		hash[7] = 0xbefa4fa4;
+	}
 }
 
 uint32_t	swap_endianness(uint32_t before)
@@ -135,16 +149,20 @@ static void		digest_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 	free(words);
 }
 
-static void		print_digest(uint32_t hash[8])
+static void		print_digest(uint32_t hash[8], int algo)
 {
 	int i;
 
 	i = 0;
 	while (i < 8)
+	{
 		ft_printf("%08x", hash[i++]);
+		if (i == 7 && algo == 224)
+			break ;
+	}
 }
 
-void	sha256(char *input)
+void	sha2(char *input, int algo)
 {
 	uint32_t	*padded;
 	uint32_t	hash[8];
@@ -152,47 +170,20 @@ void	sha256(char *input)
 	size_t		msg_len;
 
 	padded = pad(input, &msg_len);
-	init_hash(hash);
+	init_hash(hash, algo);
 	chunk = 0;
 	while (chunk < msg_len)
 		digest_chunk(hash, padded, chunk++);
 	free(padded);
-	print_digest(hash);
-}
-
-void	init_224(uint32_t hash[8])
-{
-	hash[0] = 0xc1059ed8;
-	hash[1] = 0x367cd507;
-	hash[2] = 0x3070dd17;
-	hash[3] = 0xf70e5939;
-	hash[4] = 0xffc00b31;
-	hash[5] = 0x68581511;
-	hash[6] = 0x64f98fa7;
-	hash[7] = 0xbefa4fa4;
-}
-
-static void		print_224(uint32_t hash[8])
-{
-	int i;
-
-	i = 0;
-	while (i < 7)
-		ft_printf("%08x", hash[i++]);
+	print_digest(hash, algo);
 }
 
 void	sha224(char *input)
 {
-	uint32_t	*padded;
-	uint32_t	hash[8];
-	size_t		chunk;
-	size_t		msg_len;
+	sha2(input, 224);
+}
 
-	padded = pad(input, &msg_len);
-	init_224(hash);
-	chunk = 0;
-	while (chunk < msg_len)
-		digest_chunk(hash, padded, chunk++);
-	free(padded);
-	print_224(hash);
+void	sha256(char *input)
+{
+	sha2(input, 256);
 }
