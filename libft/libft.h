@@ -104,4 +104,5 @@ int					get_next_line(const int fd, char **line);
 void				ft_freestr(char *str);
 char				**ft_split_whitespaces(char *str);
 int					ft_isblank(int c);
+void				*ft_calloc(size_t count, size_t size);
 #endif

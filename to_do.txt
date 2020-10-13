@@ -1,5 +1,4 @@
-function dispatcher (function pointer array)
-read commands from STDIN not just args
+uage update with all sha
 
 test devices, pipes, symbolic links, sockets, etc.
 
@@ -8,17 +7,17 @@ sort headers (inc libft)
 norm
 author
 
-The md5 & sha utilities exit 0 on success
-1 if at least one of the input files could not be read (error)
+md5 & sha exit 0 on success, 1 on error
+(at least one of the input files could not be read)
 
 #### INPUT #### 
-// flag: -s "string1" -s "string2"
-// file as direct argument: ./ft_ssl md5 file
-// standard in: -p OR echo "string" | ./ft_ssl md5
+- flag: -s "string1" -s "string2"
+- file as direct argument: ./ft_ssl md5 file
+- standard in: -p OR echo "string" | ./ft_ssl md5
 
 #### BONUS ####
-1. test.sh
-2. other sha#?
-parse commands from STDIN the same way that OpenSSL does ?
+1. parse commands from STDIN the same way that OpenSSL does
+2. test.sh
+3. sha224
 -t Run a built-in time trial ?
 -x Run a built-in test script ?

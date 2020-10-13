@@ -45,7 +45,7 @@ static uint32_t	*pad(char *input, size_t *msg_len)
 
 	padded = NULL;
 	(*msg_len) = ((g_len + 64) / 512) + 1;
-	if ((padded = calloc((*msg_len) * 16, 32)) == NULL)// malloc
+	if ((padded = ft_calloc((*msg_len) * 16, 32)) == NULL)// malloc
 	{
 		ft_dprintf(2, "Memory allocation failure\n");
 		exit(EXIT_FAILURE);

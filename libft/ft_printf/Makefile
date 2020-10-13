@@ -108,7 +108,8 @@ LIB_C = ft_atoi.c \
 		ft_split_whitespaces.c \
 		ft_isblank.c \
 		get_next_line.c \
-		ft_freestr.c
+		ft_freestr.c \
+		ft_calloc.c
 
 OBJ = $(SRCS:.c=.o)
 LIB_O = $(LIB_C:.c=.o)
