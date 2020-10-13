@@ -22,13 +22,20 @@ static void	read_command(char *cmd, t_args *args)
 		i++;
 	}
 	if (g_cmd_func == NULL)
-		print_usage();// correct action here?
+	{
+		ft_dprintf(2, "ft_ssl:Error: \'%s\' is an invalid command.\n", cmd);
+		print_usage();
+	}
 }
 
 int			flag_s(int argc, char **argv, int i, t_args *args)
 {
 	if (i + 2 > argc)
-		ft_printf("Error: no string here!!\n");// EXIT!!!
+	{
+		ft_printf("%s: option requires an argument -- s\n", args->command);
+		ft_printf("usage: %s [-pqr] [-s string] [files ...]\n", args->command);
+		exit(1);
+	}
 	i++;
 	args->flag_s = 1;
 	g_len = ft_strlen(argv[i]) * 8;
@@ -57,6 +64,29 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	return (++i);
 }
 
+static void	stdin_cmd(t_args *args)
+{
+	char	*input;
+	int		error;
+
+	ft_putstr("FT_SSL> ");
+	input = NULL;
+	if ((error = get_next_line(0, &input) == -1))
+	{
+		ft_dprintf(2, "error reading stdin\n", error);
+		exit(1);
+	}
+	if (ft_strcmp(input, "quit") == 0)
+		exit(0);
+	if (ft_strcmp(input, "") == 0)
+		stdin_cmd(args);
+	read_command(input, args);
+	if (g_cmd_func == NULL)
+		stdin_cmd(args);
+	else
+		read_stdin(0);
+}
+
 int			main(int argc, char **argv)
 {
 	int		i;
@@ -65,10 +95,12 @@ int			main(int argc, char **argv)
 	i = 2;
 	init_ssl(&args);
 	if (argc == 1)
-		print_usage();
+		stdin_cmd(&args);
 	else
 	{
 		read_command(argv[1], &args);
+		if (g_cmd_func == NULL)
+			exit(0);
 		if (argc == 2)
 			read_stdin(0);
 		else
