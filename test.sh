@@ -80,6 +80,10 @@ test_hash()
 	unit_test test/random_binary2_err.txt
 	unit_test test/random_binary3_err.txt
 
+	unit_test test/lorem_ipsum.txt
+	unit_test test/some_hipster_ipsum
+	unit_test test/some_hipster_ipsum_sum
+
 	unit_test test/contradiction_long.txt
 	unit_test test/the_best_player_around_the_whole_universe.cor
 	unit_test test/the_best_player_around_the_whole_universe.s
@@ -419,6 +423,10 @@ test_sha()
 	unit_test_sha test/random_binary3.txt
 	unit_test_sha test/random_binary2_err.txt
 	unit_test_sha test/random_binary3_err.txt
+
+	unit_test_sha test/lorem_ipsum.txt
+	unit_test_sha test/some_hipster_ipsum
+	unit_test_sha test/some_hipster_ipsum_sum
 
 	unit_test_sha test/contradiction_long.txt
 	unit_test_sha test/the_best_player_around_the_whole_universe.cor

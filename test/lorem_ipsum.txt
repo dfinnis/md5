@@ -1,0 +1,13 @@
+echo "Lorem ipsum dolor amet thundercats letterpress cray portland 
+cornhole coloring book twee prism hexagon mixtape pork belly hell of 
+four dollar toast disrupt. Hammock PBR&B bicycle rights selvage street 
+art, lumbersexual gochujang vegan hot chicken. Meggings drinking 
+vinegar biodiesel poke roof party tote bag cloud bread ethical. 
+Glossier ﬂannel 8-bit hexagon selvage adaptogen farm-to-table offal 
+knausgaard pickled." > some_hipster_ipsum
+
+shasum -a 256 some_hipster_ipsum > some_hipster_ipsum_sum
+
+./ft_ssl sha256 some_hipster_ipsum > ﬂip_some_hipsum
+
+diff some_hipster_ipsum_sum ﬂip_some_hipsum
