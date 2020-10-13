@@ -1,4 +1,4 @@
-uage update with all sha
+usage update with all sha
 
 test devices, pipes, symbolic links, sockets, etc.
 

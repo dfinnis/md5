@@ -5,5 +5,7 @@
 void	md5(char *input);
 void	sha224(char *input);
 void	sha256(char *input);
+void	sha384(char *input);
+void	sha512(char *input);
 
 #endif
