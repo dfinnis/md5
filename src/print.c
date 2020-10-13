@@ -2,14 +2,14 @@
 
 void		print_usage(void)
 {
-	ft_putstr("\nStandard commands\n");
+	ft_putstr("\nStandard commands:\n");
 	ft_putstr("\n");
-	ft_putstr("Message Digest commands\n");
+	ft_putstr("Message Digest commands:\n");
 	ft_putstr("md5\n");
 	ft_putstr("sha224\n");
 	ft_putstr("sha256\n");
 	ft_putstr("\n");
-	ft_putstr("Cipher commands\n");
+	ft_putstr("Cipher commands:\n");
 	ft_putstr("\n");
 	// ft_putstr("\nusage:\t./ft_ssl []\n");
 	// free(eveything);

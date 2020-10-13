@@ -23,26 +23,24 @@ static void	read_command(char *cmd, t_args *args)
 	}
 	if (g_cmd_func == NULL)
 	{
-		ft_dprintf(2, "ft_ssl:Error: \'%s\' is an invalid command.\n", cmd);
+		ft_dprintf(2, "ft_ssl: Error: \'%s\' is an invalid command.\n", cmd);
 		print_usage();
 	}
 }
 
-int			flag_s(int argc, char **argv, int i, t_args *args)
+static void	flag_s(int argc, char **argv, int i, t_args *args)
 {
-	if (i + 2 > argc)
+	if (++i >= argc)
 	{
 		ft_printf("%s: option requires an argument -- s\n", args->command);
 		ft_printf("usage: %s [-pqr] [-s string] [files ...]\n", args->command);
 		exit(1);
 	}
-	i++;
 	args->flag_s = 1;
 	g_len = ft_strlen(argv[i]) * 8;
 	print_prefix(argv[i], args);
 	g_cmd_func(argv[i]);
 	print_suffix(argv[i], args);
-	return (i);
 }
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)
@@ -55,7 +53,7 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 	else if (ft_strcmp((argv[i]), "-r") == 0 && args->first)
 		args->flag_r = 1;
 	else if (ft_strcmp((argv[i]), "-s") == 0 && args->first)
-		i = flag_s(argc, argv, i, args);
+		flag_s(argc, argv, i++, args);
 	else
 	{
 		read_file(argv[i], args);
