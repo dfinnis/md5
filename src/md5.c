@@ -22,7 +22,7 @@ static uint8_t	*pad(char *input, uint32_t *msg_len)
 	while ((*msg_len) % 512 != 448)
 		(*msg_len)++;
 	(*msg_len) = ((*msg_len) + 64) / 8;
-	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * (*msg_len))))//free!!!
+	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * (*msg_len))))
 		error_exit("memory allocation failed");
 	while (++i < g_len / 8)
 		padded[i] = input[i];
