@@ -7,10 +7,7 @@ void	read_stdin(int flag_p)
 
 	input = NULL;
 	if ((error = read_fd(0, &input) == -1))
-	{
-		ft_dprintf(2, "error reading stdin\n", error);
-		exit(1);
-	}
+		error_exit("reading stdin failed");
 	g_len *= 8;
 	if (flag_p)
 		ft_printf(input);
@@ -26,10 +23,7 @@ void	stdin_cmd(t_args *args)
 	ft_putstr("FT_SSL> ");
 	input = NULL;
 	if ((error = get_next_line(0, &input) == -1))
-	{
-		ft_dprintf(2, "error reading stdin\n", error);
-		exit(1);
-	}
+		error_exit("reading stdin failed");
 	if (ft_strcmp(input, "quit") == 0)
 		exit(0);
 	if (ft_strcmp(input, "") == 0)

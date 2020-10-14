@@ -81,10 +81,7 @@ void			sha512_chunk(uint64_t hash[8], uint64_t *padded, size_t chunk)
 	int			i;
 
 	if ((words = ft_calloc(80, 64)) == NULL)
-	{
-		ft_dprintf(2, "Memory allocation failure\n");
-		exit(EXIT_FAILURE);
-	}
+		error_exit("memory allocation failure");
 	ft_memcpy(words, &padded[chunk * 16], 1024);
 	round = 16;
 	while (round < 80)

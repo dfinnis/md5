@@ -11,7 +11,7 @@ static uint8_t	*pad(char *input, uint32_t *msg_len)
 		(*msg_len)++;
 	(*msg_len) = ((*msg_len) + 64) / 8;
 	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * (*msg_len))))//free!!!
-		ft_printf("Error: memory allocation failed\n");//EXIT!!!!
+		error_exit("memory allocation failed");
 	while (++i < g_len / 8)
 		padded[i] = input[i];
 	padded[i] = 128;
@@ -25,55 +25,6 @@ static uint8_t	*pad(char *input, uint32_t *msg_len)
 	}
 	(*msg_len) /= 64;
 	return (padded);
-}
-
-static void		digest_round(uint32_t *buf, uint32_t *words, size_t round)
-{
-	if (round < 16)
-	{
-		buf[WORD] = round;
-		buf[F] = (buf[B] & buf[C]) | ((~buf[B]) & buf[D]);
-	}
-	else if (round < 32)
-	{
-		buf[WORD] = (5 * round + 1) % 16;
-		buf[F] = (buf[D] & buf[B]) | ((~buf[D]) & buf[C]);
-	}
-	else if (round < 48)
-	{
-		buf[WORD] = (3 * round + 5) % 16;
-		buf[F] = buf[B] ^ buf[C] ^ buf[D];
-	}
-	else
-	{
-		buf[WORD] = (7 * round) % 16;
-		buf[F] = buf[C] ^ (buf[B] | (~buf[D]));
-	}
-	buf[TMP] = buf[D];
-	buf[D] = buf[C];
-	buf[C] = buf[B];
-	rotate_left_b(buf, round, words);
-	buf[A] = buf[TMP];
-}
-
-static void		digest_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk)
-{
-	uint32_t		buf[7];
-	uint32_t		*words;
-	size_t			round;
-
-	words = (uint32_t*)(padded + chunk * 64);
-	buf[A] = hash[A];
-	buf[B] = hash[B];
-	buf[C] = hash[C];
-	buf[D] = hash[D];
-	round = 0;
-	while (round < 64)
-		digest_round(buf, words, round++);
-	hash[A] += buf[A];
-	hash[B] += buf[B];
-	hash[C] += buf[C];
-	hash[D] += buf[D];
 }
 
 static void		print_digest(uint32_t hash[4])
@@ -101,7 +52,7 @@ void			md5(char *input)
 	hash[D] = 0x10325476;
 	chunk = 0;
 	while (chunk < msg_len)
-		digest_chunk(hash, padded, chunk++);
+		md5_chunk(hash, padded, chunk++);
 	free(padded);
 	print_digest(hash);
 }

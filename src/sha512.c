@@ -62,10 +62,7 @@ static uint64_t	*pad(char *input, size_t *msg_len)
 	padded = NULL;
 	(*msg_len) = ((g_len + 128) / 1024) + 1;
 	if ((padded = ft_calloc((*msg_len) * 16, 64)) == NULL)
-	{
-		ft_dprintf(2, "Memory allocation failure\n");
-		exit(1);
-	}
+		error_exit("memory allocation failure");
 	((uint8_t*)padded)[g_len / 8] = 0x80;
 	ft_memcpy(padded, input, g_len / 8);
 	i = -1;

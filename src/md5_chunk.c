@@ -31,8 +31,57 @@ static uint32_t	rotate_left(uint32_t x, uint32_t n)
 	return ((x << n) | (x >> (32 - n)));
 }
 
-void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words)
+static void		rotate_left_b(uint32_t *buf, size_t round, uint32_t *words)
 {
 	buf[B] += rotate_left((buf[F] + buf[A] + g_sine[round] + words[buf[WORD]]),
 							g_shift[round]);
+}
+
+static void		digest_round(uint32_t *buf, uint32_t *words, size_t round)
+{
+	if (round < 16)
+	{
+		buf[WORD] = round;
+		buf[F] = (buf[B] & buf[C]) | ((~buf[B]) & buf[D]);
+	}
+	else if (round < 32)
+	{
+		buf[WORD] = (5 * round + 1) % 16;
+		buf[F] = (buf[D] & buf[B]) | ((~buf[D]) & buf[C]);
+	}
+	else if (round < 48)
+	{
+		buf[WORD] = (3 * round + 5) % 16;
+		buf[F] = buf[B] ^ buf[C] ^ buf[D];
+	}
+	else
+	{
+		buf[WORD] = (7 * round) % 16;
+		buf[F] = buf[C] ^ (buf[B] | (~buf[D]));
+	}
+	buf[TMP] = buf[D];
+	buf[D] = buf[C];
+	buf[C] = buf[B];
+	rotate_left_b(buf, round, words);
+	buf[A] = buf[TMP];
+}
+
+void			md5_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk)
+{
+	uint32_t		buf[7];
+	uint32_t		*words;
+	size_t			round;
+
+	words = (uint32_t*)(padded + chunk * 64);
+	buf[A] = hash[A];
+	buf[B] = hash[B];
+	buf[C] = hash[C];
+	buf[D] = hash[D];
+	round = 0;
+	while (round < 64)
+		digest_round(buf, words, round++);
+	hash[A] += buf[A];
+	hash[B] += buf[B];
+	hash[C] += buf[C];
+	hash[D] += buf[D];
 }

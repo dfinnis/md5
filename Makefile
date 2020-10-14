@@ -18,7 +18,7 @@ SRCS_FILES = ft_ssl.c \
 	read_stdin.c \
 	print.c \
 	md5.c \
-	md5_rotate.c \
+	md5_chunk.c \
 	sha256.c \
 	sha256_chunk.c \
 	sha256_cmd.c \

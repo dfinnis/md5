@@ -48,14 +48,15 @@ void			stdin_cmd(t_args *args);
 /*
 **		print.c
 */
+void			error_exit(char *err_msg);
 void			print_usage();
 void			print_prefix(char *input, t_args *args);
 void			print_suffix(char *input, t_args *args);
 
 /*
-**		md5_rotate.c
+**		md5_chunk.c
 */
-void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
+void			md5_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk);
 
 /*
 **		sha256.c

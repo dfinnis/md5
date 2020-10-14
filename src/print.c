@@ -1,5 +1,11 @@
 #include "../inc/ft_ssl.h"
 
+void		error_exit(char *err_msg)
+{
+	ft_dprintf(2, "Error: %s\n", err_msg);
+	exit(1);
+}
+
 void		print_usage(void)
 {
 	ft_putstr("\nStandard commands:\n");

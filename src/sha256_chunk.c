@@ -70,10 +70,7 @@ void			sha256_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 	int			i;
 
 	if ((words = ft_calloc(64, 32)) == NULL)
-	{
-		ft_dprintf(2, "Memory allocation failure\n");
-		exit(1);
-	}
+		error_exit("memory allocation failure");
 	ft_memcpy(words, &padded[chunk * 16], 512);
 	round = 16;
 	while (round < 64)
