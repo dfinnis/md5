@@ -12,7 +12,7 @@
 
 #include "../inc/ft_ssl.h"
 
-static uint64_t g_k[] = {
+static uint64_t g_const[] = {
 	0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f,
 	0xe9b5dba58189dbbc, 0x3956c25bf348b538, 0x59f111f1b605d019,
 	0x923f82a4af194f9b, 0xab1c5ed5da6d8118, 0xd807aa98a3030242,
@@ -47,7 +47,19 @@ static uint64_t	rotate64_right(uint64_t x, uint64_t n)
 	return ((x >> n) | (x << (64 - n)));
 }
 
-static void		operations(uint64_t *buf, uint64_t *words, size_t i)
+static void		extend(uint64_t *words, size_t i)
+{
+	uint64_t s0;
+	uint64_t s1;
+
+	s0 = rotate64_right(words[i - 15], 1) ^ rotate64_right(words[i - 15], 8) ^
+	(words[i - 15] >> 7);
+	s1 = rotate64_right(words[i - 2], 19) ^ rotate64_right(words[i - 2], 61)
+	^ (words[i - 2] >> 6);
+	words[i] = words[i - 16] + s0 + words[i - 7] + s1;
+}
+
+static void		compress(uint64_t *buf, uint64_t *words, size_t i)
 {
 	uint64_t ch;
 	uint64_t maj;
@@ -60,7 +72,7 @@ static void		operations(uint64_t *buf, uint64_t *words, size_t i)
 	rotate64_right(buf[A], 39);
 	s[1] = rotate64_right(buf[E], 14) ^ rotate64_right(buf[E], 18) ^
 	rotate64_right(buf[E], 41);
-	tmp[0] = buf[I] + s[1] + ch + g_k[i] + words[i];
+	tmp[0] = buf[I] + s[1] + ch + g_const[i] + words[i];
 	tmp[1] = s[0] + maj;
 	buf[I] = buf[G];
 	buf[G] = buf[F];
@@ -70,18 +82,6 @@ static void		operations(uint64_t *buf, uint64_t *words, size_t i)
 	buf[C] = buf[B];
 	buf[B] = buf[A];
 	buf[A] = tmp[0] + tmp[1];
-}
-
-static void		extend(uint64_t *words, size_t i)
-{
-	uint64_t s0;
-	uint64_t s1;
-
-	s0 = rotate64_right(words[i - 15], 1) ^ rotate64_right(words[i - 15], 8) ^
-	(words[i - 15] >> 7);
-	s1 = rotate64_right(words[i - 2], 19) ^ rotate64_right(words[i - 2], 61)
-	^ (words[i - 2] >> 6);
-	words[i] = words[i - 16] + s0 + words[i - 7] + s1;
 }
 
 void			sha512_chunk(uint64_t hash[8], uint64_t *padded, size_t chunk)
@@ -102,7 +102,7 @@ void			sha512_chunk(uint64_t hash[8], uint64_t *padded, size_t chunk)
 		buf[i] = hash[i];
 	round = 0;
 	while (round < 80)
-		operations(buf, words, round++);
+		compress(buf, words, round++);
 	i = -1;
 	while (++i < 8)
 		hash[i] += buf[i];

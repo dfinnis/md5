@@ -19,7 +19,7 @@ const uint32_t	g_shift[64] = {
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 };
 
-const uint32_t	g_sine[64] = {
+const uint32_t	g_const[64] = {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 	0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -45,11 +45,11 @@ static uint32_t	rotate_left(uint32_t x, uint32_t n)
 
 static void		rotate_left_b(uint32_t *buf, size_t round, uint32_t *words)
 {
-	buf[B] += rotate_left((buf[F] + buf[A] + g_sine[round] + words[buf[WORD]]),
+	buf[B] += rotate_left((buf[F] + buf[A] + g_const[round] + words[buf[WORD]]),
 							g_shift[round]);
 }
 
-static void		digest_round(uint32_t *buf, uint32_t *words, size_t round)
+static void		compress(uint32_t *buf, uint32_t *words, size_t round)
 {
 	if (round < 16)
 	{
@@ -91,7 +91,7 @@ void			md5_chunk(uint32_t hash[4], uint8_t *padded, size_t chunk)
 	buf[D] = hash[D];
 	round = 0;
 	while (round < 64)
-		digest_round(buf, words, round++);
+		compress(buf, words, round++);
 	hash[A] += buf[A];
 	hash[B] += buf[B];
 	hash[C] += buf[C];

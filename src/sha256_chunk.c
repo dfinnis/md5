@@ -12,7 +12,7 @@
 
 #include "../inc/ft_ssl.h"
 
-static uint32_t g_roots[] = {
+static uint32_t g_const[] = {
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
 	0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -36,19 +36,19 @@ static uint32_t	rotate_right(uint32_t x, uint32_t n)
 	return ((x >> n) | (x << (32 - n)));
 }
 
-static void		extend(uint32_t *w, size_t i)
+static void		extend(uint32_t *words, size_t i)
 {
 	uint32_t s0;
 	uint32_t s1;
 
-	s0 = rotate_right(w[i - 15], 7) ^ rotate_right(w[i - 15], 18) ^
-	(w[i - 15] >> 3);
-	s1 = rotate_right(w[i - 2], 17) ^ rotate_right(w[i - 2], 19)
-	^ (w[i - 2] >> 10);
-	w[i] = w[i - 16] + s0 + w[i - 7] + s1;
+	s0 = rotate_right(words[i - 15], 7) ^ rotate_right(words[i - 15], 18) ^
+	(words[i - 15] >> 3);
+	s1 = rotate_right(words[i - 2], 17) ^ rotate_right(words[i - 2], 19)
+	^ (words[i - 2] >> 10);
+	words[i] = words[i - 16] + s0 + words[i - 7] + s1;
 }
 
-static void		operations(uint32_t *buf, uint32_t *w, size_t i)
+static void		compress(uint32_t *buf, uint32_t *words, size_t i)
 {
 	uint32_t ch;
 	uint32_t maj;
@@ -61,7 +61,7 @@ static void		operations(uint32_t *buf, uint32_t *w, size_t i)
 	rotate_right(buf[A], 22);
 	s[1] = rotate_right(buf[E], 6) ^ rotate_right(buf[E], 11) ^
 	rotate_right(buf[E], 25);
-	tmp[0] = buf[I] + s[1] + ch + g_roots[i] + w[i];
+	tmp[0] = buf[I] + s[1] + ch + g_const[i] + words[i];
 	tmp[1] = s[0] + maj;
 	buf[I] = buf[G];
 	buf[G] = buf[F];
@@ -91,7 +91,7 @@ void			sha256_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 		buf[i] = hash[i];
 	round = 0;
 	while (round < 64)
-		operations(buf, words, round++);
+		compress(buf, words, round++);
 	i = -1;
 	while (++i < 8)
 		hash[i] += buf[i];
