@@ -8,11 +8,15 @@ void		print_usage(void)
 	ft_putstr("md5\n");
 	ft_putstr("sha224\n");
 	ft_putstr("sha256\n");
+	ft_putstr("sha384\n");
+	ft_putstr("sha512\n");
+	ft_putstr("sha512224\n");
+	ft_putstr("sha512256\n");
 	ft_putstr("\n");
 	ft_putstr("Cipher commands:\n");
 	ft_putstr("\n");
 	// ft_putstr("\nusage:\t./ft_ssl []\n");
-	// free(eveything);
+	// free(eveything);???
 	// exit(1);
 }
 
