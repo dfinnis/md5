@@ -51,7 +51,7 @@ static uint32_t	*pad(char *input, size_t *msg_len)
 	((uint8_t*)padded)[g_len / 8] = 0x80;
 	i = -1;
 	while (++i < g_len / 8 + 1)
-		padded[i] = swap_endianness(padded[i]);
+		padded[i] = swap_endian(padded[i]);
 	padded[((((*msg_len) * 512) - 64) / 32) + 1] = g_len;
 	g_len = 0;
 	return (padded);

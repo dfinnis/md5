@@ -79,7 +79,7 @@ static uint64_t	*pad(char *input, size_t *msg_len)
 	ft_memcpy(padded, input, g_len / 8);
 	i = -1;
 	while (++i < g_len / 8 + 1)
-		padded[i] = swap_endianness64(padded[i]);
+		padded[i] = swap_endian64(padded[i]);
 	padded[((((*msg_len) * 1024) - 128) / 64) + 1] = g_len;
 	g_len = 0;
 	return (padded);

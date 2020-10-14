@@ -89,10 +89,4 @@ void			sha384_512(char *input, int algo);
 */
 void			sha512_chunk(uint64_t hash[8], uint64_t *padded, size_t chunk);
 
-/*
-**		endian.c
-*/
-uint32_t		swap_endianness(uint32_t before);
-uint64_t		swap_endianness64(uint64_t before);
-
 #endif

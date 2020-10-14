@@ -105,4 +105,6 @@ void				ft_freestr(char *str);
 char				**ft_split_whitespaces(char *str);
 int					ft_isblank(int c);
 void				*ft_calloc(size_t count, size_t size);
+uint32_t			swap_endian(uint32_t before);
+uint64_t			swap_endian64(uint64_t before);
 #endif

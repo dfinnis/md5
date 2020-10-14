@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   endian.c                                           :+:      :+:    :+:   */
+/*   swap_endian.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dfinnis <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ssl.h"
+#include "libft.h"
 
-uint32_t	swap_endianness(uint32_t before)
+uint32_t	swap_endian(uint32_t before)
 {
 	uint32_t after;
 
@@ -24,7 +24,7 @@ uint32_t	swap_endianness(uint32_t before)
 	return (after);
 }
 
-uint64_t	swap_endianness64(uint64_t before)
+uint64_t	swap_endian64(uint64_t before)
 {
 	uint64_t after;
 
