@@ -7,7 +7,10 @@ void	read_stdin(int flag_p)
 
 	input = NULL;
 	if ((error = read_fd(0, &input) == -1))
-		ft_dprintf(2, "error reading stdin\n", error);// EXIT!!!!!!!!!
+	{
+		ft_dprintf(2, "error reading stdin\n", error);
+		exit(1);
+	}
 	g_len *= 8;
 	if (flag_p)
 		ft_printf(input);
