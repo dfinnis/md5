@@ -80,7 +80,8 @@ static void	init_hash(uint64_t hash[8], int algo)
 		hash[6] = 0x1f83d9abfb41bd6b;
 		hash[7] = 0x5be0cd19137e2179;
 	}
-	else init_truncated(hash, algo);
+	else
+		init_truncated(hash, algo);
 }
 
 uint64_t	swap_endianness64(uint64_t before)
@@ -126,7 +127,7 @@ uint64_t	rotate64_right(uint64_t x, uint64_t n)
 	return ((x >> n) | (x << (64 - n)));
 }
 
-static void		operations(uint64_t *buf, uint64_t *w, size_t i)
+static void		operations(uint64_t *buf, uint64_t *words, size_t i)
 {
 	uint64_t ch;
 	uint64_t maj;
@@ -139,7 +140,7 @@ static void		operations(uint64_t *buf, uint64_t *w, size_t i)
 	rotate64_right(buf[A], 39);
 	s[1] = rotate64_right(buf[E], 14) ^ rotate64_right(buf[E], 18) ^
 	rotate64_right(buf[E], 41);
-	tmp[0] = buf[I] + s[1] + ch + g_k[i] + w[i];
+	tmp[0] = buf[I] + s[1] + ch + g_k[i] + words[i];
 	tmp[1] = s[0] + maj;
 	buf[I] = buf[G];
 	buf[G] = buf[F];
@@ -151,16 +152,16 @@ static void		operations(uint64_t *buf, uint64_t *w, size_t i)
 	buf[A] = tmp[0] + tmp[1];
 }
 
-static void		extend(uint64_t *w, size_t i)
+static void		extend(uint64_t *words, size_t i)
 {
 	uint64_t s0;
 	uint64_t s1;
 
-	s0 = rotate64_right(w[i - 15], 1) ^ rotate64_right(w[i - 15], 8) ^
-	(w[i - 15] >> 7);
-	s1 = rotate64_right(w[i - 2], 19) ^ rotate64_right(w[i - 2], 61)
-	^ (w[i - 2] >> 6);
-	w[i] = w[i - 16] + s0 + w[i - 7] + s1;
+	s0 = rotate64_right(words[i - 15], 1) ^ rotate64_right(words[i - 15], 8) ^
+	(words[i - 15] >> 7);
+	s1 = rotate64_right(words[i - 2], 19) ^ rotate64_right(words[i - 2], 61)
+	^ (words[i - 2] >> 6);
+	words[i] = words[i - 16] + s0 + words[i - 7] + s1;
 }
 
 static void		digest_chunk(uint64_t hash[8], uint64_t *padded, size_t chunk)
@@ -202,7 +203,8 @@ static void		print_digest(uint64_t hash[8], int algo)
 			ft_printf("%08llx", hash[i++] / 0x100000000);
 		else
 			ft_printf("%016llx", hash[i++]);
-		if ((i >= 4 && (algo == 512224 || algo == 512256)) || (i >= 6 && algo == 384))
+		if ((algo == 384 && i >= 6) ||
+			((algo == 512224 || algo == 512256) && i >= 4))
 			break ;
 	}
 }
