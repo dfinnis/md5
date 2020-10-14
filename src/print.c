@@ -21,9 +21,6 @@ void		print_usage(void)
 	ft_putstr("\n");
 	ft_putstr("Cipher commands:\n");
 	ft_putstr("\n");
-	// ft_putstr("\nusage:\t./ft_ssl []\n");
-	// free(eveything);???
-	// exit(1);
 }
 
 void		print_prefix(char *input, t_args *args)
