@@ -64,4 +64,19 @@ void			sha2(char *input, int algo);
 */
 void			sha_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk);
 
+/*
+**		sha512.c
+*/
+void			sha384_512(char *input, int algo);
+
+/*
+**		sha512_chunk.c
+*/
+void			sha512_chunk(uint64_t hash[8], uint64_t *padded, size_t chunk);
+
+/*
+**		endian.c
+*/
+uint64_t		swap_endianness64(uint64_t before);
+
 #endif

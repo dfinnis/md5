@@ -21,7 +21,10 @@ SRCS_FILES = ft_ssl.c \
 	sha.c \
 	sha_chunk.c \
 	sha_cmd.c \
-	sha512.c
+	sha512.c \
+	sha512_chunk.c \
+	sha512_cmd.c \
+	endian.c
 
 SRCS_PATH = $(SRCS_FILES:%=$(SRCS_DIR)%)
 
