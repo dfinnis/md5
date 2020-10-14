@@ -1,10 +1,9 @@
-usage update with all sha
-
 test devices, pipes, symbolic links, sockets, etc.
 
 static all files as possible
 sort headers (inc libft)
 norm
+leaks
 author
 
 md5 & sha exit 0 on success, 1 on error
@@ -17,7 +16,9 @@ md5 & sha exit 0 on success, 1 on error
 
 #### BONUS ####
 1. parse commands from STDIN the same way that OpenSSL does
-2. test.sh
-3. sha224
--t Run a built-in time trial ?
--x Run a built-in test script ?
+2. sha224
+3. sha384
+4. sha512
+5. sha512224
+6. sha512256
+7. test.sh
