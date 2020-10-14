@@ -69,7 +69,7 @@ void			sha_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 	uint32_t	buf[8];
 	int			i;
 
-	if ((words = ft_calloc(64, 32)) == NULL)// malloc
+	if ((words = ft_calloc(64, 32)) == NULL)
 	{
 		ft_dprintf(2, "Memory allocation failure\n");
 		exit(1);

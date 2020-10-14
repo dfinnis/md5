@@ -1,6 +1,6 @@
 #include "../inc/ft_ssl.h"
 
-static void	init_truncated(uint64_t hash[8], int algo)
+static void		init_truncated(uint64_t hash[8], int algo)
 {
 	if (algo == 512224)
 	{
@@ -26,7 +26,7 @@ static void	init_truncated(uint64_t hash[8], int algo)
 	}
 }
 
-static void	init_hash(uint64_t hash[8], int algo)
+static void		init_hash(uint64_t hash[8], int algo)
 {
 	if (algo == 384)
 	{
