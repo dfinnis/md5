@@ -26,18 +26,6 @@ static void		init_hash(uint32_t hash[8], int algo)
 	}
 }
 
-static uint32_t	swap_endianness(uint32_t before)
-{
-	uint32_t after;
-
-	after = 0;
-	after |= (before & 0x000000ff) << 24;
-	after |= (before & 0x0000ff00) << 8;
-	after |= (before & 0x00ff0000) >> 8;
-	after |= (before & 0xff000000) >> 24;
-	return (after);
-}
-
 static uint32_t	*pad(char *input, size_t *msg_len)
 {
 	uint32_t	*padded;
@@ -73,7 +61,7 @@ static void		print_digest(uint32_t hash[8], int algo)
 	}
 }
 
-void			sha2(char *input, int algo)
+void			sha224_256(char *input, int algo)
 {
 	uint32_t	*padded;
 	uint32_t	hash[8];
@@ -84,7 +72,7 @@ void			sha2(char *input, int algo)
 	init_hash(hash, algo);
 	chunk = 0;
 	while (chunk < msg_len)
-		sha_chunk(hash, padded, chunk++);
+		sha256_chunk(hash, padded, chunk++);
 	free(padded);
 	print_digest(hash, algo);
 }

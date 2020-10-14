@@ -2,10 +2,10 @@
 
 void	sha224(char *input)
 {
-	sha2(input, 224);
+	sha224_256(input, 224);
 }
 
 void	sha256(char *input)
 {
-	sha2(input, 256);
+	sha224_256(input, 256);
 }

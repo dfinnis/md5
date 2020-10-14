@@ -29,10 +29,6 @@ typedef struct	s_args
 }				t_args;
 
 /*
-**		ft_ssl.c
-*/
-
-/*
 **		read.c
 */
 void			read_file(char *filepath, t_args *args);
@@ -46,23 +42,19 @@ void			print_prefix(char *input, t_args *args);
 void			print_suffix(char *input, t_args *args);
 
 /*
-**		md5.c
-*/
-
-/*
 **		md5_rotate.c
 */
 void			rotate_left_b(uint32_t *buf, size_t round, uint32_t *words);
 
 /*
-**		sha.c
+**		sha256.c
 */
-void			sha2(char *input, int algo);
+void			sha224_256(char *input, int algo);
 
 /*
-**		sha_chunk.c
+**		sha256_chunk.c
 */
-void			sha_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk);
+void			sha256_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk);
 
 /*
 **		sha512.c
@@ -77,6 +69,7 @@ void			sha512_chunk(uint64_t hash[8], uint64_t *padded, size_t chunk);
 /*
 **		endian.c
 */
+uint32_t		swap_endianness(uint32_t before);
 uint64_t		swap_endianness64(uint64_t before);
 
 #endif

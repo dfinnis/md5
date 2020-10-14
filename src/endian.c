@@ -1,5 +1,17 @@
 #include "../inc/ft_ssl.h"
 
+uint32_t	swap_endianness(uint32_t before)
+{
+	uint32_t after;
+
+	after = 0;
+	after |= (before & 0x000000ff) << 24;
+	after |= (before & 0x0000ff00) << 8;
+	after |= (before & 0x00ff0000) >> 8;
+	after |= (before & 0xff000000) >> 24;
+	return (after);
+}
+
 uint64_t	swap_endianness64(uint64_t before)
 {
 	uint64_t after;

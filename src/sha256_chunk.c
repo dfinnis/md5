@@ -62,7 +62,7 @@ static void		operations(uint32_t *buf, uint32_t *w, size_t i)
 	buf[A] = tmp[0] + tmp[1];
 }
 
-void			sha_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
+void			sha256_chunk(uint32_t hash[8], uint32_t *padded, size_t chunk)
 {
 	uint32_t	*words;
 	size_t		round;
