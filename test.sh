@@ -367,15 +367,15 @@ test_hash "md5"
 test_sha()
 {
 	SHA=$1
-	echo "\n\n$BRIGHT $SHA $RESET"
+	echo "\n\n$BRIGHT sha$SHA $RESET"
 	#### -- SHA UNIT test -- ####
 	unit_correct=0
 	unit_count=0
 	unit_test_sha()
 	{
 		FILEPATH=$1
-		./ft_ssl $SHA -q $FILEPATH > test/test_unit.txt 2> test/test_unit_err.txt
-		openssl $SHA -r $FILEPATH | awk '{print $1;}' > test/test_unit2.txt 2> test/test_unit2_err.txt
+		./ft_ssl sha$SHA -q $FILEPATH > test/test_unit.txt 2> test/test_unit_err.txt
+		shasum -a $SHA $FILEPATH | awk '{print $1;}' > test/test_unit2.txt 2> test/test_unit2_err.txt
 		dif=$(eval "diff test/test_unit.txt test/test_unit2.txt;
 					diff test/test_unit_err.txt test/test_unit2_err.txt")
 		if [ "$dif" = "" ]
@@ -442,8 +442,8 @@ test_sha()
 	do
 		random_len=$(( ( RANDOM % 1000 )  + 1 ))
 		openssl rand -base64 $random_len > test/test_random.txt
-		cmd="./ft_ssl $HASH -q test/test_random.txt"
-		control="openssl $HASH -r test/test_random.txt | awk '{print \$1;}'"
+		cmd="./ft_ssl sha$SHA -q test/test_random.txt"
+		control="shasum -a $SHA test/test_random.txt | awk '{print \$1;}'"
 		output=$(eval "$cmd")
 		output2=$(eval "$control")
 		if [ "$output" = "$output2" ]
@@ -473,8 +473,8 @@ test_sha()
 	do
 		random_len=$(( ( RANDOM % 1000 )  + 1 ))
 		random_str=$(eval "openssl rand -base64 $random_len")
-		cmd="echo \"$random_str\" | ./ft_ssl $SHA"
-		control="echo \"$random_str\" | openssl $SHA"
+		cmd="echo \"$random_str\" | ./ft_ssl sha$SHA"
+		control="echo \"$random_str\" | shasum -a $SHA  | awk '{print \$1;}'"
 		output=$(eval "$cmd")
 		output2=$(eval "$control")
 		if [ "$output" = "$output2" ]
@@ -508,8 +508,8 @@ test_sha()
 	do
 		random_len=$(( ( RANDOM % 1000 )  + 1 ))
 		cat /dev/urandom | head -c $random_len > test/test_random.txt
-		cmd="./ft_ssl $SHA -q test/test_random.txt"
-		control="openssl $SHA -r test/test_random.txt | awk '{print \$1;}'"
+		cmd="./ft_ssl sha$SHA -q test/test_random.txt"
+		control="shasum -a $SHA test/test_random.txt | awk '{print \$1;}'"
 		output=$(eval "$cmd")
 		output2=$(eval "$control")
 		if [ "$output" = "$output2" ]
@@ -545,10 +545,12 @@ test_sha()
 	# fi
 }
 
-test_sha sha256
-test_sha sha224
-test_sha sha384
-test_sha sha512
+test_sha 256
+test_sha 224
+test_sha 384
+test_sha 512
+test_sha 512224
+test_sha 512256
 
 #### -- FINAL STATS -- ####
 echo

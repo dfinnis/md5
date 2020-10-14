@@ -30,6 +30,32 @@ static uint64_t g_k[] = {
 	0x5fcb6fab3ad6faec, 0x6c44198c4a475817
 };
 
+static void	init_truncated(uint64_t hash[8], int algo)
+{
+	if (algo == 512224)
+	{
+		hash[0] = 0x8c3d37c819544da2;
+		hash[1] = 0x73e1996689dcd4d6;
+		hash[2] = 0x1dfab7ae32ff9c82;
+		hash[3] = 0x679dd514582f9fcf;
+		hash[4] = 0x0f6d2b697bd44da8;
+		hash[5] = 0x77e36f7304c48942;
+		hash[6] = 0x3f9d85a86a1d36c8;
+		hash[7] = 0x1112e6ad91d692a1;
+	}
+	else if (algo == 512256)
+	{
+		hash[0] = 0x22312194fc2bf72c;
+		hash[1] = 0x9f555fa3c84c64c2;
+		hash[2] = 0x2393b86b6f53b151;
+		hash[3] = 0x963877195940eabd;
+		hash[4] = 0x96283ee2a88effe3;
+		hash[5] = 0xbe5e1e2553863992;
+		hash[6] = 0x2b0199fc2c85b8aa;
+		hash[7] = 0x0eb72ddc81c52ca2;
+	}
+}
+
 static void	init_hash(uint64_t hash[8], int algo)
 {
 	if (algo == 384)
@@ -54,6 +80,7 @@ static void	init_hash(uint64_t hash[8], int algo)
 		hash[6] = 0x1f83d9abfb41bd6b;
 		hash[7] = 0x5be0cd19137e2179;
 	}
+	else init_truncated(hash, algo);
 }
 
 uint64_t	swap_endianness64(uint64_t before)
@@ -168,13 +195,14 @@ static void		print_digest(uint64_t hash[8], int algo)
 {
 	int i;
 
-	// if (algo == 512224)
-	// 	hash[3] /= 0x100000000;
 	i = 0;
 	while (i < 8)
 	{
-		ft_printf("%016llx", hash[i++]);
-		if (/*(i >= 4 && (algo == 512224 || algo == 512256)) || */i >= 6 && algo == 384)
+		if (algo == 512224 && i == 3)
+			ft_printf("%08llx", hash[i++] / 0x100000000);
+		else
+			ft_printf("%016llx", hash[i++]);
+		if ((i >= 4 && (algo == 512224 || algo == 512256)) || (i >= 6 && algo == 384))
 			break ;
 	}
 }
@@ -203,4 +231,14 @@ void	sha384(char *input)
 void	sha512(char *input)
 {
 	sha384_512(input, 512);
+}
+
+void	sha512224(char *input)
+{
+	sha384_512(input, 512224);
+}
+
+void	sha512256(char *input)
+{
+	sha384_512(input, 512256);
 }

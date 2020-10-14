@@ -13,6 +13,8 @@ const static struct {
 	{ "sha256", sha256 },
 	{ "sha384", sha384 },
 	{ "sha512", sha512 },
+	{ "sha512224", sha512224 },
+	{ "sha512256", sha512256 },
 };
 
 #endif
