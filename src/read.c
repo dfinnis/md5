@@ -36,7 +36,7 @@ static int	cp_char(char **line, char *str)
 	return (0);
 }
 
-static int	read_fd(const int fd, char **line)
+int			read_fd(const int fd, char **line)
 {
 	char	*str;
 	int		k;
@@ -95,19 +95,4 @@ void		read_file(char *filepath, t_args *args)
 	print_prefix(filepath, args);
 	g_cmd_func(input);
 	print_suffix(filepath, args);
-}
-
-void		read_stdin(int flag_p)
-{
-	char	*input;
-	int		error;
-
-	input = NULL;
-	if ((error = read_fd(0, &input) == -1))
-		ft_dprintf(2, "error reading stdin\n", error);// EXIT!!!!!!!!!
-	g_len *= 8;
-	if (flag_p)
-		ft_printf(input);
-	g_cmd_func(input);
-	ft_printf("\n");
 }

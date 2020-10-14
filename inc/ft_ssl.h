@@ -29,10 +29,21 @@ typedef struct	s_args
 }				t_args;
 
 /*
+**		ft_ssl.c
+*/
+void			read_command(char *cmd, t_args *args);
+
+/*
 **		read.c
 */
+int				read_fd(const int fd, char **line);
 void			read_file(char *filepath, t_args *args);
+
+/*
+**		read_stdin.c
+*/
 void			read_stdin(int flag_p);
+void			stdin_cmd(t_args *args);
 
 /*
 **		print.c

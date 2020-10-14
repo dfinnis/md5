@@ -6,7 +6,7 @@ static void	init_ssl(t_args *args)
 	args->first = 1;
 }
 
-static void	read_command(char *cmd, t_args *args)
+void		read_command(char *cmd, t_args *args)
 {
 	unsigned long i;
 
@@ -60,29 +60,6 @@ static int	read_arg(int argc, char **argv, t_args *args, int i)
 		args->first = 0;
 	}
 	return (++i);
-}
-
-static void	stdin_cmd(t_args *args)
-{
-	char	*input;
-	int		error;
-
-	ft_putstr("FT_SSL> ");
-	input = NULL;
-	if ((error = get_next_line(0, &input) == -1))
-	{
-		ft_dprintf(2, "error reading stdin\n", error);
-		exit(1);
-	}
-	if (ft_strcmp(input, "quit") == 0)
-		exit(0);
-	if (ft_strcmp(input, "") == 0)
-		stdin_cmd(args);
-	read_command(input, args);
-	if (g_cmd_func == NULL)
-		stdin_cmd(args);
-	else
-		read_stdin(0);
 }
 
 int			main(int argc, char **argv)

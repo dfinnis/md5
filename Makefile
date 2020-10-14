@@ -15,6 +15,7 @@ LIBFT_A = $(LIBFT)/libftprintf.a
 
 SRCS_FILES = ft_ssl.c \
 	read.c \
+	read_stdin.c \
 	print.c \
 	md5.c \
 	md5_rotate.c \
