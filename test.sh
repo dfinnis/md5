@@ -547,8 +547,8 @@ test_sha()
 
 test_sha sha256
 test_sha sha224
-# test_sha sha384
-# test_sha sha512
+test_sha sha384
+test_sha sha512
 
 #### -- FINAL STATS -- ####
 echo
