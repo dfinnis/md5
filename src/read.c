@@ -82,10 +82,17 @@ static int	is_regular_file(const char *path)
 	return (S_ISREG(path_stat.st_mode));
 }
 
+static int	is_directory(const char *path)
+{
+	struct stat path_stat;
+
+	stat(path, &path_stat);
+	return (S_ISDIR(path_stat.st_mode));
+}
+
 void		read_file(char *filepath, t_args *args)
 {
 	char	*input;
-	int		error;
 	int		fd;
 
 	input = NULL;
@@ -96,10 +103,13 @@ void		read_file(char *filepath, t_args *args)
 	}
 	if (!is_regular_file(filepath))
 	{
-		ft_dprintf(2, "%s: %s: Is a directory\n", args->command, filepath);
+		if (is_directory(filepath))
+			ft_dprintf(2, "%s: %s: Is a directory\n", args->command, filepath);
+		else
+			ft_dprintf(2, "%s: %s: Is not a file\n", args->command, filepath);
 		return ;
 	}
-	if ((error = read_fd(fd, &input) == -1))
+	if (read_fd(fd, &input) == -1)
 	{
 		ft_dprintf(2, "%s: %s: Error reading file\n", args->command, filepath);
 		return ;
