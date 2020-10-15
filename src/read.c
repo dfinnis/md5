@@ -52,7 +52,6 @@ void		read_file(char *filepath, t_args *args)
 		ft_dprintf(2, "%s: %s: Error reading file\n", args->command, filepath);
 		return ;
 	}
-	g_bitlen *= 8;
 	print_prefix(filepath, args);
 	g_cmd_func(input);
 	print_suffix(filepath, args);
@@ -65,7 +64,6 @@ void		read_stdin(int flag_p)
 	input = NULL;
 	if (read_fd(0, &input) == -1)
 		error_exit("reading stdin failed");
-	g_bitlen *= 8;
 	if (flag_p)
 		ft_printf(input);
 	g_cmd_func(input);

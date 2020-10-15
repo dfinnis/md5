@@ -1,7 +1,6 @@
 /dev/urandom/
 test leaks
 
-clean up test.sh
 final norm
 
 md5 & sha exit 0 on success, 1 on error

@@ -19,16 +19,16 @@ static char	*ft_strjoin_bin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	if (!(fresh = ft_strnew(g_bitlen + 1)))
+	if (!(fresh = ft_strnew(g_byte_len + 1)))
 		return (NULL);
 	i = 0;
-	while (i < g_bitlen)
+	while (i < g_byte_len)
 	{
 		fresh[i] = s1[i];
 		i++;
 	}
-	fresh[g_bitlen] = s2[0];
-	fresh[g_bitlen + 1] = '\0';
+	fresh[g_byte_len] = s2[0];
+	fresh[g_byte_len + 1] = '\0';
 	return (fresh);
 }
 
@@ -55,7 +55,7 @@ int			read_fd(const int fd, char **line)
 
 	if (line == NULL || fd < 0 || !(*line = ft_strdup("")))
 		return (-1);
-	g_bitlen = 0;
+	g_byte_len = 0;
 	k = 1;
 	while (k > 0)
 	{
@@ -69,7 +69,7 @@ int			read_fd(const int fd, char **line)
 			return (0);
 		else if (k == 0 && *line[0])
 			return (1);
-		g_bitlen++;
+		g_byte_len++;
 	}
 	return (-1);
 }

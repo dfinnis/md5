@@ -17,23 +17,24 @@ static uint8_t	*pad(char *input, uint32_t *msg_len)
 	unsigned long	i;
 	uint8_t			*padded;
 
-	(*msg_len) = g_bitlen + 1;
+	(*msg_len) = g_byte_len * 8 + 1;
 	while ((*msg_len) % 512 != 448)
 		(*msg_len)++;
 	(*msg_len) = ((*msg_len) + 64) / 8;
 	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * (*msg_len))))
 		error_exit("memory allocation failed");
 	i = -1;
-	while (++i < g_bitlen / 8)
+	while (++i < g_byte_len)
 		padded[i] = input[i];
 	padded[i] = 128;
 	while (++i < (*msg_len))
 		padded[i] = 0;
+	g_byte_len *= 8;
 	i = (*msg_len) - 9;
 	while (++i < (*msg_len))
 	{
-		padded[i] = g_bitlen % 256;
-		g_bitlen /= 256;
+		padded[i] = g_byte_len % 256;
+		g_byte_len /= 256;
 	}
 	(*msg_len) /= 64;
 	return (padded);
