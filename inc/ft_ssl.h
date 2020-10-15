@@ -23,7 +23,7 @@
 **		global command function pointer
 */
 void			(*g_cmd_func)(char *);
-unsigned long	g_len;
+unsigned long	g_bitlen;
 
 enum			e_bufs
 {

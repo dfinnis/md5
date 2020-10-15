@@ -72,16 +72,15 @@ static uint64_t	*pad(char *input, size_t *msg_len)
 	size_t		i;
 
 	padded = NULL;
-	(*msg_len) = ((g_len + 128) / 1024) + 1;
+	(*msg_len) = ((g_bitlen + 128) / 1024) + 1;
 	if ((padded = ft_calloc((*msg_len) * 16, 64)) == NULL)
 		error_exit("memory allocation failure");
-	((uint8_t*)padded)[g_len / 8] = 0x80;
-	ft_memcpy(padded, input, g_len / 8);
+	((uint8_t*)padded)[g_bitlen / 8] = 0x80;
+	ft_memcpy(padded, input, g_bitlen / 8);
 	i = -1;
-	while (++i < g_len / 8 + 1)
+	while (++i < g_bitlen / 8 + 1)
 		padded[i] = swap_endian64(padded[i]);
-	padded[((((*msg_len) * 1024) - 128) / 64) + 1] = g_len;
-	g_len = 0;
+	padded[((((*msg_len) * 1024) - 128) / 64) + 1] = g_bitlen;
 	return (padded);
 }
 

@@ -1,10 +1,8 @@
 test devices, pipes, symbolic links, sockets, etc.
+test leaks
 
-static all files as possible
-sort headers (inc libft)
-norm
-leaks
-author
+clean up test.sh
+final norm
 
 md5 & sha exit 0 on success, 1 on error
 (at least one of the input files could not be read)

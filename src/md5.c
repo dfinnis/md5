@@ -18,13 +18,13 @@ static uint8_t	*pad(char *input, uint32_t *msg_len)
 	uint8_t			*padded;
 
 	i = -1;
-	(*msg_len) = g_len + 1;
+	(*msg_len) = g_bitlen + 1;
 	while ((*msg_len) % 512 != 448)
 		(*msg_len)++;
 	(*msg_len) = ((*msg_len) + 64) / 8;
 	if (!(padded = (uint8_t *)malloc(sizeof(uint8_t) * (*msg_len))))
 		error_exit("memory allocation failed");
-	while (++i < g_len / 8)
+	while (++i < g_bitlen / 8)
 		padded[i] = input[i];
 	padded[i] = 128;
 	while (++i < (*msg_len))
@@ -32,8 +32,8 @@ static uint8_t	*pad(char *input, uint32_t *msg_len)
 	i = (*msg_len) - 9;
 	while (++i < (*msg_len))
 	{
-		padded[i] = g_len % 256;
-		g_len /= 256;
+		padded[i] = g_bitlen % 256;
+		g_bitlen /= 256;
 	}
 	(*msg_len) /= 64;
 	return (padded);

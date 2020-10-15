@@ -20,7 +20,7 @@ void	read_stdin(int flag_p)
 	input = NULL;
 	if ((error = read_fd(0, &input) == -1))
 		error_exit("reading stdin failed");
-	g_len *= 8;
+	g_bitlen *= 8;
 	if (flag_p)
 		ft_printf(input);
 	g_cmd_func(input);
