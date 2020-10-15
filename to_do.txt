@@ -1,4 +1,4 @@
-test devices, pipes, symbolic links, sockets, etc.
+/dev/urandom/
 test leaks
 
 clean up test.sh
