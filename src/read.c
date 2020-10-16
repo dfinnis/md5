@@ -55,6 +55,7 @@ void		read_file(char *filepath, t_args *args)
 	print_prefix(filepath, args);
 	g_cmd_func(input);
 	print_suffix(filepath, args);
+	ft_freestr(input);
 }
 
 void		read_stdin(int flag_p)
@@ -68,6 +69,7 @@ void		read_stdin(int flag_p)
 		ft_printf(input);
 	g_cmd_func(input);
 	ft_printf("\n");
+	ft_freestr(input);
 }
 
 void		read_stdin_command(t_args *args)
@@ -80,10 +82,17 @@ void		read_stdin_command(t_args *args)
 	if ((error = get_next_line(0, &input) == -1))
 		error_exit("reading stdin failed");
 	if (ft_strcmp(input, "quit") == 0)
+	{
+		ft_freestr(input);
 		exit(0);
+	}
 	if (ft_strcmp(input, "") == 0)
+	{
+		ft_freestr(input);
 		read_stdin_command(args);
+	}
 	read_command(input, args);
+	ft_freestr(input);
 	if (g_cmd_func == NULL)
 		read_stdin_command(args);
 	else
