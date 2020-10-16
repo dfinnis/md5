@@ -35,7 +35,7 @@ void		print_usage(void)
 	ft_putstr("\n");
 }
 
-void		print_prefix(char *input, t_args *args)
+static void	print_prefix(char *input, t_args *args)
 {
 	unsigned long i;
 	unsigned long len;
@@ -53,7 +53,7 @@ void		print_prefix(char *input, t_args *args)
 	}
 }
 
-void		print_suffix(char *input, t_args *args)
+static void	print_suffix(char *input, t_args *args)
 {
 	if (args->flag_r && !args->flag_q)
 	{
@@ -63,4 +63,11 @@ void		print_suffix(char *input, t_args *args)
 			ft_printf(" %s", input);
 	}
 	ft_printf("\n");
+}
+
+void		exec_cmd_print(char *input, char *filepath, t_args *args)
+{
+	print_prefix(filepath, args);
+	g_cmd_func(input);
+	print_suffix(filepath, args);
 }

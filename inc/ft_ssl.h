@@ -61,8 +61,7 @@ int				read_fd(const int fd, char **line);
 */
 void			error_exit(char *err_msg);
 void			print_usage();
-void			print_prefix(char *input, t_args *args);
-void			print_suffix(char *input, t_args *args);
+void			exec_cmd_print(char *input, char *filepath, t_args *args);
 
 /*
 **		md5_chunk.c

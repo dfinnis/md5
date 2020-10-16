@@ -50,9 +50,7 @@ static void	flag_s(int argc, char **argv, int i, t_args *args)
 	}
 	args->flag_s = 1;
 	g_byte_len = ft_strlen(argv[i]);
-	print_prefix(argv[i], args);
-	g_cmd_func(argv[i]);
-	print_suffix(argv[i], args);
+	exec_cmd_print(argv[i], argv[i], args);
 }
 
 static int	read_arg(int argc, char **argv, t_args *args, int i)

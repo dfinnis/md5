@@ -52,9 +52,7 @@ void		read_file(char *filepath, t_args *args)
 		ft_dprintf(2, "%s: %s: Error reading file\n", args->command, filepath);
 		return ;
 	}
-	print_prefix(filepath, args);
-	g_cmd_func(input);
-	print_suffix(filepath, args);
+	exec_cmd_print(input, filepath, args);
 	ft_freestr(input);
 }
 
