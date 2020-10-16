@@ -82,7 +82,7 @@ int			main(int argc, char **argv)
 	i = 2;
 	init_ssl(&args);
 	if (argc == 1)
-		stdin_cmd(&args);
+		read_stdin_command(&args);
 	else
 	{
 		read_command(argv[1], &args);

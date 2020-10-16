@@ -49,10 +49,10 @@ void			read_command(char *cmd, t_args *args);
 */
 void			read_file(char *filepath, t_args *args);
 void			read_stdin(int flag_p);
-void			stdin_cmd(t_args *args);
+void			read_stdin_command(t_args *args);
 
 /*
-**		read_stdin.c
+**		read_fd.c
 */
 int				read_fd(const int fd, char **line);
 

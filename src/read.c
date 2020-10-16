@@ -70,7 +70,7 @@ void		read_stdin(int flag_p)
 	ft_printf("\n");
 }
 
-void		stdin_cmd(t_args *args)
+void		read_stdin_command(t_args *args)
 {
 	char	*input;
 	int		error;
@@ -82,10 +82,10 @@ void		stdin_cmd(t_args *args)
 	if (ft_strcmp(input, "quit") == 0)
 		exit(0);
 	if (ft_strcmp(input, "") == 0)
-		stdin_cmd(args);
+		read_stdin_command(args);
 	read_command(input, args);
 	if (g_cmd_func == NULL)
-		stdin_cmd(args);
+		read_stdin_command(args);
 	else
 		read_stdin(0);
 }
