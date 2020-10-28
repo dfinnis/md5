@@ -15,6 +15,8 @@ echo "$BRIGHT Launching MD5 Performance Test... $RESET\n"
 count=0
 correct=0
 echo "And above all," > file
+touch test/no_permissions.txt
+chmod 000 test/no_permissions.txt
 
 #### -- MD5 -- ####
 echo "$BRIGHT md5 $RESET"
@@ -80,6 +82,7 @@ unit_test test/the_best_player_around_the_whole_universe.cor
 unit_test test/the_best_player_around_the_whole_universe.s
 unit_test test/big_smoke_order_remix
 unit_test test/all_permissions.txt
+unit_test test/no_permissions.txt
 unit_test test/symbolic_link
 unit_test test/max_line.txt
 
@@ -530,5 +533,6 @@ else
 fi
 
 #### -- END -- ####
-rm file ft_ssl
-make clean
+chmod 755 test/no_permissions.txt
+rm file test/no_permissions.txt
+make fclean
