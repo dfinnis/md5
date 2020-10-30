@@ -79,15 +79,17 @@ void		read_stdin_command(t_args *args)
 	ft_putstr("FT_SSL> ");
 	if ((error = get_next_line(0, &input) == -1))
 		error_exit("reading stdin failed");
-	if (ft_strcmp(input, "quit") == 0)
+	while (ft_strcmp(input, "") == 0)
+	{
+		ft_freestr(input);
+		ft_putstr("FT_SSL> ");
+		if ((error = get_next_line(0, &input) == -1))
+			error_exit("reading stdin failed");
+	}
+	if (ft_strcmp(input, "quit") == 0 || ft_strcmp(input, "q") == 0)
 	{
 		ft_freestr(input);
 		exit(0);
-	}
-	if (ft_strcmp(input, "") == 0)
-	{
-		ft_freestr(input);
-		read_stdin_command(args);
 	}
 	read_command(input, args);
 	ft_freestr(input);
