@@ -76,25 +76,25 @@ void		read_stdin_command(t_args *args)
 	int		error;
 
 	input = NULL;
-	ft_putstr("FT_SSL> ");
-	if ((error = get_next_line(0, &input) == -1))
-		error_exit("reading stdin failed");
-	while (ft_strcmp(input, "") == 0)
+	while (g_cmd_func == NULL)
 	{
-		ft_freestr(input);
 		ft_putstr("FT_SSL> ");
 		if ((error = get_next_line(0, &input) == -1))
 			error_exit("reading stdin failed");
-	}
-	if (ft_strcmp(input, "quit") == 0 || ft_strcmp(input, "q") == 0)
-	{
+		while (ft_strcmp(input, "") == 0)
+		{
+			ft_freestr(input);
+			ft_putstr("FT_SSL> ");
+			if ((error = get_next_line(0, &input) == -1))
+				error_exit("reading stdin failed");
+		}
+		if (ft_strcmp(input, "quit") == 0 || ft_strcmp(input, "q") == 0)
+		{
+			ft_freestr(input);
+			exit(0);
+		}
+		read_command(input, args);
 		ft_freestr(input);
-		exit(0);
 	}
-	read_command(input, args);
-	ft_freestr(input);
-	if (g_cmd_func == NULL)
-		read_stdin_command(args);
-	else
-		read_stdin(0);
+	read_stdin(0);
 }
