@@ -1,7 +1,13 @@
 #### INPUT #### 
-- flag: -s "string1" -s "string2"
-- file as direct argument: ./ft_ssl md5 file
-- standard in: -p OR echo "string" | ./ft_ssl md5
+- file as direct argument:
+	./ft_ssl md5 file
+
+- flag -s:
+	./ft_ssl -s "string1" -s "string2"
+
+- standard in:
+	./ft_ssl -p
+	echo "string" | ./ft_ssl md5
 
 #### BONUS ####
 1. parse commands from STDIN the same way that OpenSSL does
