@@ -66,7 +66,9 @@ Run the test script ```./test.sh``` .
 It will compare the output of ```ft_ssl``` with the output of ```openssl```/```shasum```.
 
 It will run some unit tests (files in the test folder), random strings, random strings piped into stdin, and random binary files.
-It will run tests for each hashing algorithm emulated, MD5 and SHA family hashes.
+It will run these tests for each hashing algorithm emulated, MD5 and SHA family hashes.
+
+![md5 test output](https://github.com/dfinnis/md5/blob/master/test/md5_test_output.png?raw=true)
 
 ## Flags
 
@@ -77,10 +79,33 @@ It will run tests for each hashing algorithm emulated, MD5 and SHA family hashes
 * ```-r``` reverse the format of the output
 * ```-s``` print the sum of the given string
 
+## Ideal hashing
+
+The ideal cryptographic hash function has 5 main properties:
+
+* Deterministic, the same message always results in the same hash
+* Quick to compute
+* Infeasible to reverse engineer a message from its hash (one-way)
+* a small change in message should change the hash extensively
+* no two different messages with the same hash value
+
+## How hashing functions work
+
+Though the numbers change, the basic principle is the same for MD5 and SHA family hashes. For MD5:
+
+1. Pad the message until length is a multiple of 512 bytes
+2. Initialize 4 buffers
+3. Process the message 512 byte chunk at a time, adding the result to the hash.
+4. For each 512 byte chunk, do 64 rounds of compression (specific bitwise buffer operations)
+
 ## References
 
 [Wikipedia MD5 pseudocode](https://en.wikipedia.org/wiki/MD5#Pseudocode)
+
 [Wikipedia SHA-2 pseudocode](https://en.wikipedia.org/wiki/SHA-2#Pseudocode)
+
 [EDUCBA - Introduction to MD5 Algorithm](https://www.educba.com/md5-alogrithm/)
+
 [National Institute of Standards and Technology - Secure Hash Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf)
+
 [Information Warfare - description of SHA family hash functions](http://www.iwar.org.uk/comsec/resources/cipher/sha256-384-512.pdf)
