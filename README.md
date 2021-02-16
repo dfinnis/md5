@@ -86,8 +86,8 @@ The ideal cryptographic hash function has 5 main properties:
 * Deterministic, the same message always results in the same hash
 * Quick to compute
 * Infeasible to reverse engineer a message from its hash (one-way)
-* a small change in message should change the hash extensively
-* no two different messages with the same hash value
+* A small change in message should change the hash extensively
+* No two different messages with the same hash value
 
 ## How hashing functions work
 
