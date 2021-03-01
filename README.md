@@ -9,6 +9,8 @@ Recode MD5 and SHA Hashing Algorithms:
 6. sha512/224
 7. sha512/256
 
+#### Final Score 125/100
+
 ## Getting Started
 
 Clone this repo to your machine. Then make, creating the binary ```ft_ssl```.
