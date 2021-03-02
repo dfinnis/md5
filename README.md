@@ -13,7 +13,7 @@ Recode MD5 and SHA Hashing Algorithms:
 
 ## Getting Started
 
-Clone this repo to your machine. Then make, creating the binary ```ft_ssl```.
+Clone this repo to your machine. Then ```make```, creating the binary ```ft_ssl```.
 ```
 ➜  git clone https://github.com/dfinnis/md5.git
 ...
