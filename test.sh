@@ -8,7 +8,11 @@ CLEAR_SCREEN="\E[H\E[2J"
 CLEAR_LINE="\r\c"
 
 # make fclean
-make
+if [ ! -f ft_ssl ]
+then
+	make
+fi
+
 printf $CLEAR_SCREEN
 echo "$BRIGHT Launching MD5 Performance Test... $RESET\n"
 
