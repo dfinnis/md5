@@ -53,6 +53,8 @@ Like *openssl*, you can run *ft_ssl* without arguments. It will then prompt for 
 Next input whatever text then press ctrl+D. It will then output the hash for the given text.
 Here is an example shown against *openssl*.
 
+```./ft_ssl```
+
 <img src="https://github.com/dfinnis/md5/blob/master/img/stdin.png" width="33%">
 
 
@@ -95,8 +97,7 @@ Though the numbers change, the basic principle is the same for MD5 and SHA famil
 
 1. Pad the message until length is a multiple of 512 bytes
 2. Initialize 4 buffers
-3. Process the message 512 byte chunk at a time, adding the result to the hash.
-4. For each 512 byte chunk, do 64 rounds of compression (specific bitwise buffer operations)
+3. Process the message 512 byte chunk at a time, adding the result to the hash buffers. For each 512 byte chunk, do 64 rounds of compression (specific bitwise buffer operations)
 
 
 ## Dependencies
