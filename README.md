@@ -26,6 +26,8 @@ Then run *ft_ssl* with hashing algorithm then filepath as argument.
 
 ```./ft_ssl md5 test/hello.txt```
 
+<img src="https://github.com/dfinnis/md5/blob/master/img/ssl.png" width="56%">
+
 
 ### md5 example
 
@@ -33,7 +35,7 @@ We can compare our output hash with the MD5 standalone, and openssl.
 
 ```md5 test/hello.txt```
 
-<img src="https://github.com/dfinnis/md5/blob/master/img/md5.png" width="60%">
+<img src="https://github.com/dfinnis/md5/blob/master/img/md5.png" width="56%">
 
 
 ### sha example
@@ -42,16 +44,16 @@ Here is an example running *ft_ssl* with SHA256. The same works for all SHA fami
 
 ```./ft_ssl sha256 test/hello.txt```
 
-<img src="https://github.com/dfinnis/md5/blob/master/img/sha.png" width="100%">
+<img src="https://github.com/dfinnis/md5/blob/master/img/sha.png" width="90%">
 
 
 ### stdin example
 
-Like ```openssl```, you can run ```ft_ssl``` without arguments. It will then prompt for input from stdin, accepting a hashing algorithm.
-Next input whatever text followed by control-D. It will then output the hash for the given text.
-Here is an example shown against ```openssl```.
+Like *openssl*, you can run *ft_ssl* without arguments. It will then prompt for input from stdin, accepting a hashing algorithm.
+Next input whatever text then press ctrl+D. It will then output the hash for the given text.
+Here is an example shown against *openssl*.
 
-<img src="https://github.com/dfinnis/md5/blob/master/img/stdin.png" width="35%">
+<img src="https://github.com/dfinnis/md5/blob/master/img/stdin.png" width="33%">
 
 
 ## Test script
