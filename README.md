@@ -11,66 +11,60 @@ Recode MD5 and SHA Hashing Algorithms:
 
 #### Final Score 125/100
 
+
 ## Getting Started
 
-Clone this repo to your machine. Then ```make```, creating the binary ```ft_ssl```.
-```
-➜  git clone https://github.com/dfinnis/md5.git
-...
-➜  cd md5
-➜  md5 git:(master) make
-...
-```
+First clone this repo.
 
-### Examples
+```git clone https://github.com/dfinnis/md5.git; cd md5```
 
-Run ```./ft_ssl```, followed by hashing algorithm, then any filepath. You can see the output hash is the same as the MD5 standalone, and openssl.
-```
-➜  md5 git:(master) ./ft_ssl md5 test/hello.txt
-MD5 (test/hello.txt) = b1946ac92492d2347c6235b4d2611184
-➜  md5 git:(master) md5 test/hello.txt
-MD5 (test/hello.txt) = b1946ac92492d2347c6235b4d2611184
-➜  md5 git:(master) openssl md5 test/hello.txt
-MD5(test/hello.txt)= b1946ac92492d2347c6235b4d2611184
-```
+Make the binary *ft_ssl*.
 
-Here is an example for SHA256. The same works for all SHA family hashes.
-```
-➜  md5 git:(master) ./ft_ssl sha256 test/hello.txt
-SHA256 (test/hello.txt) = 5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03
-➜  md5 git:(master) openssl sha256 test/hello.txt
-SHA256(test/hello.txt)= 5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03
-➜  md5 git:(master) shasum -a 256 test/hello.txt
-5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03  test/hello.txt
-```
+```make```
+
+Then run *ft_ssl* with hashing algorithm then filepath as argument.
+
+```./ft_ssl md5 test/hello.txt```
+
+
+### md5 example
+
+We can compare our output hash with the MD5 standalone, and openssl.
+
+```md5 test/hello.txt```
+
+<img src="https://github.com/dfinnis/md5/blob/master/img/md5.png" width="60%">
+
+
+### sha example
+
+Here is an example running *ft_ssl* with SHA256. The same works for all SHA family hashes.
+
+```./ft_ssl sha256 test/hello.txt```
+
+<img src="https://github.com/dfinnis/md5/blob/master/img/sha.png" width="100%">
+
+
+### stdin example
 
 Like ```openssl```, you can run ```ft_ssl``` without arguments. It will then prompt for input from stdin, accepting a hashing algorithm.
 Next input whatever text followed by control-D. It will then output the hash for the given text.
 Here is an example shown against ```openssl```.
-```
-➜  md5 git:(master) ./ft_ssl
-FT_SSL> md5
-hash this
-d2e196667eeb24381125d3d4230d8bfb
-➜  md5 git:(master) openssl
-OpenSSL> md5
-hash this
-d2e196667eeb24381125d3d4230d8bfb
-```
 
-### Prerequisites
+<img src="https://github.com/dfinnis/md5/blob/master/img/stdin.png" width="38%">
 
-None! All dependencies are already contained in the repo.
 
-## Tests
+## Test script
 
-Run the test script ```./test.sh``` .
-It will compare the output of ```ft_ssl``` with the output of ```openssl```/```shasum```.
+*test.sh* compares the output of *ft_ssl* with the output of *openssl / shasum*.
 
 It will run some unit tests (files in the test folder), random strings, random strings piped into stdin, and random binary files.
 It will run these tests for each hashing algorithm emulated, MD5 and SHA family hashes.
 
-![md5 test output](https://github.com/dfinnis/md5/blob/master/test/md5_test_output.png?raw=true)
+```./test.sh```
+
+<img src="https://github.com/dfinnis/md5/blob/master/img/test.png" width="35%">
+
 
 ## Flags
 
@@ -80,6 +74,7 @@ It will run these tests for each hashing algorithm emulated, MD5 and SHA family 
 * ```-q``` quiet mode
 * ```-r``` reverse the format of the output
 * ```-s``` print the sum of the given string
+
 
 ## Ideal hashing
 
@@ -91,6 +86,7 @@ The ideal cryptographic hash function has 5 main properties:
 * A small change in message should change the hash extensively
 * No two different messages with the same hash value
 
+
 ## How hashing functions work
 
 Though the numbers change, the basic principle is the same for MD5 and SHA family hashes. For MD5:
@@ -99,6 +95,12 @@ Though the numbers change, the basic principle is the same for MD5 and SHA famil
 2. Initialize 4 buffers
 3. Process the message 512 byte chunk at a time, adding the result to the hash.
 4. For each 512 byte chunk, do 64 rounds of compression (specific bitwise buffer operations)
+
+
+## Dependencies
+
+None! All dependencies are already contained in the repo.
+
 
 ## References
 
