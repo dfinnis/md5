@@ -51,7 +51,7 @@ Like ```openssl```, you can run ```ft_ssl``` without arguments. It will then pro
 Next input whatever text followed by control-D. It will then output the hash for the given text.
 Here is an example shown against ```openssl```.
 
-<img src="https://github.com/dfinnis/md5/blob/master/img/stdin.png" width="38%">
+<img src="https://github.com/dfinnis/md5/blob/master/img/stdin.png" width="35%">
 
 
 ## Test script
