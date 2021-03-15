@@ -95,9 +95,9 @@ The ideal cryptographic hash function has 5 main properties:
 
 Though the numbers change, the basic principle is the same for MD5 and SHA family hashes. For MD5:
 
-1. Pad the message until length is a multiple of 512 bytes
+1. Pad the message until length is a multiple of 512 bits
 2. Initialize 4 buffers
-3. Process the message 512 byte chunk at a time, adding the result to the hash buffers. For each 512 byte chunk, do 64 rounds of compression (specific bitwise buffer operations)
+3. Process the message 512 bit chunk at a time, adding the result to the hash buffers. For each 512 bit chunk, do 64 rounds of compression (specific bitwise buffer operations)
 
 
 ## Dependencies
