@@ -14,16 +14,13 @@ Recode MD5 and SHA Hashing Algorithms:
 
 ## Getting Started
 
-First clone this repo.
-
+First clone this repo. <br>
 ```git clone https://github.com/dfinnis/md5.git; cd md5```
 
-Make the binary *ft_ssl*.
-
+Make the binary *ft_ssl*. <br>
 ```make```
 
-Then run *ft_ssl* with hashing algorithm then filepath as argument.
-
+Then run *ft_ssl* with hashing algorithm then filepath as argument. <br>
 ```./ft_ssl md5 test/hello.txt```
 
 <img src="https://github.com/dfinnis/md5/blob/master/img/ssl.png" width="56%">
