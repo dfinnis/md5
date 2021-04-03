@@ -9,7 +9,9 @@ Recode MD5 and SHA Hashing Algorithms:
 6. sha512/224
 7. sha512/256
 
-#### Final Score 125/100
+See the [subject](https://github.com/dfinnis/md5/blob/master/subject.pdf) for more details.
+
+*Final Score 125/100*
 
 
 ## Getting Started
