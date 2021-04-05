@@ -4,7 +4,6 @@ BRIGHT="\x1b[1m"
 RED="\x1b[31m"
 GREEN="\x1b[32m"
 YELLOW="\x1b[33m"
-CLEAR_SCREEN="\E[H\E[2J"
 CLEAR_LINE="\r\c"
 
 # make fclean
@@ -13,8 +12,9 @@ then
 	make
 fi
 
-printf $CLEAR_SCREEN
-echo "$BRIGHT Launching MD5 Performance Test... $RESET\n"
+printf "\E[H\E[2J" ## Clear Screen
+printf $BRIGHT
+echo "Launching MD5 Performance Test... $RESET\n"
 
 count=0
 correct=0
